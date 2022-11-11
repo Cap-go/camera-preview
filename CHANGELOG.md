@@ -114,7 +114,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Changed
 
 * chore(deps): bump async from 2.6.3 to 2.6.4 in /demo ([#217](https://github.com/capacitor-community/camera-preview/pull/217))
-* chore(deps): bump minimist from 1.2.5 to 1.2.6 ([#225](https://github.com/capacitor-community/camera-preview/pull/225)) 
+* chore(deps): bump minimist from 1.2.5 to 1.2.6 ([#225](https://github.com/capacitor-community/camera-preview/pull/225))
 
 ### Fixed
 
@@ -138,6 +138,6 @@ The version number has increased in line with Semver as there's one backwards-in
 * Add pinch and zoom support on iOS. Thank you to contributors @luckyboykg and @guischulz! ([#204](https://github.com/capacitor-community/camera-preview/pull/204))
 
 ### Documentation
-* Add info on styling when the camera preview doesn't display because it's behind elements. Thank you to contributor @dhayanth-dharma! 
+* Add info on styling when the camera preview doesn't display because it's behind elements. Thank you to contributor @dhayanth-dharma!
 * Fix deprecated imports in README. Thank you to contributor @koen20!
 * Document the iOS-only `enableHighResolution` option. Thank you to contributor @bfinleyui! ([#207](https://github.com/capacitor-community/camera-preview/pull/207))

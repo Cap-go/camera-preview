@@ -3,11 +3,11 @@ import { WebPlugin } from '@capacitor/core';
 import type {
   CameraPreviewOptions,
   CameraPreviewPictureOptions,
-  CameraPreviewPlugin,
   CameraPreviewFlashMode,
   CameraSampleOptions,
   CameraOpacityOptions,
 } from './definitions';
+import { CameraPreviewPlugin } from './definitions';
 
 export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
   /**
@@ -34,7 +34,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
         stream.getTracks().forEach((track) => track.stop());
       })
       .catch((error) => {
-        Promise.reject(error);
+        reject(error);
       });
 
     const video = document.getElementById('video');
@@ -79,20 +79,38 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
           this.isBackCamera = false;
         }
 
-        navigator.mediaDevices.getUserMedia(constraints).then(
-          function (stream) {
-            //video.src = window.URL.createObjectURL(stream);
-            videoElement.srcObject = stream;
-            videoElement.play();
-            Promise.resolve();
-          },
-          (err) => {
-            Promise.reject(err);
-          }
-        );
+          const self = this;
+          await navigator.mediaDevices.getUserMedia(constraints).then(
+            function (stream) {
+              if (document.getElementById('video')) {
+                //video.src = window.URL.createObjectURL(stream);
+                videoElement.srcObject = stream;
+                videoElement.play();
+                resolve({});
+              } else {
+                self.stopStream(stream);
+                reject({ message: 'camera already stopped' });
+              }
+            },
+            (err) => {
+              reject(err);
+            }
+          );
+        }
+      } else {
+        reject({ message: 'camera already started' });
       }
-    } else {
-      Promise.reject({ message: 'camera already started' });
+    });
+  }
+
+  private stopStream(stream: any) {
+    if (stream) {
+      const tracks = stream.getTracks();
+
+      for (let i = 0; i < tracks.length; i++) {
+        const track = tracks[i];
+        track.stop();
+      }
     }
   }
 
@@ -101,43 +119,44 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
     if (video) {
       video.pause();
 
-      const st: MediaStream = video.srcObject as MediaStream;
-      const tracks = st.getTracks();
+      this.stopStream(video.srcObject);
 
-      for (const i in tracks) {
-        const track = tracks[i];
-        track.stop();
-      }
       video.remove();
     }
   }
 
   async capture(options: CameraPreviewPictureOptions): Promise<any> {
-    return new Promise((resolve, _) => {
-      const video = document.getElementById('video') as HTMLVideoElement;
-      const canvas = document.createElement('canvas');
+    return new Promise((resolve, reject) => {
+      const video = <HTMLVideoElement>document.getElementById('video');
+      if (!video || !video.srcObject) {
+        reject({ message: 'camera is not running' });
+        return;
+      }
 
       // video.width = video.offsetWidth;
 
-      const context = canvas.getContext('2d');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
-      // flip horizontally back camera isn't used
-      if (!this.isBackCamera) {
-        context.translate(video.videoWidth, 0);
-        context.scale(-1, 1);
-      }
-      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
       let base64EncodedImage;
 
-      if (options.quality != undefined) {
-        base64EncodedImage = canvas
-          .toDataURL('image/jpeg', options.quality / 100.0)
-          .replace('data:image/jpeg;base64,', '');
-      } else {
-        base64EncodedImage = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+      if (video && video.videoWidth > 0 && video.videoHeight > 0) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // flip horizontally back camera isn't used
+        if (!this.isBackCamera) {
+          context.translate(video.videoWidth, 0);
+          context.scale(-1, 1);
+        }
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+        if ((options.format || 'jpeg') === 'jpeg') {
+          base64EncodedImage = canvas
+            .toDataURL('image/jpeg', (options.quality || 85) / 100.0)
+            .replace('data:image/jpeg;base64,', '');
+        } else {
+          base64EncodedImage = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+        }
       }
 
       resolve({
@@ -171,7 +190,3 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
     }
   }
 }
-
-const CameraPreview = new CameraPreviewWeb();
-
-export { CameraPreview };
