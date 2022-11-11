@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/Cap-go/camera-preview/compare/v3.3.1...v3.4.0) (2022-11-11)
+
+
+### Features
+
+* update to v4 ([6a48367](https://github.com/Cap-go/camera-preview/commit/6a483672136e3cc063c1581e18275109f40ac5f3))
+
+
+### Bug Fixes
+
+* **web:** made it work with Capacitor 4 ([b4e3168](https://github.com/Cap-go/camera-preview/commit/b4e316886267f8b0fc5e6cb1dc1737cc021889d3))
+
 ### [3.3.1](https://github.com/Cap-go/camera-preview/compare/v3.3.0...v3.3.1) (2022-11-11)
 
 
