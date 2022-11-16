@@ -1,6 +1,32 @@
 import Foundation
 import Capacitor
 import AVFoundation
+
+extension UIWindow {
+    static var isLandscape: Bool {
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.windows
+                .first?
+                .windowScene?
+                .interfaceOrientation
+                .isLandscape ?? false
+        } else {
+            return UIApplication.shared.statusBarOrientation.isLandscape
+        }
+    }
+    static var isPortrait: Bool {
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.windows
+                .first?
+                .windowScene?
+                .interfaceOrientation
+                .isPortrait ?? false
+        } else {
+            return UIApplication.shared.statusBarOrientation.isPortrait
+        }
+    }
+}
+
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitor.ionicframework.com/docs/plugins/ios
@@ -26,12 +52,12 @@ public class CameraPreview: CAPPlugin {
     @objc func rotated() {
         let height = self.paddingBottom != nil ? self.height! - self.paddingBottom!: self.height!
 
-        if UIApplication.shared.statusBarOrientation.isLandscape {
+        if UIWindow.isLandscape {
             self.previewView.frame = CGRect(x: self.y!, y: self.x!, width: max(height, self.width!), height: min(height, self.width!))
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
 
-        if UIApplication.shared.statusBarOrientation.isPortrait {
+        if UIWindow.isPortrait {
             if self.previewView != nil && self.x != nil && self.y != nil && self.width != nil && self.height != nil {
                 self.previewView.frame = CGRect(x: self.x!, y: self.y!, width: min(height, self.width!), height: max(height, self.width!))
             }
@@ -229,7 +255,7 @@ public class CameraPreview: CAPPlugin {
 
     @objc func getHorizontalFov(_ call: CAPPluginCall) {
         do {
-            let supportedFlashModes = try self.cameraController.getHorizontalFov()
+            let horizontalFov = try self.cameraController.getHorizontalFov()
             call.resolve(["result": horizontalFov])
         } catch {
             call.reject("failed to get FOV")

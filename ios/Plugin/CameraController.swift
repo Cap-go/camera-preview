@@ -323,7 +323,7 @@ extension CameraController {
         return supportedFlashModesAsStrings
 
     }
-    func getHorizontalFov() throws -> String {
+    func getHorizontalFov() throws -> Float {
         var currentCamera: AVCaptureDevice?
         switch currentCameraPosition {
         case .front:
