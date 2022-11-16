@@ -42,8 +42,8 @@ export interface CameraPreviewPictureOptions {
   width?: number;
   /** The picture quality, 0 - 100, default 85 */
   quality?: number;
-  /** The picture format, jpeg or png, default jpeg on `Web`. 
-   * 
+  /** The picture format, jpeg or png, default jpeg on `Web`.
+   *
    * quality has no effect on png */
   format?: PictureFormat;
 }
@@ -69,6 +69,9 @@ export interface CameraPreviewPlugin {
   captureSample(options: CameraSampleOptions): Promise<{ value: string }>;
   getSupportedFlashModes(): Promise<{
     result: CameraPreviewFlashMode[];
+  }>;
+  getHorizontalFov(): Promise<{
+    result: any;
   }>;
   setFlashMode(options: { flashMode: CameraPreviewFlashMode | string }): Promise<void>;
   flip(): Promise<void>;
