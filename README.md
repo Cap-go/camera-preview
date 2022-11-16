@@ -572,11 +572,12 @@ setOpacity(options: CameraOpacityOptions) => Promise<void>
 
 #### CameraPreviewPictureOptions
 
-| Prop          | Type                | Description                                                                                                                                                  |
-| ------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **`height`**  | <code>number</code> | The picture height, optional, default 0 (Device default)                                                                                                     |
-| **`width`**   | <code>number</code> | The picture width, optional, default 0 (Device default)                                                                                                      |
-| **`quality`** | <code>number</code> | The picture quality, 0 - 100, default 85 on `iOS/Android`. If left undefined, the `web` implementation will export a PNG, otherwise a JPEG will be generated |
+| Prop          | Type                                                    | Description                                                                          |
+| ------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **`height`**  | <code>number</code>                                     | The picture height, optional, default 0 (Device default)                             |
+| **`width`**   | <code>number</code>                                     | The picture width, optional, default 0 (Device default)                              |
+| **`quality`** | <code>number</code>                                     | The picture quality, 0 - 100, default 85                                             |
+| **`format`**  | <code><a href="#pictureformat">PictureFormat</a></code> | The picture format, jpeg or png, default jpeg on `Web`. quality has no effect on png |
 
 #### CameraSampleOptions
 
@@ -595,6 +596,10 @@ setOpacity(options: CameraOpacityOptions) => Promise<void>
 #### CameraPosition
 
 <code>'rear' | 'front'</code>
+
+#### PictureFormat
+
+<code>'jpeg' | 'png'</code>
 
 #### CameraPreviewFlashMode
 
