@@ -265,7 +265,7 @@ const CameraPreviewFlashMode: CameraPreviewFlashMode = 'torch';
 CameraPreview.setFlashMode(cameraPreviewFlashMode);
 ```
 
-### startRecordVideo(options) ---- ANDROID only
+### startRecordVideo(options)
 
 <info>Start capturing video</info><br/>
 
@@ -279,7 +279,7 @@ const cameraPreviewOptions: CameraPreviewOptions = {
 CameraPreview.startRecordVideo(cameraPreviewOptions);
 ```
 
-### stopRecordVideo() ---- ANDROID only
+### stopRecordVideo()
 
 <info>Finish capturing a video. The captured video will be returned as a file path and the video format is .mp4</info><br/>
 
