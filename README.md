@@ -1,15 +1,17 @@
-<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
-<h3 align="center">Capacitor Camera Preview</h3>
-<p align="center"><strong><code>@capgo/camera-preview</code></strong></p>
-<br>
-<p align="center"><strong>CAPACITOR 4</strong></p><br>
+# Capacitor Camera Preview Plugin
 
-<p align="center">
+<a href="https://capgo.app/"><img src='https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png' alt='Capgo - Instant updates for capacitor'/></a>
+
+<div align="center">
+<h2><a href="https://capgo.app/">Check out: Capgo — Live updates for capacitor</a></h2>
+</div>
+
+<p>
   Capacitor plugin that allows camera interaction from Javascript and HTML<br>(based on cordova-plugin-camera-preview).
 </p>
 <br>
 
-Version 4+ of this plugin is compatible Capacitor 4.
+This plugin is compatible Capacitor 4 only.
 
 **PR's are greatly appreciated.**
 
