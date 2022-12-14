@@ -458,9 +458,12 @@ To run the demo on your local network and access media devices, a secure context
 - [`capture(...)`](#capture)
 - [`captureSample(...)`](#capturesample)
 - [`getSupportedFlashModes()`](#getsupportedflashmodes)
+- [`getHorizontalFov()`](#gethorizontalfov)
 - [`setFlashMode(...)`](#setflashmode)
 - [`flip()`](#flip)
 - [`setOpacity(...)`](#setopacity)
+- [`stopRecordVideo()`](#stoprecordvideo)
+- [`startRecordVideo(...)`](#startrecordvideo)
 - [Interfaces](#interfaces)
 - [Type Aliases](#type-aliases)
 
@@ -472,90 +475,134 @@ To run the demo on your local network and access media devices, a secure context
 ### start(...)
 
 ```typescript
-start(options: CameraPreviewOptions) => Promise<void>
+start(options: CameraPreviewOptions) => any
 ```
 
 | Param         | Type                                                                  |
 | ------------- | --------------------------------------------------------------------- |
 | **`options`** | <code><a href="#camerapreviewoptions">CameraPreviewOptions</a></code> |
 
+**Returns:** <code>any</code>
+
 ---
 
 ### stop()
 
 ```typescript
-stop() => Promise<void>
+stop() => any
 ```
+
+**Returns:** <code>any</code>
 
 ---
 
 ### capture(...)
 
 ```typescript
-capture(options: CameraPreviewPictureOptions) => Promise<{ value: string; }>
+capture(options: CameraPreviewPictureOptions) => any
 ```
 
 | Param         | Type                                                                                |
 | ------------- | ----------------------------------------------------------------------------------- |
 | **`options`** | <code><a href="#camerapreviewpictureoptions">CameraPreviewPictureOptions</a></code> |
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>any</code>
 
 ---
 
 ### captureSample(...)
 
 ```typescript
-captureSample(options: CameraSampleOptions) => Promise<{ value: string; }>
+captureSample(options: CameraSampleOptions) => any
 ```
 
 | Param         | Type                                                                |
 | ------------- | ------------------------------------------------------------------- |
 | **`options`** | <code><a href="#camerasampleoptions">CameraSampleOptions</a></code> |
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>any</code>
 
 ---
 
 ### getSupportedFlashModes()
 
 ```typescript
-getSupportedFlashModes() => Promise<{ result: CameraPreviewFlashMode[]; }>
+getSupportedFlashModes() => any
 ```
 
-**Returns:** <code>Promise&lt;{ result: CameraPreviewFlashMode[]; }&gt;</code>
+**Returns:** <code>any</code>
+
+---
+
+### getHorizontalFov()
+
+```typescript
+getHorizontalFov() => any
+```
+
+**Returns:** <code>any</code>
 
 ---
 
 ### setFlashMode(...)
 
 ```typescript
-setFlashMode(options: { flashMode: CameraPreviewFlashMode | string; }) => Promise<void>
+setFlashMode(options: { flashMode: CameraPreviewFlashMode | string; }) => any
 ```
 
 | Param         | Type                                |
 | ------------- | ----------------------------------- |
 | **`options`** | <code>{ flashMode: string; }</code> |
 
+**Returns:** <code>any</code>
+
 ---
 
 ### flip()
 
 ```typescript
-flip() => Promise<void>
+flip() => any
 ```
+
+**Returns:** <code>any</code>
 
 ---
 
 ### setOpacity(...)
 
 ```typescript
-setOpacity(options: CameraOpacityOptions) => Promise<void>
+setOpacity(options: CameraOpacityOptions) => any
 ```
 
 | Param         | Type                                                                  |
 | ------------- | --------------------------------------------------------------------- |
 | **`options`** | <code><a href="#cameraopacityoptions">CameraOpacityOptions</a></code> |
+
+**Returns:** <code>any</code>
+
+---
+
+### stopRecordVideo()
+
+```typescript
+stopRecordVideo() => any
+```
+
+**Returns:** <code>any</code>
+
+---
+
+### startRecordVideo(...)
+
+```typescript
+startRecordVideo(options: CameraPreviewOptions) => any
+```
+
+| Param         | Type                                                                  |
+| ------------- | --------------------------------------------------------------------- |
+| **`options`** | <code><a href="#camerapreviewoptions">CameraPreviewOptions</a></code> |
+
+**Returns:** <code>any</code>
 
 ---
 
