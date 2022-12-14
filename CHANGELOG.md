@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.2](https://github.com/Cap-go/camera-preview/compare/v3.5.1...v3.5.2) (2022-12-14)
+
+
+### Bug Fixes
+
+* ci script ([3f6575d](https://github.com/Cap-go/camera-preview/commit/3f6575ddb5b5db040c98ffb97c6a654abdd6ae97))
+* definitions ([9440ecd](https://github.com/Cap-go/camera-preview/commit/9440ecd748cafd7cc49a7db454175c2e728c70ad))
+* readme display ([68b71ee](https://github.com/Cap-go/camera-preview/commit/68b71ee442986b0ced748594fff587830bb2b374))
+* use pnpm instead of npm ([374151c](https://github.com/Cap-go/camera-preview/commit/374151ca66f17a9d40e652addc407be50ba72739))
+
 ### [3.5.1](https://github.com/Cap-go/camera-preview/compare/v3.5.0...v3.5.1) (2022-12-06)
 
 
