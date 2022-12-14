@@ -76,4 +76,6 @@ export interface CameraPreviewPlugin {
   setFlashMode(options: { flashMode: CameraPreviewFlashMode | string }): Promise<void>;
   flip(): Promise<void>;
   setOpacity(options: CameraOpacityOptions): Promise<void>;
+  stopRecordVideo(): Promise<void>;
+  startRecordVideo(options: CameraPreviewOptions): Promise<void>;
 }
