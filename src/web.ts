@@ -126,7 +126,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
   async capture(options: CameraPreviewPictureOptions): Promise<any> {
     return new Promise((resolve, reject) => {
       const video = document.getElementById('video') as HTMLVideoElement;
-      if (!video || !video.srcObject) {
+      if (!video?.srcObject) {
         reject({ message: 'camera is not running' });
         return;
       }
@@ -165,6 +165,14 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
 
   async captureSample(_options: CameraSampleOptions): Promise<any> {
     return this.capture(_options);
+  }
+
+  async stopRecordVideo(): Promise<any> {
+    throw new Error('stopRecordVideo not supported under the web platform');
+  }
+
+  async startRecordVideo(_options: CameraPreviewOptions): Promise<any> {
+    throw new Error('startRecordVideo not supported under the web platform');
   }
 
   async getSupportedFlashModes(): Promise<{
