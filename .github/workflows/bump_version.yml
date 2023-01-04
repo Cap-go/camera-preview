@@ -33,7 +33,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
       - name: Update Readme
-        run: npm run docgen
+        run: pnpm docgen
       - name: Add readme
         run: git add README.md
       - name: Create bump and changelog main
