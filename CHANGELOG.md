@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/Cap-go/camera-preview/compare/v3.5.5...v3.6.0) (2023-01-04)
+
+
+### Features
+
+* add workflow for renovate ([c1a0bf1](https://github.com/Cap-go/camera-preview/commit/c1a0bf12f2b292c04ccd30c4b52fae4abca003e3))
+
 ### [3.5.5](https://github.com/Cap-go/camera-preview/compare/v3.5.4...v3.5.5) (2022-12-15)
 
 
