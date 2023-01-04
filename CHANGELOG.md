@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.7](https://github.com/Cap-go/camera-preview/compare/v3.6.6...v3.6.7) (2023-01-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.test.ext:junit to v1.1.5 ([c39e315](https://github.com/Cap-go/camera-preview/commit/c39e31578114c465a57fe4d992aa7ab45c040e32))
+
 ### [3.6.6](https://github.com/Cap-go/camera-preview/compare/v3.6.5...v3.6.6) (2023-01-04)
 
 ### [3.6.5](https://github.com/Cap-go/camera-preview/compare/v3.6.4...v3.6.5) (2023-01-04)
