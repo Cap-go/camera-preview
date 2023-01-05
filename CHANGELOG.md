@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.14](https://github.com/Cap-go/camera-preview/compare/v3.6.13...v3.6.14) (2023-01-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency junit:junit to v4.13.2 ([c7d4a7f](https://github.com/Cap-go/camera-preview/commit/c7d4a7f72e2d29c59af2150252d427d21735a5f9))
+
 ### [3.6.13](https://github.com/Cap-go/camera-preview/compare/v3.6.12...v3.6.13) (2023-01-05)
 
 
