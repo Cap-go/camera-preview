@@ -1249,15 +1249,15 @@
   dependencies:
     "@capacitor/core" latest
 
-"@capacitor/android@2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-2.4.4.tgz#6f96a7f37c0e9c5359d887140016f84a8cc1e2f2"
-  integrity sha512-0ueuW7R6PUCSI/bRdVlyM156JtvdJWhIInptC/yIdz/FjdvX8G8Rcb7lVoRk15eVUapqSQZ/S09F8JajaGnJjA==
+"@capacitor/android@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-2.5.0.tgz#143d7b3b0131af221b4a1fca778fc207f3d235a6"
+  integrity sha512-W25F9GRuqNAN9D6Sd5Lj21ibGqzd8006Tf3mfai6MJj8DB3a1TMp+hueRwt+WhDJAS+T2pnljuR3FD/jd4u2Rw==
 
-"@capacitor/cli@2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-2.4.4.tgz#46b5ac44a82c884a998109e1e582bdc76745905a"
-  integrity sha512-xHPjRrzIYGTa1sWszLt10WXYIGzTNsF9jDgacsPPoGM7H/D0/JO8aVVEYAoyGGpCpxxDFcyiTBcdMZhEWDniiA==
+"@capacitor/cli@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-2.5.0.tgz#8a4fee7055757bdb56560952c4893eddf91a9afc"
+  integrity sha512-TVBDsnjJRSRVI1R6ON5b6C5ydkbXX0CAaN1QRzVMVmTrg8YwQn2FvHu/wk3+zJm02R1um1+oonj6RyZkpBOfOw==
   dependencies:
     chalk "^2.3.0"
     commander "^4.1.1"
@@ -1271,7 +1271,14 @@
     which "^1.3.0"
     xml2js "^0.4.19"
 
-"@capacitor/core@2.4.4", "@capacitor/core@latest":
+"@capacitor/core@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.5.0.tgz#86b202ed950846427f710fafbdbbd844b1d0cc56"
+  integrity sha512-WUkUnqqLtlEYn6tly8t6VR0ABlSVbXdlD/gBbYxx0P+gEqMF9b46uYb2YqyH+8HBDANzTweEySpLfhiSUvYS7w==
+  dependencies:
+    tslib "^1.9.0"
+
+"@capacitor/core@latest":
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.4.4.tgz#de489734ddf99a24af2f92f4667e46d9adc5c418"
   integrity sha512-Cc+g2MjHAaAlIotkQUdaZT/A5taGOXBjPK3ehSdezXX/lztp2zaBHFmO87cx0huasiFelFjwzQwY+Rh6soMNdg==
