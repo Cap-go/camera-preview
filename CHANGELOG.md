@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.16](https://github.com/Cap-go/camera-preview/compare/v3.6.15...v3.6.16) (2023-01-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency typescript to v3.9.10 ([b14db44](https://github.com/Cap-go/camera-preview/commit/b14db440dc8799895aab6fe0a13bf421975e8acd))
+
 ### [3.6.15](https://github.com/Cap-go/camera-preview/compare/v3.6.14...v3.6.15) (2023-01-05)
 
 ### [3.6.14](https://github.com/Cap-go/camera-preview/compare/v3.6.13...v3.6.14) (2023-01-05)
