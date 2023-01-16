@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.18](https://github.com/Cap-go/camera-preview/compare/v3.6.17...v3.6.18) (2023-01-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.appcompat:appcompat to v1.6.0 ([5b6bd81](https://github.com/Cap-go/camera-preview/commit/5b6bd8104800631367c900ee004d5c09a813d98d))
+
 ### [3.6.17](https://github.com/Cap-go/camera-preview/compare/v3.6.16...v3.6.17) (2023-01-16)
 
 ### [3.6.16](https://github.com/Cap-go/camera-preview/compare/v3.6.15...v3.6.16) (2023-01-09)
