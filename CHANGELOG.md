@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.19](https://github.com/Cap-go/camera-preview/compare/v3.6.18...v3.6.19) (2023-01-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.google.gms:google-services to v4.3.15 ([37b29d0](https://github.com/Cap-go/camera-preview/commit/37b29d09a4c78721dc761955029e2525251b4a05))
+
 ### [3.6.18](https://github.com/Cap-go/camera-preview/compare/v3.6.17...v3.6.18) (2023-01-16)
 
 
