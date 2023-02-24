@@ -453,19 +453,19 @@ To run the demo on your local network and access media devices, a secure context
 
 <docgen-index>
 
-- [`start(...)`](#start)
-- [`stop()`](#stop)
-- [`capture(...)`](#capture)
-- [`captureSample(...)`](#capturesample)
-- [`getSupportedFlashModes()`](#getsupportedflashmodes)
-- [`getHorizontalFov()`](#gethorizontalfov)
-- [`setFlashMode(...)`](#setflashmode)
-- [`flip()`](#flip)
-- [`setOpacity(...)`](#setopacity)
-- [`stopRecordVideo()`](#stoprecordvideo)
-- [`startRecordVideo(...)`](#startrecordvideo)
-- [Interfaces](#interfaces)
-- [Type Aliases](#type-aliases)
+* [`start(...)`](#start)
+* [`stop()`](#stop)
+* [`capture(...)`](#capture)
+* [`captureSample(...)`](#capturesample)
+* [`getSupportedFlashModes()`](#getsupportedflashmodes)
+* [`getHorizontalFov()`](#gethorizontalfov)
+* [`setFlashMode(...)`](#setflashmode)
+* [`flip()`](#flip)
+* [`setOpacity(...)`](#setopacity)
+* [`stopRecordVideo()`](#stoprecordvideo)
+* [`startRecordVideo(...)`](#startrecordvideo)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
 
 </docgen-index>
 
@@ -484,7 +484,8 @@ start(options: CameraPreviewOptions) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### stop()
 
@@ -494,7 +495,8 @@ stop() => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### capture(...)
 
@@ -508,7 +510,8 @@ capture(options: CameraPreviewPictureOptions) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### captureSample(...)
 
@@ -522,7 +525,8 @@ captureSample(options: CameraSampleOptions) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### getSupportedFlashModes()
 
@@ -532,7 +536,8 @@ getSupportedFlashModes() => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### getHorizontalFov()
 
@@ -542,7 +547,8 @@ getHorizontalFov() => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### setFlashMode(...)
 
@@ -556,7 +562,8 @@ setFlashMode(options: { flashMode: CameraPreviewFlashMode | string; }) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### flip()
 
@@ -566,7 +573,8 @@ flip() => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### setOpacity(...)
 
@@ -580,7 +588,8 @@ setOpacity(options: CameraOpacityOptions) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### stopRecordVideo()
 
@@ -590,7 +599,8 @@ stopRecordVideo() => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### startRecordVideo(...)
 
@@ -604,9 +614,11 @@ startRecordVideo(options: CameraPreviewOptions) => any
 
 **Returns:** <code>any</code>
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### CameraPreviewOptions
 
@@ -624,11 +636,12 @@ startRecordVideo(options: CameraPreviewOptions) => any
 | **`position`**                     | <code>string</code>  | Choose the camera to use 'front' or 'rear', default 'front'                                                                                                   |
 | **`storeToFile`**                  | <code>boolean</code> | Defaults to false - Capture images to a file and return the file path instead of returning base64 encoded data                                                |
 | **`disableExifHeaderStripping`**   | <code>boolean</code> | Defaults to false - Android Only - Disable automatic rotation of the image, and let the browser deal with it (keep reading on how to achieve it)              |
-| **`enableHighResolution`**         | <code>boolean</code> | Defaults to false - iOS only - Activate high resolution image capture so that output images are from the highest resolution possible on the device \*         |
+| **`enableHighResolution`**         | <code>boolean</code> | Defaults to false - iOS only - Activate high resolution image capture so that output images are from the highest resolution possible on the device *          |
 | **`disableAudio`**                 | <code>boolean</code> | Defaults to false - Web only - Disables audio stream to prevent permission requests and output switching                                                      |
 | **`lockAndroidOrientation`**       | <code>boolean</code> | Android Only - Locks device orientation when camera is showing.                                                                                               |
 | **`enableOpacity`**                | <code>boolean</code> | Defaults to false - Android and Web only. Set if camera preview can change opacity.                                                                           |
 | **`enableZoom`**                   | <code>boolean</code> | Defaults to false - Android only. Set if camera preview will support pinch to zoom.                                                                           |
+
 
 #### CameraPreviewPictureOptions
 
@@ -639,11 +652,13 @@ startRecordVideo(options: CameraPreviewOptions) => any
 | **`quality`** | <code>number</code>                                     | The picture quality, 0 - 100, default 85                                             |
 | **`format`**  | <code><a href="#pictureformat">PictureFormat</a></code> | The picture format, jpeg or png, default jpeg on `Web`. quality has no effect on png |
 
+
 #### CameraSampleOptions
 
 | Prop          | Type                | Description                              |
 | ------------- | ------------------- | ---------------------------------------- |
 | **`quality`** | <code>number</code> | The picture quality, 0 - 100, default 85 |
+
 
 #### CameraOpacityOptions
 
@@ -651,15 +666,19 @@ startRecordVideo(options: CameraPreviewOptions) => any
 | ------------- | ------------------- | ----------------------------------------------------- |
 | **`opacity`** | <code>number</code> | The percent opacity to set for camera view, default 1 |
 
+
 ### Type Aliases
+
 
 #### CameraPosition
 
 <code>'rear' | 'front'</code>
 
+
 #### PictureFormat
 
 <code>'jpeg' | 'png'</code>
+
 
 #### CameraPreviewFlashMode
 
