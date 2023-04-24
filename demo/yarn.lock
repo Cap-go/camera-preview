@@ -1210,12 +1210,12 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@capacitor-community/camera-preview@^1.1.0":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@capacitor-community/camera-preview/-/camera-preview-1.2.1.tgz#9c357562ff387b407dba569f998e3e4ca2ebe0d4"
-  integrity sha512-rskj/12TR4X8cUzvkWvygf7A/4TFUld9BU5nAc1gc3LXU06FGP0R/6MxZKQdf20qqRaTRLPrF3HFAlkz7xb6yg==
+"@capacitor-community/camera-preview@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/camera-preview/-/camera-preview-4.0.0.tgz#38ff223f9e4c16beada0106427d05f7a040094bf"
+  integrity sha512-eHov/D/xHsAFWmqkkP9MNako2zP9fH90cUtlLoX+w6gHCS5TBdz/Xtq4sSN8OciUjQYvC1FD7baHu2vCxfZ87w==
   dependencies:
-    "@capacitor/core" latest
+    "@capacitor/core" "^4.0.0"
 
 "@capacitor/android@2.5.0":
   version "2.5.0"
@@ -1246,7 +1246,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@capacitor/core@latest":
+"@capacitor/core@^4.0.0":
   version "4.7.3"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.7.3.tgz#d28dab05be7a390065cc92fab6f788c2a8dcf344"
   integrity sha512-IDhJapHqfJNpSlq89M0quOZGb08uOUZhVhyRDdrGUrwa4ttFoWeX/Vi9F+b9bffsDRKkSLF0BhzA9TH7ko5c3A==
