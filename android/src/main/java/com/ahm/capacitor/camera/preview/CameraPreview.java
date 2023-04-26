@@ -198,7 +198,7 @@ public class CameraPreview extends Plugin implements CameraActivity.CameraPrevie
 
         List<String> supportedFlashModes;
         supportedFlashModes = camera.getParameters().getSupportedFlashModes();
-        if (supportedFlashModes.indexOf(flashMode) > -1) {
+        if (supportedFlashModes != null && supportedFlashModes.indexOf(flashMode) > -1) {
             params.setFlashMode(flashMode);
         } else {
             call.reject("Flash mode not recognised: " + flashMode);
