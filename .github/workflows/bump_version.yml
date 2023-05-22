@@ -10,7 +10,7 @@ jobs:
   bump-version:
     if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
     runs-on: ubuntu-latest
-    name: "Bump version and create changelog with standard version"
+    name: 'Bump version and create changelog with standard version'
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -34,10 +34,10 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
       - name: Create bump and changelog main
         if: github.ref == 'refs/heads/main'
-        run: pnpm dlx capacitor-plugin-standard-version
+        run: pnpm dlx capacitor-plugin-standard-version@latest
       - name: Create bump and changelog development
         if: github.ref != 'refs/heads/main'
-        run: pnpm dlx capacitor-plugin-standard-version --prerelease alpha
+        run: pnpm dlx capacitor-plugin-standard-version@latest --prerelease alpha
       - name: Update Doc
         run: pnpm docgen
       - name: Add doc to github
@@ -53,7 +53,7 @@ jobs:
   create-cache:
     if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
     runs-on: ubuntu-latest
-    name: "Create global cache on main branch"
+    name: 'Create global cache on main branch'
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -67,3 +67,5 @@ jobs:
       - name: Install dependencies
         id: install_code
         run: pnpm install --frozen-lockfile
+      - name: CLI capacitor-standard-version install
+        run: pnpm dlx capacitor-standard-version@latest --version
