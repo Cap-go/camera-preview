@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/Cap-go/camera-preview/compare/v3.6.23...v4.0.0) (2023-05-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* update capacitor 5
+
+### Features
+
+* update capacitor 5 ([0298a9d](https://github.com/Cap-go/camera-preview/commit/0298a9d04e584f39dbde14fd6851752f8e939b3d))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/react to v16.14.38 ([8eeedfa](https://github.com/Cap-go/camera-preview/commit/8eeedfa04f229244cc7fc16f9fb461acd66d648d))
+* **deps:** update dependency @types/react-dom to v16.9.19 ([9a9b03c](https://github.com/Cap-go/camera-preview/commit/9a9b03c4ced6c56ecd18017fc3192e6638eb2b5c))
+* **deps:** update dependency androidx.appcompat:appcompat to v1.6.1 ([d515b88](https://github.com/Cap-go/camera-preview/commit/d515b88301d9cfb1244eb5c5336308fb888a83ae))
+* **deps:** update dependency androidx.exifinterface:exifinterface to v1.3.6 ([ad625a4](https://github.com/Cap-go/camera-preview/commit/ad625a425e3d087840d663e731518d2236cafb5c))
+* doc script ([b0bb292](https://github.com/Cap-go/camera-preview/commit/b0bb29252decf1eadebd0cd0b3eba0d62d3ef1a9))
+* docgen issue ([5369c7c](https://github.com/Cap-go/camera-preview/commit/5369c7cacef56aada454fe55018bbd05b87a1c30))
+* issue plugin ([13afa9e](https://github.com/Cap-go/camera-preview/commit/13afa9eea03c9149be9d226e6d2ec33331d273a2))
+* lint ([741b67b](https://github.com/Cap-go/camera-preview/commit/741b67b88247e753c5ccde6411ec0856ffa5e261))
+
 ### [3.6.23](https://github.com/Cap-go/camera-preview/compare/v3.6.22...v3.6.23) (2023-02-13)
 
 ### [3.6.22](https://github.com/Cap-go/camera-preview/compare/v3.6.21...v3.6.22) (2023-02-13)
