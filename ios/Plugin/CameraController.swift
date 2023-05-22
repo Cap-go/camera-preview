@@ -436,7 +436,8 @@ extension CameraController {
             completion(CameraControllerError.captureSessionIsMissing)
             return
         }
-        // self.videoOutput?.stopRecording()
+        self.videoOutput?.stopRecording()
+        
     }
 }
 

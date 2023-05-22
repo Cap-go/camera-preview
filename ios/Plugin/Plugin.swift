@@ -319,7 +319,7 @@ public class CameraPreview: CAPPlugin {
     @objc func stopRecordVideo(_ call: CAPPluginCall) {
 
         self.cameraController.stopRecording { (_) in
-
+            call.resolve()
         }
     }
 

@@ -272,8 +272,11 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback, TextureV
     private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
         double targetRatio = (double) w / h;
+
+        int targetHeight = h;
         if (displayOrientation == 90 || displayOrientation == 270) {
             targetRatio = (double) h / w;
+            targetHeight = w;
         }
 
         if (sizes == null) {
@@ -282,8 +285,6 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback, TextureV
 
         Camera.Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
-
-        int targetHeight = h;
 
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
