@@ -68,21 +68,94 @@ export interface CameraOpacityOptions {
 }
 
 export interface CameraPreviewPlugin {
+  /**
+   * Start the camera preview instance.
+   * @param {CameraPreviewOptions} options the options to start the camera preview with
+   * @returns {Promise<void>} an Promise that resolves when the instance is started
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   start(options: CameraPreviewOptions): Promise<void>;
+  /**
+   * Stop the camera preview instance.
+   * @returns {Promise<void>} an Promise that resolves when the instance is stopped
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   stop(): Promise<void>;
+  /**
+   * Switch camera.
+   * @param {CameraPreviewOptions} options the options to switch the camera with
+   * @returns {Promise<void>} an Promise that resolves when the camera is switched
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   capture(options: CameraPreviewPictureOptions): Promise<{ value: string }>;
+  /**
+   * Capture a sample image.
+   * @param {CameraSampleOptions} options the options to capture the sample image with
+   * @returns {Promise<string>} an Promise that resolves with the sample image as a base64 encoded string
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   captureSample(options: CameraSampleOptions): Promise<{ value: string }>;
+  /**
+   * Get supported flash modes.
+   * @returns {Promise<CameraPreviewFlashMode[]>} an Promise that resolves with the supported flash modes
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   getSupportedFlashModes(): Promise<{
     result: CameraPreviewFlashMode[];
   }>;
+  /**
+   * Get horizontal field of view.
+   * @returns {Promise<any>} an Promise that resolves with the horizontal field of view
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   getHorizontalFov(): Promise<{
     result: any;
   }>;
+  /**
+   * Set flash mode.
+   * @param options the options to set the flash mode with
+   * @returns {Promise<void>} an Promise that resolves when the flash mode is set
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   setFlashMode(options: {
     flashMode: CameraPreviewFlashMode | string;
   }): Promise<void>;
+  /**
+   * Flip camera.
+   * @returns {Promise<void>} an Promise that resolves when the camera is flipped
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   flip(): Promise<void>;
+  /**
+   * Set opacity.
+   * @param {CameraOpacityOptions} options the options to set the camera opacity with
+   * @returns {Promise<void>} an Promise that resolves when the camera color effect is set
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   setOpacity(options: CameraOpacityOptions): Promise<void>;
+  /**
+   * Stop recording video.
+   * @param {CameraPreviewOptions} options the options to stop recording video with
+   * @returns {Promise<void>} an Promise that resolves when the camera zoom is set
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   stopRecordVideo(): Promise<void>;
+  /**
+   * Start recording video.
+   * @param {CameraPreviewOptions} options the options to start recording video with
+   * @returns {Promise<void>} an Promise that resolves when the video recording is started
+   * @throws An error if the something went wrong
+   * @since 0.0.1
+   */
   startRecordVideo(options: CameraPreviewOptions): Promise<void>;
 }

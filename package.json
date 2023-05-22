@@ -17,7 +17,7 @@
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "docgen": "docgen --api NativeMarketPlugin --output-readme README.md --output-json dist/docs.json",
+    "docgen": "docgen --api CameraPreviewPlugin --output-readme README.md --output-json dist/docs.json",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
