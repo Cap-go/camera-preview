@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.1](https://github.com/Cap-go/camera-preview/compare/6.0.0...6.0.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/react to v16.14.43 ([5789ccb](https://github.com/Cap-go/camera-preview/commit/5789ccb1b8f87e85ef1c1940d283cb667432dd47))
+
 ## [6.0.0](https://github.com/Cap-go/camera-preview/compare/v3.6.23...v6.0.0) (2023-06-01)
 
 
