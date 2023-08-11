@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.2](https://github.com/Cap-go/camera-preview/compare/6.0.1...6.0.2) (2023-08-11)
+
+
+### Bug Fixes
+
+* **deps:** update capacitor monorepo to v5 ([bdd0720](https://github.com/Cap-go/camera-preview/commit/bdd0720d28fd98860f19aa2dfd961a5a42f90cff))
+
 ### [6.0.1](https://github.com/Cap-go/camera-preview/compare/6.0.0...6.0.1) (2023-06-12)
 
 
