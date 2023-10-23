@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.5](https://github.com/Cap-go/camera-preview/compare/6.0.4...6.0.5) (2023-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update react monorepo ([9c490ac](https://github.com/Cap-go/camera-preview/commit/9c490ac310c219cd744eaa29126f3df23d8f2fbf))
+
 ### [6.0.4](https://github.com/Cap-go/camera-preview/compare/6.0.3...6.0.4) (2023-10-16)
 
 
