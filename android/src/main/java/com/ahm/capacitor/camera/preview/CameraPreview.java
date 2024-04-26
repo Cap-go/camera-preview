@@ -619,7 +619,7 @@ public class CameraPreview
         new View.OnTouchListener() {
           @Override
           public boolean onTouch(View v, MotionEvent event) {
-            if ((null != fragment) && (fragment.toBack == true)) {
+            if ((null != fragment) && (fragment.toBack == true) && null != fragment.frameContainerLayout) {
               fragment.frameContainerLayout.dispatchTouchEvent(event);
             }
             return false;
