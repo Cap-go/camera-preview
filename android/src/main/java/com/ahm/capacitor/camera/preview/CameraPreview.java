@@ -44,7 +44,7 @@ public class CameraPreview
   static final String CAMERA_PERMISSION_ALIAS = "camera";
 
   private static String VIDEO_FILE_PATH = "";
-  private static String VIDEO_FILE_EXTENSION = ".mp4";
+  private final static String VIDEO_FILE_EXTENSION = ".mp4";
 
   private String captureCallbackId = "";
   private String snapshotCallbackId = "";
@@ -52,10 +52,10 @@ public class CameraPreview
   private String cameraStartCallbackId = "";
 
   // keep track of previously specified orientation to support locking orientation:
-  private int previousOrientationRequest = -1;
+  private int previousOrientationRequest = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
   private CameraActivity fragment;
-  private int containerViewId = 20;
+  private final int containerViewId = 20;
 
   @PluginMethod
   public void start(PluginCall call) {
@@ -87,7 +87,7 @@ public class CameraPreview
 
   @PluginMethod
   public void setOpacity(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.error("Camera is not running");
       return;
     }
@@ -99,7 +99,7 @@ public class CameraPreview
 
   @PluginMethod
   public void capture(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -115,7 +115,7 @@ public class CameraPreview
 
   @PluginMethod
   public void captureSample(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -167,7 +167,7 @@ public class CameraPreview
 
   @PluginMethod
   public void getSupportedFlashModes(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -191,7 +191,7 @@ public class CameraPreview
 
   @PluginMethod
   public void getHorizontalFov(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -208,7 +208,7 @@ public class CameraPreview
 
   @PluginMethod
   public void setFlashMode(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -240,7 +240,7 @@ public class CameraPreview
 
   @PluginMethod
   public void startRecordVideo(final PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }
@@ -281,7 +281,7 @@ public class CameraPreview
 
   @PluginMethod
   public void stopRecordVideo(PluginCall call) {
-    if (this.hasCamera(call) == false) {
+    if (!this.hasCamera(call)) {
       call.reject("Camera is not running");
       return;
     }

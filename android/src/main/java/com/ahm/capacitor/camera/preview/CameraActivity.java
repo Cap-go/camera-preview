@@ -87,7 +87,6 @@ public class CameraActivity extends Fragment {
   private RecordingState mRecordingState = RecordingState.INITIALIZING;
   private MediaRecorder mRecorder = null;
   private String recordFilePath;
-  private float opacity;
 
   // The first rear facing camera
   private int defaultCameraId;
@@ -362,10 +361,16 @@ public class CameraActivity extends Fragment {
         }
       );
   }
+  
+  private int getNumberOfCameras() {
+    if (numberOfCameras == 0) {
+      numberOfCameras = Camera.getNumberOfCameras();
+    }
+
+    return numberOfCameras;
+  }
 
   private void setDefaultCameraId() {
-    // Find the total number of cameras available
-    numberOfCameras = Camera.getNumberOfCameras();
 
     int facing = "front".equals(defaultCamera)
       ? Camera.CameraInfo.CAMERA_FACING_FRONT
@@ -373,7 +378,7 @@ public class CameraActivity extends Fragment {
 
     // Find the ID of the default camera
     Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-    for (int i = 0; i < numberOfCameras; i++) {
+    for (int i = 0; i < getNumberOfCameras(); i++) {
       Camera.getCameraInfo(i, cameraInfo);
       if (cameraInfo.facing == facing) {
         defaultCameraId = i;
@@ -384,15 +389,16 @@ public class CameraActivity extends Fragment {
 
   @Override
   public void onResume() {
+    // This gets called when getting started AND after the app gets resumed.
     super.onResume();
 
-    mCamera = Camera.open(defaultCameraId);
+    // Make sure that we load the currently "locked" camera. If the camera gets changed
+    // during use, we want to "restore" that camera back as soon as we come back to the app.
+    mCamera = Camera.open(cameraCurrentlyLocked);
 
-    if (cameraParameters != null) {
+    if (cameraCurrentlyLocked == 0 && cameraParameters != null) {
       mCamera.setParameters(cameraParameters);
     }
-
-    cameraCurrentlyLocked = defaultCameraId;
 
     if (mPreview.mPreviewSize == null) {
       mPreview.setCamera(mCamera, cameraCurrentlyLocked);
@@ -512,7 +518,7 @@ public class CameraActivity extends Fragment {
     if (numberOfCameras == 1) {
       //There is only one camera available
     } else {
-      Log.d(TAG, "numberOfCameras: " + numberOfCameras);
+      Log.d(TAG, "numberOfCameras: " + getNumberOfCameras());
 
       // OK, we have multiple cameras. Release this camera -> cameraCurrentlyLocked
       if (mCamera != null) {
@@ -527,7 +533,7 @@ public class CameraActivity extends Fragment {
         "cameraCurrentlyLocked := " + Integer.toString(cameraCurrentlyLocked)
       );
       try {
-        cameraCurrentlyLocked = (cameraCurrentlyLocked + 1) % numberOfCameras;
+        cameraCurrentlyLocked = (cameraCurrentlyLocked + 1) % getNumberOfCameras();
         Log.d(TAG, "cameraCurrentlyLocked new: " + cameraCurrentlyLocked);
       } catch (Exception exception) {
         Log.d(TAG, exception.getMessage());
@@ -841,7 +847,6 @@ public class CameraActivity extends Fragment {
 
   public void setOpacity(final float opacity) {
     Log.d(TAG, "set opacity:" + opacity);
-    this.opacity = opacity;
     mPreview.setOpacity(opacity);
   }
 
