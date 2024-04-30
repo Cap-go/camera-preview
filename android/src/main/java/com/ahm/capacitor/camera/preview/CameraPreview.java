@@ -1,6 +1,7 @@
 package com.ahm.capacitor.camera.preview;
 
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.RECORD_AUDIO;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -32,7 +33,7 @@ import org.json.JSONArray;
   name = "CameraPreview",
   permissions = {
     @Permission(
-      strings = { CAMERA },
+      strings = { CAMERA, RECORD_AUDIO },
       alias = CameraPreview.CAMERA_PERMISSION_ALIAS
     ),
   }
