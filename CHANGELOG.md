@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/Cap-go/camera-preview/compare/6.0.9...6.1.0) (2024-04-30)
+
+
+### Features
+
+* allow capacitor 6 ([251f67c](https://github.com/Cap-go/camera-preview/commit/251f67c3a23425d9cbc8c006629318051bd5e50a))
+
+
+### Bug Fixes
+
+* pnpm ([75b59a7](https://github.com/Cap-go/camera-preview/commit/75b59a78fe2d1d64567e3e303c897994170a9eae))
+
 ### [6.0.9](https://github.com/Cap-go/camera-preview/compare/6.0.8...6.0.9) (2024-04-26)
 
 
