@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.2](https://github.com/Cap-go/camera-preview/compare/6.1.1...6.1.2) (2024-04-30)
+
+
+### Bug Fixes
+
+* add stop button as well ([c6c680a](https://github.com/Cap-go/camera-preview/commit/c6c680a118f9b1948736bb8b73fa99552545aee8))
+* https://github.com/capacitor-community/camera-preview/pull/305 ([2ad64b3](https://github.com/Cap-go/camera-preview/commit/2ad64b3297922cc8dbe1d332cc91fa1dac6bf1dd))
+
 ### [6.1.1](https://github.com/Cap-go/camera-preview/compare/6.1.0...6.1.1) (2024-04-30)
 
 ## [6.1.0](https://github.com/Cap-go/camera-preview/compare/6.0.9...6.1.0) (2024-04-30)
