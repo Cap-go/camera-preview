@@ -44,7 +44,7 @@ public class CameraPreview
   static final String CAMERA_PERMISSION_ALIAS = "camera";
 
   private static String VIDEO_FILE_PATH = "";
-  private final static String VIDEO_FILE_EXTENSION = ".mp4";
+  private static final String VIDEO_FILE_EXTENSION = ".mp4";
 
   private String captureCallbackId = "";
   private String snapshotCallbackId = "";
@@ -52,7 +52,8 @@ public class CameraPreview
   private String cameraStartCallbackId = "";
 
   // keep track of previously specified orientation to support locking orientation:
-  private int previousOrientationRequest = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+  private int previousOrientationRequest =
+    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
   private CameraActivity fragment;
   private final int containerViewId = 20;
@@ -346,8 +347,9 @@ public class CameraPreview
       "lockAndroidOrientation",
       false
     );
-    previousOrientationRequest =
-      getBridge().getActivity().getRequestedOrientation();
+    previousOrientationRequest = getBridge()
+      .getActivity()
+      .getRequestedOrientation();
 
     fragment = new CameraActivity();
     fragment.setEventListener(this);
@@ -398,23 +400,21 @@ public class CameraPreview
             int computedPaddingBottom;
 
             if (paddingBottom != 0) {
-              computedPaddingBottom =
-                (int) TypedValue.applyDimension(
-                  TypedValue.COMPLEX_UNIT_DIP,
-                  paddingBottom,
-                  metrics
-                );
+              computedPaddingBottom = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                paddingBottom,
+                metrics
+              );
             } else {
               computedPaddingBottom = 0;
             }
 
             if (width != 0) {
-              computedWidth =
-                (int) TypedValue.applyDimension(
-                  TypedValue.COMPLEX_UNIT_DIP,
-                  width,
-                  metrics
-                );
+              computedWidth = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                width,
+                metrics
+              );
             } else {
               Display defaultDisplay = getBridge()
                 .getActivity()
@@ -423,22 +423,20 @@ public class CameraPreview
               final Point size = new Point();
               defaultDisplay.getSize(size);
 
-              computedWidth =
-                (int) TypedValue.applyDimension(
-                  TypedValue.COMPLEX_UNIT_PX,
-                  size.x,
-                  metrics
-                );
+              computedWidth = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_PX,
+                size.x,
+                metrics
+              );
             }
 
             if (height != 0) {
-              computedHeight =
-                (int) TypedValue.applyDimension(
-                  TypedValue.COMPLEX_UNIT_DIP,
-                  height,
-                  metrics
-                ) -
-                computedPaddingBottom;
+              computedHeight = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                height,
+                metrics
+              ) -
+              computedPaddingBottom;
             } else {
               Display defaultDisplay = getBridge()
                 .getActivity()
@@ -447,13 +445,12 @@ public class CameraPreview
               final Point size = new Point();
               defaultDisplay.getSize(size);
 
-              computedHeight =
-                (int) TypedValue.applyDimension(
-                  TypedValue.COMPLEX_UNIT_PX,
-                  size.y,
-                  metrics
-                ) -
-                computedPaddingBottom;
+              computedHeight = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_PX,
+                size.y,
+                metrics
+              ) -
+              computedPaddingBottom;
             }
 
             fragment.setRect(
@@ -467,8 +464,9 @@ public class CameraPreview
               .getActivity()
               .findViewById(containerViewId);
             if (containerView == null) {
-              containerView =
-                new FrameLayout(getActivity().getApplicationContext());
+              containerView = new FrameLayout(
+                getActivity().getApplicationContext()
+              );
               containerView.setId(containerViewId);
 
               getBridge().getWebView().setBackgroundColor(Color.TRANSPARENT);
@@ -619,7 +617,11 @@ public class CameraPreview
         new View.OnTouchListener() {
           @Override
           public boolean onTouch(View v, MotionEvent event) {
-            if ((null != fragment) && (fragment.toBack == true) && null != fragment.frameContainerLayout) {
+            if (
+              (null != fragment) &&
+              (fragment.toBack == true) &&
+              null != fragment.frameContainerLayout
+            ) {
               fragment.frameContainerLayout.dispatchTouchEvent(event);
             }
             return false;

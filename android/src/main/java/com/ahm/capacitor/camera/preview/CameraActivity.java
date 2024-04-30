@@ -120,13 +120,12 @@ public class CameraActivity extends Fragment {
     appResourcesPackage = getActivity().getPackageName();
 
     // Inflate the layout for this fragment
-    view =
-      inflater.inflate(
-        getResources()
-          .getIdentifier("camera_activity", "layout", appResourcesPackage),
-        container,
-        false
-      );
+    view = inflater.inflate(
+      getResources()
+        .getIdentifier("camera_activity", "layout", appResourcesPackage),
+      container,
+      false
+    );
     createCameraPreview();
     return view;
   }
@@ -148,19 +147,17 @@ public class CameraActivity extends Fragment {
         height
       );
       layoutParams.setMargins(x, y, 0, 0);
-      frameContainerLayout =
-        (FrameLayout) view.findViewById(
-          getResources()
-            .getIdentifier("frame_container", "id", appResourcesPackage)
-        );
+      frameContainerLayout = (FrameLayout) view.findViewById(
+        getResources()
+          .getIdentifier("frame_container", "id", appResourcesPackage)
+      );
       frameContainerLayout.setLayoutParams(layoutParams);
 
       //video view
       mPreview = new Preview(getActivity(), enableOpacity);
-      mainLayout =
-        (FrameLayout) view.findViewById(
-          getResources().getIdentifier("video_view", "id", appResourcesPackage)
-        );
+      mainLayout = (FrameLayout) view.findViewById(
+        getResources().getIdentifier("video_view", "id", appResourcesPackage)
+      );
       mainLayout.setLayoutParams(
         new RelativeLayout.LayoutParams(
           RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -279,10 +276,10 @@ public class CameraActivity extends Fragment {
                         switch (event.getAction()) {
                           case MotionEvent.ACTION_DOWN:
                             if (mLastTouchX == 0 || mLastTouchY == 0) {
-                              mLastTouchX =
-                                (int) event.getRawX() - layoutParams.leftMargin;
-                              mLastTouchY =
-                                (int) event.getRawY() - layoutParams.topMargin;
+                              mLastTouchX = (int) event.getRawX() -
+                              layoutParams.leftMargin;
+                              mLastTouchY = (int) event.getRawY() -
+                              layoutParams.topMargin;
                             } else {
                               mLastTouchX = (int) event.getRawX();
                               mLastTouchY = (int) event.getRawY();
@@ -361,7 +358,7 @@ public class CameraActivity extends Fragment {
         }
       );
   }
-  
+
   private int getNumberOfCameras() {
     if (numberOfCameras == 0) {
       numberOfCameras = Camera.getNumberOfCameras();
@@ -371,7 +368,6 @@ public class CameraActivity extends Fragment {
   }
 
   private void setDefaultCameraId() {
-
     int facing = "front".equals(defaultCamera)
       ? Camera.CameraInfo.CAMERA_FACING_FRONT
       : Camera.CameraInfo.CAMERA_FACING_BACK;
@@ -446,8 +442,8 @@ public class CameraActivity extends Fragment {
                   frameContainerLayout.getWidth(),
                   frameContainerLayout.getHeight()
                 );
-              camViewLayout.gravity =
-                Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+              camViewLayout.gravity = Gravity.CENTER_HORIZONTAL |
+              Gravity.CENTER_VERTICAL;
               frameCamContainerLayout.setLayoutParams(camViewLayout);
             }
           }
@@ -533,7 +529,8 @@ public class CameraActivity extends Fragment {
         "cameraCurrentlyLocked := " + Integer.toString(cameraCurrentlyLocked)
       );
       try {
-        cameraCurrentlyLocked = (cameraCurrentlyLocked + 1) % getNumberOfCameras();
+        cameraCurrentlyLocked = (cameraCurrentlyLocked + 1) %
+        getNumberOfCameras();
         Log.d(TAG, "cameraCurrentlyLocked new: " + cameraCurrentlyLocked);
       } catch (Exception exception) {
         Log.d(TAG, exception.getMessage());
@@ -726,8 +723,8 @@ public class CameraActivity extends Fragment {
 
     Camera.Size requestedSize = mCamera.new Size(size.width, size.height);
 
-    double previewAspectRatio = (double) previewSize.width /
-    (double) previewSize.height;
+    double previewAspectRatio =
+      (double) previewSize.width / (double) previewSize.height;
 
     if (previewAspectRatio < 1.0) {
       // reset ratio to landscape
@@ -863,13 +860,12 @@ public class CameraActivity extends Fragment {
               mPreview.getCameraFacing() ==
               Camera.CameraInfo.CAMERA_FACING_FRONT
             ) {
-              bytes =
-                rotateNV21(
-                  bytes,
-                  size.width,
-                  size.height,
-                  (360 - orientation) % 360
-                );
+              bytes = rotateNV21(
+                bytes,
+                size.width,
+                size.height,
+                (360 - orientation) % 360
+              );
             } else {
               bytes = rotateNV21(bytes, size.width, size.height, orientation);
             }
@@ -1053,8 +1049,10 @@ public class CameraActivity extends Fragment {
           CamcorderProfile.QUALITY_HIGH
         )
       ) {
-        profile =
-          CamcorderProfile.get(defaultCameraId, CamcorderProfile.QUALITY_HIGH);
+        profile = CamcorderProfile.get(
+          defaultCameraId,
+          CamcorderProfile.QUALITY_HIGH
+        );
       } else {
         if (
           CamcorderProfile.hasProfile(
@@ -1062,11 +1060,10 @@ public class CameraActivity extends Fragment {
             CamcorderProfile.QUALITY_480P
           )
         ) {
-          profile =
-            CamcorderProfile.get(
-              defaultCameraId,
-              CamcorderProfile.QUALITY_480P
-            );
+          profile = CamcorderProfile.get(
+            defaultCameraId,
+            CamcorderProfile.QUALITY_480P
+          );
         } else {
           if (
             CamcorderProfile.hasProfile(
@@ -1074,11 +1071,10 @@ public class CameraActivity extends Fragment {
               CamcorderProfile.QUALITY_720P
             )
           ) {
-            profile =
-              CamcorderProfile.get(
-                defaultCameraId,
-                CamcorderProfile.QUALITY_720P
-              );
+            profile = CamcorderProfile.get(
+              defaultCameraId,
+              CamcorderProfile.QUALITY_720P
+            );
           } else {
             if (
               CamcorderProfile.hasProfile(
@@ -1086,17 +1082,15 @@ public class CameraActivity extends Fragment {
                 CamcorderProfile.QUALITY_1080P
               )
             ) {
-              profile =
-                CamcorderProfile.get(
-                  defaultCameraId,
-                  CamcorderProfile.QUALITY_1080P
-                );
+              profile = CamcorderProfile.get(
+                defaultCameraId,
+                CamcorderProfile.QUALITY_1080P
+              );
             } else {
-              profile =
-                CamcorderProfile.get(
-                  defaultCameraId,
-                  CamcorderProfile.QUALITY_LOW
-                );
+              profile = CamcorderProfile.get(
+                defaultCameraId,
+                CamcorderProfile.QUALITY_LOW
+              );
             }
           }
         }
@@ -1182,11 +1176,9 @@ public class CameraActivity extends Fragment {
 
   public void muteStream(boolean mute, Activity activity) {
     AudioManager audioManager =
-      (
-        (AudioManager) activity
+      ((AudioManager) activity
           .getApplicationContext()
-          .getSystemService(Context.AUDIO_SERVICE)
-      );
+          .getSystemService(Context.AUDIO_SERVICE));
     int direction = mute
       ? audioManager.ADJUST_MUTE
       : audioManager.ADJUST_UNMUTE;
@@ -1237,10 +1229,10 @@ public class CameraActivity extends Fragment {
       y = height - 100;
     }
     return new Rect(
-      Math.round((x - 100) * 2000 / width - 1000),
-      Math.round((y - 100) * 2000 / height - 1000),
-      Math.round((x + 100) * 2000 / width - 1000),
-      Math.round((y + 100) * 2000 / height - 1000)
+      Math.round(((x - 100) * 2000) / width - 1000),
+      Math.round(((y - 100) * 2000) / height - 1000),
+      Math.round(((x + 100) * 2000) / width - 1000),
+      Math.round(((y + 100) * 2000) / height - 1000)
     );
   }
 

@@ -67,8 +67,9 @@ class Preview
     if (camera != null) {
       mCamera = camera;
       this.cameraId = cameraId;
-      mSupportedPreviewSizes =
-        mCamera.getParameters().getSupportedPreviewSizes();
+      mSupportedPreviewSizes = mCamera
+        .getParameters()
+        .getSupportedPreviewSizes();
       setCameraDisplayOrientation();
 
       List<String> mFocusModes = mCamera
@@ -154,9 +155,9 @@ class Preview
     Log.d(TAG, "screen is rotated " + degrees + "deg from natural");
     Log.d(
       TAG,
-      (
-        info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT ? "front" : "back"
-      ) +
+      (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT
+          ? "front"
+          : "back") +
       " camera is oriented -" +
       info.orientation +
       "deg from natural"
@@ -187,12 +188,11 @@ class Preview
       Log.d("CameraPreview", "before setPreviewSize");
 
       mSupportedPreviewSizes = parameters.getSupportedPreviewSizes();
-      mPreviewSize =
-        getOptimalPreviewSize(
-          mSupportedPreviewSizes,
-          v.getWidth(),
-          v.getHeight()
-        );
+      mPreviewSize = getOptimalPreviewSize(
+        mSupportedPreviewSizes,
+        v.getWidth(),
+        v.getHeight()
+      );
       parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
       Log.d(TAG, mPreviewSize.width + " " + mPreviewSize.height);
 
@@ -215,8 +215,11 @@ class Preview
     setMeasuredDimension(width, height);
 
     if (mSupportedPreviewSizes != null) {
-      mPreviewSize =
-        getOptimalPreviewSize(mSupportedPreviewSizes, width, height);
+      mPreviewSize = getOptimalPreviewSize(
+        mSupportedPreviewSizes,
+        width,
+        height
+      );
     }
   }
 
@@ -252,18 +255,18 @@ class Preview
       // Center the child SurfaceView within the parent.
       if (width * previewHeight < height * previewWidth) {
         Log.d(TAG, "center horizontally");
-        int scaledChildWidth = (int) (
-          (previewWidth * height / previewHeight) * scale
-        );
+        int scaledChildWidth = (int) (((previewWidth * height) /
+            previewHeight) *
+          scale);
         nW = (width + scaledChildWidth) / 2;
         nH = (int) (height * scale);
         top = 0;
         left = (width - scaledChildWidth) / 2;
       } else {
         Log.d(TAG, "center vertically");
-        int scaledChildHeight = (int) (
-          (previewHeight * width / previewWidth) * scale
-        );
+        int scaledChildHeight = (int) (((previewHeight * width) /
+            previewWidth) *
+          scale);
         nW = (int) (width * scale);
         nH = (height + scaledChildHeight) / 2;
         top = (height - scaledChildHeight) / 2;
@@ -359,8 +362,9 @@ class Preview
       try {
         // Now that the size is known, set up the camera parameters and begin
         // the preview.
-        mSupportedPreviewSizes =
-          mCamera.getParameters().getSupportedPreviewSizes();
+        mSupportedPreviewSizes = mCamera
+          .getParameters()
+          .getSupportedPreviewSizes();
         if (mSupportedPreviewSizes != null) {
           mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, w, h);
         }
@@ -392,8 +396,11 @@ class Preview
     try {
       mSurface = surface;
       if (mSupportedPreviewSizes != null) {
-        mPreviewSize =
-          getOptimalPreviewSize(mSupportedPreviewSizes, width, height);
+        mPreviewSize = getOptimalPreviewSize(
+          mSupportedPreviewSizes,
+          width,
+          height
+        );
       }
       if (mCamera != null) {
         mTextureView.setAlpha(opacity);

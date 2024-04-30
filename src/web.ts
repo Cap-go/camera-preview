@@ -49,7 +49,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
       if (options.position !== "rear") {
         videoElement.setAttribute(
           "style",
-          "-webkit-transform: scaleX(-1); transform: scaleX(-1);"
+          "-webkit-transform: scaleX(-1); transform: scaleX(-1);",
         );
       }
 
@@ -99,7 +99,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
           },
           (err) => {
             Promise.reject(err);
-          }
+          },
         );
       }
     } else {
@@ -186,7 +186,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
     result: CameraPreviewFlashMode[];
   }> {
     throw new Error(
-      "getSupportedFlashModes not supported under the web platform"
+      "getSupportedFlashModes not supported under the web platform",
     );
   }
 
@@ -200,7 +200,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
     flashMode: CameraPreviewFlashMode | string;
   }): Promise<void> {
     throw new Error(
-      "setFlashMode not supported under the web platform" + _options
+      "setFlashMode not supported under the web platform" + _options,
     );
   }
 
