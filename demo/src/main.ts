@@ -24,6 +24,20 @@ setTimeout(() => {
       console.error(e);
     }
   });
+  app.querySelector<HTMLButtonElement>("#flipCamera")!.addEventListener("click", async () => {
+    try {
+      await CameraPreview.flip();
+    } catch (e) {
+      console.error(e);
+    }
+  });
+  app.querySelector<HTMLButtonElement>("#stopCamera")!.addEventListener("click", async () => {
+    try {
+      await CameraPreview.stop();
+    } catch (e) {
+      console.error(e);
+    }
+  });
 }, 1000)
 
 app.innerHTML = `
@@ -32,4 +46,6 @@ app.innerHTML = `
   <div id="cameraPreview"></div>
   <button id="cameraCapture">Capture image</button>
   <button id="startCamera">Start Camera</button>
+  <button id="stopCamera">Stop Camera</button>
+  <button id="flipCamera">Flip Camera</button>
 `;
