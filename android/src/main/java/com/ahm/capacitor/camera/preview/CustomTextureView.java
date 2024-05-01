@@ -2,8 +2,8 @@ package com.ahm.capacitor.camera.preview;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.view.SurfaceHolder;
 import android.view.TextureView;
+import androidx.annotation.NonNull;
 
 class CustomTextureView
   extends TextureView
@@ -17,23 +17,23 @@ class CustomTextureView
 
   @Override
   public void onSurfaceTextureAvailable(
-    SurfaceTexture surface,
+    @NonNull SurfaceTexture surface,
     int width,
     int height
   ) {}
 
   @Override
   public void onSurfaceTextureSizeChanged(
-    SurfaceTexture surface,
+    @NonNull SurfaceTexture surface,
     int width,
     int height
   ) {}
 
   @Override
-  public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+  public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
     return true;
   }
 
   @Override
-  public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+  public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {}
 }

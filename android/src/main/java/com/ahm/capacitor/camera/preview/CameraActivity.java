@@ -8,8 +8,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
@@ -28,9 +26,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -43,7 +38,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CameraActivity extends Fragment {
@@ -84,7 +81,7 @@ public class CameraActivity extends Fragment {
     STOPPED,
   }
 
-  private RecordingState mRecordingState = RecordingState.INITIALIZING;
+  private final RecordingState mRecordingState = RecordingState.INITIALIZING;
   private MediaRecorder mRecorder = null;
   private String recordFilePath;
 
@@ -533,7 +530,7 @@ public class CameraActivity extends Fragment {
         getNumberOfCameras();
         Log.d(TAG, "cameraCurrentlyLocked new: " + cameraCurrentlyLocked);
       } catch (Exception exception) {
-        Log.d(TAG, exception.getMessage());
+        Log.d(TAG, Objects.requireNonNull(exception.getMessage()));
       }
 
       // Acquire the next camera and request Preview to reconfigure parameters.
@@ -622,7 +619,7 @@ public class CameraActivity extends Fragment {
     cache = getActivity().getCacheDir();
 
     // Create the cache directory if it doesn't exist
-    cache.mkdirs();
+    final boolean mkdirs = cache.mkdirs();
     return cache.getAbsolutePath();
   }
 
@@ -1027,11 +1024,7 @@ public class CameraActivity extends Fragment {
 
     Camera.Parameters cameraParams = mCamera.getParameters();
     if (withFlash) {
-      cameraParams.setFlashMode(
-        withFlash
-          ? Camera.Parameters.FLASH_MODE_TORCH
-          : Camera.Parameters.FLASH_MODE_OFF
-      );
+      cameraParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
       mCamera.setParameters(cameraParams);
       mCamera.startPreview();
     }
@@ -1127,9 +1120,6 @@ public class CameraActivity extends Fragment {
 
     int degrees = 0;
     switch (currentScreenRotation) {
-      case Surface.ROTATION_0:
-        degrees = 0;
-        break;
       case Surface.ROTATION_90:
         degrees = 90;
         break;
@@ -1138,6 +1128,8 @@ public class CameraActivity extends Fragment {
         break;
       case Surface.ROTATION_270:
         degrees = 270;
+        break;
+      default:
         break;
     }
 
@@ -1179,9 +1171,11 @@ public class CameraActivity extends Fragment {
       ((AudioManager) activity
           .getApplicationContext()
           .getSystemService(Context.AUDIO_SERVICE));
-    int direction = mute
-      ? audioManager.ADJUST_MUTE
-      : audioManager.ADJUST_UNMUTE;
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+      int direction = mute
+        ? AudioManager.ADJUST_MUTE
+        : AudioManager.ADJUST_UNMUTE;
+    }
   }
 
   public void setFocusArea(
@@ -1196,12 +1190,14 @@ public class CameraActivity extends Fragment {
 
       Rect focusRect = calculateTapArea(pointX, pointY, 1f);
       parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-      parameters.setFocusAreas(Arrays.asList(new Camera.Area(focusRect, 1000)));
+      parameters.setFocusAreas(
+        Collections.singletonList(new Camera.Area(focusRect, 1000))
+      );
 
       if (parameters.getMaxNumMeteringAreas() > 0) {
         Rect meteringRect = calculateTapArea(pointX, pointY, 1.5f);
         parameters.setMeteringAreas(
-          Arrays.asList(new Camera.Area(meteringRect, 1000))
+          Collections.singletonList(new Camera.Area(meteringRect, 1000))
         );
       }
 
@@ -1209,7 +1205,7 @@ public class CameraActivity extends Fragment {
         setCameraParameters(parameters);
         mCamera.autoFocus(callback);
       } catch (Exception e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, Objects.requireNonNull(e.getMessage()));
         callback.onAutoFocus(false, this.mCamera);
       }
     }

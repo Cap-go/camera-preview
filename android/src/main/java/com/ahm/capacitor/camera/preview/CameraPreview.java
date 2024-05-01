@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import androidx.annotation.NonNull;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
 import com.getcapacitor.PermissionState;
@@ -27,6 +28,7 @@ import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import org.json.JSONArray;
 
 @CapacitorPlugin(
@@ -95,7 +97,7 @@ public class CameraPreview
     }
 
     bridge.saveCall(call);
-    Float opacity = call.getFloat("opacity", 1F);
+    Float opacity = Objects.requireNonNull(call.getFloat("opacity", 1F));
     fragment.setOpacity(opacity);
   }
 
@@ -108,10 +110,10 @@ public class CameraPreview
     bridge.saveCall(call);
     captureCallbackId = call.getCallbackId();
 
-    Integer quality = call.getInt("quality", 85);
+    Integer quality = Objects.requireNonNull(call.getInt("quality", 85));
     // Image Dimensions - Optional
-    Integer width = call.getInt("width", 0);
-    Integer height = call.getInt("height", 0);
+    Integer width = Objects.requireNonNull(call.getInt("width", 0));
+    Integer height = Objects.requireNonNull(call.getInt("height", 0));
     fragment.takePicture(width, height, quality);
   }
 
@@ -124,7 +126,7 @@ public class CameraPreview
     bridge.saveCall(call);
     snapshotCallbackId = call.getCallbackId();
 
-    Integer quality = call.getInt("quality", 85);
+    Integer quality = Objects.requireNonNull(call.getInt("quality", 85));
     fragment.takeSnapshot(quality);
   }
 
@@ -182,7 +184,7 @@ public class CameraPreview
 
     if (supportedFlashModes != null) {
       for (int i = 0; i < supportedFlashModes.size(); i++) {
-        jsonFlashModes.put(new String(supportedFlashModes.get(i)));
+        jsonFlashModes.put(supportedFlashModes.get(i));
       }
     }
 
@@ -216,7 +218,7 @@ public class CameraPreview
     }
 
     String flashMode = call.getString("flashMode");
-    if (flashMode == null || flashMode.isEmpty() == true) {
+    if (flashMode == null || flashMode.isEmpty()) {
       call.reject("flashMode required parameter is missing");
       return;
     }
@@ -227,7 +229,7 @@ public class CameraPreview
     List<String> supportedFlashModes;
     supportedFlashModes = camera.getParameters().getSupportedFlashModes();
     if (
-      supportedFlashModes != null && supportedFlashModes.indexOf(flashMode) > -1
+      supportedFlashModes != null && supportedFlashModes.contains(flashMode)
     ) {
       params.setFlashMode(flashMode);
     } else {
@@ -249,12 +251,18 @@ public class CameraPreview
     final String filename = "videoTmp";
     VIDEO_FILE_PATH = getActivity().getCacheDir().toString() + "/";
 
-    final String position = call.getString("position", "front");
-    final Integer width = call.getInt("width", 0);
-    final Integer height = call.getInt("height", 0);
-    final Boolean withFlash = call.getBoolean("withFlash", false);
-    final Integer maxDuration = call.getInt("maxDuration", 0);
-    // final Integer quality = call.getInt("quality", 0);
+    final String position = Objects.requireNonNull(
+      call.getString("position", "front")
+    );
+    final Integer width = Objects.requireNonNull(call.getInt("width", 0));
+    final Integer height = Objects.requireNonNull(call.getInt("height", 0));
+    final Boolean withFlash = Objects.requireNonNull(
+      call.getBoolean("withFlash", false)
+    );
+    final Integer maxDuration = Objects.requireNonNull(
+      call.getInt("maxDuration", 0)
+    );
+    // final Integer quality = Objects.requireNonNull(call.getInt("quality", 0));
     bridge.saveCall(call);
     recordCallbackId = call.getCallbackId();
 
@@ -264,9 +272,8 @@ public class CameraPreview
         new Runnable() {
           @Override
           public void run() {
-            // fragment.startRecord(getFilePath(filename), position, width, height, quality, withFlash);
             fragment.startRecord(
-              getFilePath(filename),
+              getFilePath(),
               position,
               width,
               height,
@@ -331,22 +338,35 @@ public class CameraPreview
       position = "front";
     }
 
-    final Integer x = call.getInt("x", 0);
-    final Integer y = call.getInt("y", 0);
-    final Integer width = call.getInt("width", 0);
-    final Integer height = call.getInt("height", 0);
-    final Integer paddingBottom = call.getInt("paddingBottom", 0);
-    final Boolean toBack = call.getBoolean("toBack", false);
-    final Boolean storeToFile = call.getBoolean("storeToFile", false);
-    final Boolean enableOpacity = call.getBoolean("enableOpacity", false);
-    final Boolean enableZoom = call.getBoolean("enableZoom", false);
-    final Boolean disableExifHeaderStripping = call.getBoolean(
-      "disableExifHeaderStripping",
-      true
+    @NonNull
+    final Integer x = Objects.requireNonNull(call.getInt("x", 0));
+    @NonNull
+    final Integer y = Objects.requireNonNull(call.getInt("y", 0));
+    @NonNull
+    final Integer width = Objects.requireNonNull(call.getInt("width", 0));
+    @NonNull
+    final Integer height = Objects.requireNonNull(call.getInt("height", 0));
+    @NonNull
+    final Integer paddingBottom = Objects.requireNonNull(
+      call.getInt("paddingBottom", 0)
     );
-    final Boolean lockOrientation = call.getBoolean(
-      "lockAndroidOrientation",
-      false
+    final Boolean toBack = Objects.requireNonNull(
+      call.getBoolean("toBack", false)
+    );
+    final Boolean storeToFile = Objects.requireNonNull(
+      call.getBoolean("storeToFile", false)
+    );
+    final Boolean enableOpacity = Objects.requireNonNull(
+      call.getBoolean("enableOpacity", false)
+    );
+    final Boolean enableZoom = Objects.requireNonNull(
+      call.getBoolean("enableZoom", false)
+    );
+    final Boolean disableExifHeaderStripping = Objects.requireNonNull(
+      call.getBoolean("disableExifHeaderStripping", true)
+    );
+    final Boolean lockOrientation = Objects.requireNonNull(
+      call.getBoolean("lockAndroidOrientation", false)
     );
     previousOrientationRequest = getBridge()
       .getActivity()
@@ -474,7 +494,7 @@ public class CameraPreview
               ((ViewGroup) getBridge().getWebView().getParent()).addView(
                   containerView
                 );
-              if (toBack == true) {
+              if (toBack) {
                 getBridge()
                   .getWebView()
                   .getParent()
@@ -581,7 +601,7 @@ public class CameraPreview
   }
 
   private boolean hasCamera(PluginCall call) {
-    if (this.hasView(call) == false) {
+    if (!this.hasView(call)) {
       return false;
     }
 
@@ -592,8 +612,8 @@ public class CameraPreview
     return true;
   }
 
-  private String getFilePath(String filename) {
-    String fileName = filename;
+  private String getFilePath() {
+    String fileName = "videoTmp";
 
     int i = 1;
 
@@ -601,7 +621,7 @@ public class CameraPreview
       new File(VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION).exists()
     ) {
       // Add number suffix if file exists
-      fileName = filename + '_' + i;
+      fileName = "videoTmp" + '_' + i;
       i++;
     }
 

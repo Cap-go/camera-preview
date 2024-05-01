@@ -3,6 +3,7 @@ package com.ahm.capacitor.camera.preview;
 import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import androidx.annotation.NonNull;
 
 class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -13,16 +14,16 @@ class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
   }
 
   @Override
-  public void surfaceCreated(SurfaceHolder holder) {}
+  public void surfaceCreated(@NonNull SurfaceHolder holder) {}
 
   @Override
   public void surfaceChanged(
-    SurfaceHolder holder,
+    @NonNull SurfaceHolder holder,
     int format,
     int width,
     int height
   ) {}
 
   @Override
-  public void surfaceDestroyed(SurfaceHolder holder) {}
+  public void surfaceDestroyed(@NonNull SurfaceHolder holder) {}
 }
