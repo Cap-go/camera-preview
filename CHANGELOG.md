@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.5](https://github.com/Cap-go/camera-preview/compare/6.1.4...6.1.5) (2024-05-01)
+
+### [6.1.4](https://github.com/Cap-go/camera-preview/compare/6.1.3...6.1.4) (2024-04-30)
+
+### [6.1.3](https://github.com/Cap-go/camera-preview/compare/6.1.2...6.1.3) (2024-04-30)
+
+
+### Bug Fixes
+
+* start record issue android https://github.com/capacitor-community/camera-preview/pull/329 ([0349597](https://github.com/Cap-go/camera-preview/commit/03495974c133984673a4b27e07896f67ebbe2124))
+
 ### [6.1.2](https://github.com/Cap-go/camera-preview/compare/6.1.1...6.1.2) (2024-04-30)
 
 
