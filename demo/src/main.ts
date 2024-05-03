@@ -1,19 +1,25 @@
 import './style.css'
 import { Directory, Filesystem } from '@capacitor/filesystem'
 import { Toast } from '@capacitor/toast'
-import { CameraPreview } from '../../dist/esm/index.js'
+import { CameraPreview, CameraPreviewOptions } from '../../dist/esm/index.js'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
+
+const cameraPreviewOpts: CameraPreviewOptions = {
+  parent: 'cameraPreview',
+  position: 'rear',
+  className: 'camera-preview',
+  storeToFile: false,
+  disableAudio: true,
+  enableHighResolution: true,
+  enableZoom: true,
+  toBack: true,
+};
 
 setTimeout(() => {
   app.querySelector<HTMLButtonElement>('#startCamera')!.addEventListener('click', async () => {
     try {
-      await CameraPreview.start({
-        parent: 'cameraPreview',
-        position: 'rear',
-        toBack: true,
-        className: 'camera-preview',
-      })
+      await CameraPreview.start(cameraPreviewOpts)
     }
     catch (e) {
       console.error(e)

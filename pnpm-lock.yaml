@@ -7,11 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.16.1
         version: 2.16.1(@vue/compiler-sfc@3.4.26)(eslint@9.1.1)(typescript@5.4.5)
-    devDependencies:
       '@capacitor/android':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
