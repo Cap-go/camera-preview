@@ -241,10 +241,12 @@ Set opacity.
 ### stopRecordVideo()
 
 ```typescript
-stopRecordVideo() => Promise<void>
+stopRecordVideo() => Promise<{ videoFilePath: string; }>
 ```
 
 Stop recording video.
+
+**Returns:** <code>Promise&lt;{ videoFilePath: string; }&gt;</code>
 
 **Since:** 0.0.1
 

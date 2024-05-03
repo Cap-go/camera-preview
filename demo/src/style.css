@@ -8,14 +8,14 @@
 }
 
 .button-container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
   margin-top: 20px;
 }
 
 .camera-button {
-  margin: 0 10px;
-  padding: 10px 20px;
+  padding: 10px;
   font-size: 16px;
   background-color: #4CAF50;
   color: white;
