@@ -513,8 +513,10 @@ extension CameraController: UIGestureRecognizerDelegate {
 extension CameraController: AVCapturePhotoCaptureDelegate {
     public func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
                             resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Swift.Error?) {
-        if let error = error { self.photoCaptureCompletionBlock?(nil, error) } else if let buffer = photoSampleBuffer, let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: nil),
-                                                                                       let image = UIImage(data: data) {
+        if let error = error {
+            self.photoCaptureCompletionBlock?(nil, error)
+        } else if let buffer = photoSampleBuffer, let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: nil),
+                  let image = UIImage(data: data) {
             self.photoCaptureCompletionBlock?(image.fixedOrientation(), nil)
         } else {
             self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown)
@@ -612,7 +614,10 @@ extension UIImage {
             return nil
         }
 
-        guard let colorSpace = cgImage.colorSpace, let ctx = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+        guard let colorSpace = cgImage.colorSpace, let ctx = CGContext(data: nil,
+                                                                       width: Int(size.width), height: Int(size.height),
+                                                                       bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0,
+                                                                       space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
             return nil // Not able to create CGContext
         }
 

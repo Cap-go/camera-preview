@@ -71,6 +71,5 @@
       "src": "android"
     }
   },
-  "prettier": "@ionic/prettier-config",
-  "swiftlint": "@ionic/swiftlint-config"
+  "prettier": "@ionic/prettier-config"
 }

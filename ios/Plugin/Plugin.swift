@@ -37,8 +37,8 @@ public class CameraPreview: CAPPlugin {
     var previewView: UIView!
     var cameraPosition = String()
     let cameraController = CameraController()
-    var x: CGFloat?
-    var y: CGFloat?
+    var posX: CGFloat?
+    var posY: CGFloat?
     var width: CGFloat?
     var height: CGFloat?
     var paddingBottom: CGFloat?
@@ -53,13 +53,13 @@ public class CameraPreview: CAPPlugin {
         let height = self.paddingBottom != nil ? self.height! - self.paddingBottom!: self.height!
 
         if UIWindow.isLandscape {
-            self.previewView.frame = CGRect(x: self.y!, y: self.x!, width: max(height, self.width!), height: min(height, self.width!))
+            self.previewView.frame = CGRect(x: self.posY!, y: self.posX!, width: max(height, self.width!), height: min(height, self.width!))
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
 
         if UIWindow.isPortrait {
-            if self.previewView != nil && self.x != nil && self.y != nil && self.width != nil && self.height != nil {
-                self.previewView.frame = CGRect(x: self.x!, y: self.y!, width: min(height, self.width!), height: max(height, self.width!))
+            if self.previewView != nil && self.posX != nil && self.posY != nil && self.width != nil && self.height != nil {
+                self.previewView.frame = CGRect(x: self.posX!, y: self.posY!, width: min(height, self.width!), height: max(height, self.width!))
             }
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
@@ -82,8 +82,8 @@ public class CameraPreview: CAPPlugin {
         } else {
             self.height = UIScreen.main.bounds.size.height
         }
-        self.x = call.getInt("x") != nil ? CGFloat(call.getInt("x")!)/UIScreen.main.scale: 0
-        self.y = call.getInt("y") != nil ? CGFloat(call.getInt("y")!)/UIScreen.main.scale: 0
+        self.posX = call.getInt("x") != nil ? CGFloat(call.getInt("x")!)/UIScreen.main.scale: 0
+        self.posY = call.getInt("y") != nil ? CGFloat(call.getInt("y")!)/UIScreen.main.scale: 0
         if call.getInt("paddingBottom") != nil {
             self.paddingBottom = CGFloat(call.getInt("paddingBottom")!)
         }
@@ -111,7 +111,7 @@ public class CameraPreview: CAPPlugin {
                             return
                         }
                         let height = self.paddingBottom != nil ? self.height! - self.paddingBottom!: self.height!
-                        self.previewView = UIView(frame: CGRect(x: self.x ?? 0, y: self.y ?? 0, width: self.width!, height: height))
+                        self.previewView = UIView(frame: CGRect(x: self.posX ?? 0, y: self.posY ?? 0, width: self.width!, height: height))
                         self.webView?.isOpaque = false
                         self.webView?.backgroundColor = UIColor.clear
                         self.webView?.scrollView.backgroundColor = UIColor.clear

@@ -7,7 +7,7 @@ export default antfu(
       'dist',
       'demo',
       'README.md', // ignore README.md until ionic config work on eslint 9
-      'definitions.ts', // ignore README.md until ionic config work on eslint 9
+      'src/definitions.ts', // ignore README.md until ionic config work on eslint 9
     ],
   },
 )
