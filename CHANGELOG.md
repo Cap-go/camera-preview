@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.9](https://github.com/Cap-go/camera-preview/compare/6.1.8...6.1.9) (2024-05-03)
+
+
+### Bug Fixes
+
+* ios return video path ([8fc370b](https://github.com/Cap-go/camera-preview/commit/8fc370b4cd6346e1e8cbec1f966da817cbd79347))
+
 ### [6.1.8](https://github.com/Cap-go/camera-preview/compare/6.1.7...6.1.8) (2024-05-03)
 
 
