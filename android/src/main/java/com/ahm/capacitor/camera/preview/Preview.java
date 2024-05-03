@@ -85,6 +85,12 @@ class Preview
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
       }
       mCamera.setParameters(params);
+    } else {
+      // Release the camera and set it to null when the camera parameter is null
+      if (mCamera != null) {
+        mCamera.release();
+        mCamera = null;
+      }
     }
   }
 
@@ -358,6 +364,14 @@ class Preview
   }
 
   public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
+    Log.d(
+      TAG,
+      "Preview size in surfaceChanged: " +
+      mPreviewSize.width +
+      "x" +
+      mPreviewSize.height
+    );
+
     if (mCamera != null) {
       try {
         // Now that the size is known, set up the camera parameters and begin

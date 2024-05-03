@@ -457,7 +457,6 @@ public class CameraActivity extends Fragment {
     if (mCamera != null) {
       setDefaultCameraId();
       mPreview.setCamera(null, -1);
-      mCamera.setPreviewCallback(null);
       mCamera.release();
       mCamera = null;
     }
@@ -637,39 +636,109 @@ public class CameraActivity extends Fragment {
       Log.d(TAG, "CameraPreview jpegPictureCallback");
 
       try {
+        Log.d(TAG, "Inside jpegPictureCallback");
+
         if (!disableExifHeaderStripping) {
-          Matrix matrix = new Matrix();
-          if (cameraCurrentlyLocked == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            matrix.preScale(1.0f, -1.0f);
-          }
+          try {
+            ExifInterface exifInterface = new ExifInterface(
+              new ByteArrayInputStream(data)
+            );
+            int orientation = exifInterface.getAttributeInt(
+              ExifInterface.TAG_ORIENTATION,
+              ExifInterface.ORIENTATION_NORMAL
+            );
+            Log.d(TAG, "EXIF Orientation: " + orientation);
 
-          ExifInterface exifInterface = new ExifInterface(
-            new ByteArrayInputStream(data)
-          );
-          int rotation = exifInterface.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-          );
-          int rotationInDegrees = exifToDegrees(rotation);
+            int rotation = 0;
+            switch (orientation) {
+              case ExifInterface.ORIENTATION_ROTATE_90:
+                rotation = 90;
+                break;
+              case ExifInterface.ORIENTATION_ROTATE_180:
+                rotation = 180;
+                break;
+              case ExifInterface.ORIENTATION_ROTATE_270:
+                rotation = 270;
+                break;
+            }
+            Log.d(
+              TAG,
+              "Camera facing: " +
+              (cameraCurrentlyLocked == Camera.CameraInfo.CAMERA_FACING_FRONT
+                  ? "front"
+                  : "rear")
+            );
+            Log.d(TAG, "Image rotation: " + rotation);
+            Log.d(
+              TAG,
+              "Image flipped: " +
+              (cameraCurrentlyLocked == Camera.CameraInfo.CAMERA_FACING_FRONT)
+            );
 
-          if (rotation != 0f) {
-            matrix.preRotate(rotationInDegrees);
-          }
-
-          // Check if matrix has changed. In that case, apply matrix and override data
-          if (!matrix.isIdentity()) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-            bitmap = applyMatrix(bitmap, matrix);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(CompressFormat.JPEG, currentQuality, outputStream);
-            data = outputStream.toByteArray();
+            if (
+              cameraCurrentlyLocked == Camera.CameraInfo.CAMERA_FACING_FRONT
+            ) {
+              Log.d(TAG, "Front camera EXIF Orientation: " + orientation);
+              // Rotate the bitmap based on the orientation value
+              Matrix matrix = new Matrix();
+              switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                  matrix.postRotate(270);
+                  break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                  matrix.postRotate(180);
+                  break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                  matrix.postRotate(90);
+                  break;
+              }
+              // Flip the bitmap horizontally for the front camera
+              matrix.postScale(-1, 1);
+              Bitmap bitmap = BitmapFactory.decodeByteArray(
+                data,
+                0,
+                data.length
+              );
+              bitmap = Bitmap.createBitmap(
+                bitmap,
+                0,
+                0,
+                bitmap.getWidth(),
+                bitmap.getHeight(),
+                matrix,
+                true
+              );
+              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+              bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+              data = outputStream.toByteArray();
+            } else if (rotation != 0) {
+              Matrix matrix = new Matrix();
+              matrix.postRotate(rotation);
+              Bitmap bitmap = BitmapFactory.decodeByteArray(
+                data,
+                0,
+                data.length
+              );
+              bitmap = Bitmap.createBitmap(
+                bitmap,
+                0,
+                0,
+                bitmap.getWidth(),
+                bitmap.getHeight(),
+                matrix,
+                true
+              );
+              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+              bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+              data = outputStream.toByteArray();
+            }
+          } catch (IOException e) {
+            Log.e(TAG, "Failed to read EXIF data", e);
           }
         }
 
         if (!storeToFile) {
           String encodedImage = Base64.encodeToString(data, Base64.NO_WRAP);
-
           eventListener.onPictureTaken(encodedImage);
         } else {
           String path = getTempFilePath();
@@ -695,105 +764,6 @@ public class CameraActivity extends Fragment {
       }
     }
   };
-
-  private Camera.Size getOptimalPictureSize(
-    final int width,
-    final int height,
-    final Camera.Size previewSize,
-    final List<Camera.Size> supportedSizes
-  ) {
-    /*
-      get the supportedPictureSize that:
-      - matches exactly width and height
-      - has the closest aspect ratio to the preview aspect ratio
-      - has picture.width and picture.height closest to width and height
-      - has the highest supported picture width and height up to 2 Megapixel if width == 0 || height == 0
-    */
-    Camera.Size size = mCamera.new Size(width, height);
-
-    // convert to landscape if necessary
-    if (size.width < size.height) {
-      int temp = size.width;
-      size.width = size.height;
-      size.height = temp;
-    }
-
-    Camera.Size requestedSize = mCamera.new Size(size.width, size.height);
-
-    double previewAspectRatio =
-      (double) previewSize.width / (double) previewSize.height;
-
-    if (previewAspectRatio < 1.0) {
-      // reset ratio to landscape
-      previewAspectRatio = 1.0 / previewAspectRatio;
-    }
-
-    Log.d(TAG, "CameraPreview previewAspectRatio " + previewAspectRatio);
-
-    double aspectTolerance = 0.1;
-    double bestDifference = Double.MAX_VALUE;
-
-    for (int i = 0; i < supportedSizes.size(); i++) {
-      Camera.Size supportedSize = supportedSizes.get(i);
-
-      // Perfect match
-      if (supportedSize.equals(requestedSize)) {
-        Log.d(
-          TAG,
-          "CameraPreview optimalPictureSize " +
-          supportedSize.width +
-          'x' +
-          supportedSize.height
-        );
-        return supportedSize;
-      }
-
-      double difference = Math.abs(
-        previewAspectRatio -
-        ((double) supportedSize.width / (double) supportedSize.height)
-      );
-
-      if (difference < bestDifference - aspectTolerance) {
-        // better aspectRatio found
-        if (
-          (width != 0 && height != 0) ||
-          (supportedSize.width * supportedSize.height < 2048 * 1024)
-        ) {
-          size.width = supportedSize.width;
-          size.height = supportedSize.height;
-          bestDifference = difference;
-        }
-      } else if (difference < bestDifference + aspectTolerance) {
-        // same aspectRatio found (within tolerance)
-        if (width == 0 || height == 0) {
-          // set highest supported resolution below 2 Megapixel
-          if (
-            (size.width < supportedSize.width) &&
-            (supportedSize.width * supportedSize.height < 2048 * 1024)
-          ) {
-            size.width = supportedSize.width;
-            size.height = supportedSize.height;
-          }
-        } else {
-          // check if this pictureSize closer to requested width and height
-          if (
-            Math.abs(
-              width * height - supportedSize.width * supportedSize.height
-            ) <
-            Math.abs(width * height - size.width * size.height)
-          ) {
-            size.width = supportedSize.width;
-            size.height = supportedSize.height;
-          }
-        }
-      }
-    }
-    Log.d(
-      TAG,
-      "CameraPreview optimalPictureSize " + size.width + 'x' + size.height
-    );
-    return size;
-  }
 
   static byte[] rotateNV21(
     final byte[] yuv,
@@ -896,6 +866,43 @@ public class CameraActivity extends Fragment {
     );
   }
 
+  private Camera.Size getOptimalPictureSizeForPreview(
+    int width,
+    int height,
+    Camera.Size previewSize,
+    List<Camera.Size> supportedSizes
+  ) {
+    Log.d(TAG, "Requested picture size: " + width + "x" + height);
+    Log.d(TAG, "Preview size: " + previewSize.width + "x" + previewSize.height);
+    double targetRatio = (double) previewSize.width / previewSize.height;
+    Camera.Size optimalSize = null;
+    double minDiff = Double.MAX_VALUE;
+
+    for (Camera.Size size : supportedSizes) {
+      double ratio = (double) size.width / size.height;
+      if (Math.abs(ratio - targetRatio) > 0.1) continue;
+      if (Math.abs(size.height - height) < minDiff) {
+        optimalSize = size;
+        minDiff = Math.abs(size.height - height);
+      }
+    }
+
+    if (optimalSize == null) {
+      minDiff = Double.MAX_VALUE;
+      for (Camera.Size size : supportedSizes) {
+        if (Math.abs(size.height - height) < minDiff) {
+          optimalSize = size;
+          minDiff = Math.abs(size.height - height);
+        }
+      }
+    }
+    Log.d(
+      TAG,
+      "Optimal picture size: " + optimalSize.width + "x" + optimalSize.height
+    );
+    return optimalSize;
+  }
+
   public void takePicture(
     final int width,
     final int height,
@@ -922,7 +929,7 @@ public class CameraActivity extends Fragment {
         public void run() {
           Camera.Parameters params = mCamera.getParameters();
 
-          Camera.Size size = getOptimalPictureSize(
+          Camera.Size size = getOptimalPictureSizeForPreview(
             width,
             height,
             params.getPreviewSize(),

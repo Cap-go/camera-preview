@@ -363,7 +363,7 @@ public class CameraPreview
       call.getBoolean("enableZoom", false)
     );
     final Boolean disableExifHeaderStripping = Objects.requireNonNull(
-      call.getBoolean("disableExifHeaderStripping", true)
+      call.getBoolean("disableExifHeaderStripping", false)
     );
     final Boolean lockOrientation = Objects.requireNonNull(
       call.getBoolean("lockAndroidOrientation", false)

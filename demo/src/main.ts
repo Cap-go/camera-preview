@@ -1,51 +1,72 @@
-import "./style.css";
+import './style.css'
+import { Directory, Filesystem } from '@capacitor/filesystem'
+import { Toast } from '@capacitor/toast'
 import { CameraPreview } from '../../dist/esm/index.js'
 
-const app = document.querySelector<HTMLDivElement>("#app")!;
+const app = document.querySelector<HTMLDivElement>('#app')!
 
 setTimeout(() => {
-  app.querySelector<HTMLButtonElement>("#startCamera")!.addEventListener("click", async () => {
+  app.querySelector<HTMLButtonElement>('#startCamera')!.addEventListener('click', async () => {
     try {
       await CameraPreview.start({
         parent: 'cameraPreview',
         position: 'rear',
         toBack: true,
-        className: 'camera-preview'
-      });
-    } catch (e) {
-      console.error(e);
+        className: 'camera-preview',
+      })
     }
-  });
-  app.querySelector<HTMLButtonElement>("#cameraCapture")!.addEventListener("click", async () => { 
+    catch (e) {
+      console.error(e)
+    }
+  })
+  app.querySelector<HTMLButtonElement>('#cameraCapture')!.addEventListener('click', async () => {
     try {
-      const result = await CameraPreview.capture({});
-      console.log(result);
-    } catch (e) {
-      console.error(e);
+      const result = await CameraPreview.capture({})
+      console.log(result)
+
+      // Save the captured image to the default Android images folder
+      const fileName = `image_${new Date().getTime()}.jpg`
+      const savedFile = await Filesystem.writeFile({
+        path: fileName,
+        data: result.value,
+        directory: Directory.Documents,
+      })
+      await Toast.show({
+        text: 'File saved',
+      })
+
+      console.log('Saved image:', savedFile)
     }
-  });
-  app.querySelector<HTMLButtonElement>("#flipCamera")!.addEventListener("click", async () => {
+    catch (e) {
+      console.error(e)
+    }
+  })
+  app.querySelector<HTMLButtonElement>('#flipCamera')!.addEventListener('click', async () => {
     try {
-      await CameraPreview.flip();
-    } catch (e) {
-      console.error(e);
+      await CameraPreview.flip()
     }
-  });
-  app.querySelector<HTMLButtonElement>("#stopCamera")!.addEventListener("click", async () => {
+    catch (e) {
+      console.error(e)
+    }
+  })
+  app.querySelector<HTMLButtonElement>('#stopCamera')!.addEventListener('click', async () => {
     try {
-      await CameraPreview.stop();
-    } catch (e) {
-      console.error(e);
+      await CameraPreview.stop()
     }
-  });
+    catch (e) {
+      console.error(e)
+    }
+  })
 }, 1000)
 
 app.innerHTML = `
   <h1>Hello Vite!</h1>
   <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
   <div id="cameraPreview"></div>
-  <button id="cameraCapture">Capture image</button>
-  <button id="startCamera">Start Camera</button>
-  <button id="stopCamera">Stop Camera</button>
-  <button id="flipCamera">Flip Camera</button>
-`;
+  <div class="button-container">
+    <button id="cameraCapture" class="camera-button">Capture image</button>
+    <button id="startCamera" class="camera-button">Start Camera</button>
+    <button id="stopCamera" class="camera-button">Stop Camera</button>
+    <button id="flipCamera" class="camera-button">Flip Camera</button>
+  </div>
+`

@@ -96,7 +96,7 @@ Add `import '@capgo/camera-preview'` to you entry script in ionic on `app.module
 ### start(...)
 
 ```typescript
-start(options: CameraPreviewOptions) => any
+start(options: CameraPreviewOptions) => Promise<void>
 ```
 
 Start the camera preview instance.
@@ -104,8 +104,6 @@ Start the camera preview instance.
 | Param         | Type                                                                  | Description                                  |
 | ------------- | --------------------------------------------------------------------- | -------------------------------------------- |
 | **`options`** | <code><a href="#camerapreviewoptions">CameraPreviewOptions</a></code> | the options to start the camera preview with |
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -115,12 +113,10 @@ Start the camera preview instance.
 ### stop()
 
 ```typescript
-stop() => any
+stop() => Promise<void>
 ```
 
 Stop the camera preview instance.
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -130,7 +126,7 @@ Stop the camera preview instance.
 ### capture(...)
 
 ```typescript
-capture(options: CameraPreviewPictureOptions) => any
+capture(options: CameraPreviewPictureOptions) => Promise<{ value: string; }>
 ```
 
 Switch camera.
@@ -139,7 +135,7 @@ Switch camera.
 | ------------- | ----------------------------------------------------------------------------------- | ------------------------------------- |
 | **`options`** | <code><a href="#camerapreviewpictureoptions">CameraPreviewPictureOptions</a></code> | the options to switch the camera with |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
 **Since:** 0.0.1
 
@@ -149,7 +145,7 @@ Switch camera.
 ### captureSample(...)
 
 ```typescript
-captureSample(options: CameraSampleOptions) => any
+captureSample(options: CameraSampleOptions) => Promise<{ value: string; }>
 ```
 
 Capture a sample image.
@@ -158,7 +154,7 @@ Capture a sample image.
 | ------------- | ------------------------------------------------------------------- | -------------------------------------------- |
 | **`options`** | <code><a href="#camerasampleoptions">CameraSampleOptions</a></code> | the options to capture the sample image with |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
 **Since:** 0.0.1
 
@@ -168,12 +164,12 @@ Capture a sample image.
 ### getSupportedFlashModes()
 
 ```typescript
-getSupportedFlashModes() => any
+getSupportedFlashModes() => Promise<{ result: CameraPreviewFlashMode[]; }>
 ```
 
 Get supported flash modes.
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ result: CameraPreviewFlashMode[]; }&gt;</code>
 
 **Since:** 0.0.1
 
@@ -183,12 +179,12 @@ Get supported flash modes.
 ### getHorizontalFov()
 
 ```typescript
-getHorizontalFov() => any
+getHorizontalFov() => Promise<{ result: any; }>
 ```
 
 Get horizontal field of view.
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ result: any; }&gt;</code>
 
 **Since:** 0.0.1
 
@@ -198,7 +194,7 @@ Get horizontal field of view.
 ### setFlashMode(...)
 
 ```typescript
-setFlashMode(options: { flashMode: CameraPreviewFlashMode | string; }) => any
+setFlashMode(options: { flashMode: CameraPreviewFlashMode | string; }) => Promise<void>
 ```
 
 Set flash mode.
@@ -206,8 +202,6 @@ Set flash mode.
 | Param         | Type                                | Description                            |
 | ------------- | ----------------------------------- | -------------------------------------- |
 | **`options`** | <code>{ flashMode: string; }</code> | the options to set the flash mode with |
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -217,12 +211,10 @@ Set flash mode.
 ### flip()
 
 ```typescript
-flip() => any
+flip() => Promise<void>
 ```
 
 Flip camera.
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -232,7 +224,7 @@ Flip camera.
 ### setOpacity(...)
 
 ```typescript
-setOpacity(options: CameraOpacityOptions) => any
+setOpacity(options: CameraOpacityOptions) => Promise<void>
 ```
 
 Set opacity.
@@ -240,8 +232,6 @@ Set opacity.
 | Param         | Type                                                                  | Description                                |
 | ------------- | --------------------------------------------------------------------- | ------------------------------------------ |
 | **`options`** | <code><a href="#cameraopacityoptions">CameraOpacityOptions</a></code> | the options to set the camera opacity with |
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -251,12 +241,10 @@ Set opacity.
 ### stopRecordVideo()
 
 ```typescript
-stopRecordVideo() => any
+stopRecordVideo() => Promise<void>
 ```
 
 Stop recording video.
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 
@@ -266,7 +254,7 @@ Stop recording video.
 ### startRecordVideo(...)
 
 ```typescript
-startRecordVideo(options: CameraPreviewOptions) => any
+startRecordVideo(options: CameraPreviewOptions) => Promise<void>
 ```
 
 Start recording video.
@@ -274,8 +262,6 @@ Start recording video.
 | Param         | Type                                                                  | Description                               |
 | ------------- | --------------------------------------------------------------------- | ----------------------------------------- |
 | **`options`** | <code><a href="#camerapreviewoptions">CameraPreviewOptions</a></code> | the options to start recording video with |
-
-**Returns:** <code>any</code>
 
 **Since:** 0.0.1
 

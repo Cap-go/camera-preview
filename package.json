@@ -2,8 +2,28 @@
   "name": "@capgo/camera-preview",
   "version": "6.1.5",
   "description": "Camera preview",
+  "author": "Martin Donadieu <martindonadieu@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cap-go/camera-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cap-go/camera-preview/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
+  "files": [
+    "CapgoCameraPreview.podspec",
+    "android/",
+    "dist/",
+    "ios/"
+  ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
     "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
@@ -12,7 +32,7 @@
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --autocorrect --format",
     "eslint": "eslint .",
-    "prettier": "prettier --config .prettierrc.js \"**/*.{css,html,ts,js,java}\"",
+    "prettier": "prettier --config .prettierrc.js \"**/*.java\"",
     "swiftlint": "node-swiftlint",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
@@ -21,21 +41,21 @@
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
-  "author": "Martin Donadieu <martindonadieu@gmail.com>",
-  "license": "MIT",
+  "peerDependencies": {
+    "@capacitor/core": "^6.0.0"
+  },
+  "dependencies": {
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.16.1",
     "@capacitor/android": "^6.0.0",
     "@capacitor/cli": "^6.0.0",
     "@capacitor/core": "^6.0.0",
     "@capacitor/docgen": "^0.2.2",
     "@capacitor/ios": "^6.0.0",
-    "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^4.0.0",
     "@ionic/swiftlint-config": "^1.1.2",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^9.1.1",
-    "eslint-plugin-import": "^2.29.1",
     "husky": "^9.0.11",
     "prettier": "^3.2.5",
     "prettier-plugin-java": "^2.6.0",
@@ -43,9 +63,6 @@
     "rollup": "^4.17.1",
     "swiftlint": "^1.0.2",
     "typescript": "^5.4.5"
-  },
-  "peerDependencies": {
-    "@capacitor/core": "^6.0.0"
   },
   "capacitor": {
     "ios": {
@@ -56,26 +73,5 @@
     }
   },
   "prettier": "@ionic/prettier-config",
-  "swiftlint": "@ionic/swiftlint-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
-  },
-  "files": [
-    "dist/",
-    "ios/",
-    "android/",
-    "CapgoCameraPreview.podspec"
-  ],
-  "keywords": [
-    "capacitor",
-    "plugin",
-    "native"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Cap-go/camera-preview.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Cap-go/camera-preview/issues"
-  }
+  "swiftlint": "@ionic/swiftlint-config"
 }

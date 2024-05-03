@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "inlineSources": true,
-    "experimentalDecorators": true,
+    "target": "es2017",
     "lib": [
       "dom",
       "es2017"
     ],
+    "experimentalDecorators": true,
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "declaration": true,
+    "inlineSources": true,
     "outDir": "dist/esm",
     "sourceMap": true,
-    "target": "es2017"
+    "allowSyntheticDefaultImports": true
   },
   "files": [
     "src/index.ts"
