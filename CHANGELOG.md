@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.6](https://github.com/Cap-go/camera-preview/compare/6.1.5...6.1.6) (2024-05-03)
+
+
+### Bug Fixes
+
+* lint issue ([0afdecf](https://github.com/Cap-go/camera-preview/commit/0afdecf9cf6b2fdb843c1251e704d0f73cf4b0ad))
+* lock file issue ([17e6acc](https://github.com/Cap-go/camera-preview/commit/17e6acc79a7c46b3d32896ef78ebeb031dd261b3))
+* missing perms ([617a06c](https://github.com/Cap-go/camera-preview/commit/617a06c8ad17932b7bab88dea6ba1e9d9a7c1d7a))
+
 ### [6.1.5](https://github.com/Cap-go/camera-preview/compare/6.1.4...6.1.5) (2024-05-01)
 
 ### [6.1.4](https://github.com/Cap-go/camera-preview/compare/6.1.3...6.1.4) (2024-04-30)

@@ -1,6 +1,6 @@
 {
   "name": "@capgo/camera-preview",
-  "version": "6.1.5",
+  "version": "6.1.6",
   "description": "Camera preview",
   "author": "Martin Donadieu <martindonadieu@gmail.com>",
   "license": "MIT",
@@ -44,8 +44,7 @@
   "peerDependencies": {
     "@capacitor/core": "^6.0.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.1",
     "@capacitor/android": "^6.0.0",
