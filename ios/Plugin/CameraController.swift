@@ -36,6 +36,8 @@ class CameraController: NSObject {
     var audioInput: AVCaptureDeviceInput?
 
     var zoomFactor: CGFloat = 1.0
+
+    var videoFileURL: URL?
 }
 
 extension CameraController {
@@ -414,10 +416,9 @@ extension CameraController {
 
     }
 
-    func captureVideo(completion: @escaping (URL?, Error?) -> Void) {
+    func captureVideo() throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
-            completion(nil, CameraControllerError.captureSessionIsMissing)
-            return
+            throw CameraControllerError.captureSessionIsMissing
         }
         let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let identifier = UUID()
@@ -427,16 +428,24 @@ extension CameraController {
 
         let fileUrl = path.appendingPathComponent(fileName)
         try? FileManager.default.removeItem(at: fileUrl)
-        /*videoOutput!.startRecording(to: fileUrl, recordingDelegate: self)
-         self.videoRecordCompletionBlock = completion*/
+
+        // Start recording video
+        // ...
+
+        // Save the file URL for later use
+        self.videoFileURL = fileUrl
     }
 
-    func stopRecording(completion: @escaping (Error?) -> Void) {
+    func stopRecording(completion: @escaping (URL?, Error?) -> Void) {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
-            completion(CameraControllerError.captureSessionIsMissing)
+            completion(nil, CameraControllerError.captureSessionIsMissing)
             return
         }
-        //        self.videoOutput?.stopRecording()
+        // Stop recording video
+        // ...
+
+        // Return the video file URL in the completion handler
+        completion(self.videoFileURL, nil)
     }
 }
 

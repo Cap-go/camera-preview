@@ -294,32 +294,30 @@ public class CameraPreview: CAPPlugin {
 
     @objc func startRecordVideo(_ call: CAPPluginCall) {
         DispatchQueue.main.async {
+            do {
+                try self.cameraController.captureVideo()
+                call.resolve()
+            } catch {
+                call.reject(error.localizedDescription)
+            }
+        }
+    }
 
-            let quality: Int? = call.getInt("quality", 85)
-
-            self.cameraController.captureVideo { (image, error) in
-
-                guard let image = image else {
-                    print(error ?? "Image capture error")
+    @objc func stopRecordVideo(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            self.cameraController.stopRecording { (fileURL, error) in
+                guard let fileURL = fileURL else {
+                    print(error ?? "Video capture error")
                     guard let error = error else {
-                        call.reject("Image capture error")
+                        call.reject("Video capture error")
                         return
                     }
                     call.reject(error.localizedDescription)
                     return
                 }
 
-                // self.videoUrl = image
-
-                call.resolve(["value": image.absoluteString])
+                call.resolve(["videoUrl": fileURL.absoluteString])
             }
-        }
-    }
-
-    @objc func stopRecordVideo(_ call: CAPPluginCall) {
-
-        self.cameraController.stopRecording { (_) in
-            call.resolve()
         }
     }
 
