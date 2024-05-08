@@ -294,6 +294,7 @@ Start recording video.
 | **`lockAndroidOrientation`**       | <code>boolean</code> | Android Only - Locks device orientation when camera is showing.                                                                                               |
 | **`enableOpacity`**                | <code>boolean</code> | Defaults to false - Android and Web only. Set if camera preview can change opacity.                                                                           |
 | **`enableZoom`**                   | <code>boolean</code> | Defaults to false - Android only. Set if camera preview will support pinch to zoom.                                                                           |
+| **`cameraMode`**                   | <code>boolean</code> | default to false - IOS only. Set the CameraPreview to use the video mode preset                                                                               |
 
 
 #### CameraPreviewPictureOptions
