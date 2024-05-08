@@ -11,7 +11,7 @@
 </p>
 <br>
 
-This plugin is compatible Capacitor 4 only.
+This plugin is compatible Capacitor 6 and above.
 
 **PR's are greatly appreciated.**
 
