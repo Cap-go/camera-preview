@@ -877,17 +877,26 @@ public class CameraActivity extends Fragment {
     double targetRatio = (double) previewSize.width / previewSize.height;
     Camera.Size optimalSize = null;
     double minDiff = Double.MAX_VALUE;
+    long maxPixels = 0;
 
     for (Camera.Size size : supportedSizes) {
       double ratio = (double) size.width / size.height;
       if (Math.abs(ratio - targetRatio) > 0.1) continue;
-      if (Math.abs(size.height - height) < minDiff) {
+
+      long pixels = (long) size.width * size.height;
+      if (pixels > maxPixels) {
+        maxPixels = pixels;
         optimalSize = size;
-        minDiff = Math.abs(size.height - height);
+      } else if (pixels == maxPixels) {
+        if (Math.abs(size.height - height) < minDiff) {
+          optimalSize = size;
+          minDiff = Math.abs(size.height - height);
+        }
       }
     }
 
     if (optimalSize == null) {
+      Log.d(TAG, "No picture size matches the aspect ratio");
       minDiff = Double.MAX_VALUE;
       for (Camera.Size size : supportedSizes) {
         if (Math.abs(size.height - height) < minDiff) {
