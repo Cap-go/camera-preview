@@ -69,6 +69,7 @@ public class CameraPreview: CAPPlugin {
 
     @objc func start(_ call: CAPPluginCall) {
         self.cameraPosition = call.getString("position") ?? "rear"
+        let cameraMode = call.getBool("cameraMode") ?? false
         self.highResolutionOutput = call.getBool("enableHighResolution") ?? false
         self.cameraController.highResolutionOutput = self.highResolutionOutput
 
@@ -104,7 +105,7 @@ public class CameraPreview: CAPPlugin {
                 if self.cameraController.captureSession?.isRunning ?? false {
                     call.reject("camera already started")
                 } else {
-                    self.cameraController.prepare(cameraPosition: self.cameraPosition, disableAudio: self.disableAudio) {error in
+                    self.cameraController.prepare(cameraPosition: self.cameraPosition, disableAudio: self.disableAudio, cameraMode: cameraMode) {error in
                         if let error = error {
                             print(error)
                             call.reject(error.localizedDescription)

@@ -41,7 +41,7 @@ class CameraController: NSObject {
 }
 
 extension CameraController {
-    func prepare(cameraPosition: String, disableAudio: Bool, completionHandler: @escaping (Error?) -> Void) {
+    func prepare(cameraPosition: String, disableAudio: Bool, cameraMode: Bool, completionHandler: @escaping (Error?) -> Void) {
         func createCaptureSession() {
             self.captureSession = AVCaptureSession()
         }
@@ -105,8 +105,15 @@ extension CameraController {
             }
         }
 
-        func configurePhotoOutput() throws {
+        func configurePhotoOutput(cameraMode: Bool) throws {
             guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
+
+            //  TODO: check if that really useful
+            if !cameraMode && self.highResolutionOutput && captureSession.canSetSessionPreset(.photo) {
+                captureSession.sessionPreset = .photo
+            } else if cameraMode && self.highResolutionOutput && captureSession.canSetSessionPreset(.high) {
+                captureSession.sessionPreset = .high
+            }
 
             self.photoOutput = AVCapturePhotoOutput()
             self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
@@ -138,7 +145,7 @@ extension CameraController {
                 createCaptureSession()
                 try configureCaptureDevices()
                 try configureDeviceInputs()
-                try configurePhotoOutput()
+                try configurePhotoOutput(cameraMode: cameraMode)
                 try configureDataOutput()
                 // try configureVideoOutput()
             } catch {
