@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/Cap-go/camera-preview/compare/6.1.13...6.2.0) (2024-05-08)
+
+
+### Features
+
+* add hight resolution for picture or camera IOS ([e75e47f](https://github.com/Cap-go/camera-preview/commit/e75e47f0268d9d8e35183570283bebe330df728f))
+
 ### [6.1.13](https://github.com/Cap-go/camera-preview/compare/6.1.12...6.1.13) (2024-05-06)
 
 
