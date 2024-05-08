@@ -13,6 +13,8 @@
 
 This plugin is compatible Capacitor 6 and above.
 
+Use v5 for Capacitor 5 and below.
+
 **PR's are greatly appreciated.**
 
 -- [@riderx](https://github.com/riderx), current maintainers
