@@ -874,6 +874,18 @@ public class CameraActivity extends Fragment {
   ) {
     Log.d(TAG, "Requested picture size: " + width + "x" + height);
     Log.d(TAG, "Preview size: " + previewSize.width + "x" + previewSize.height);
+
+    // If width and height are provided and non-zero, find an exact match
+    if (width > 0 && height > 0) {
+      for (Camera.Size size : supportedSizes) {
+        if (size.width == width && size.height == height) {
+          Log.d(TAG, "Exact match found: " + size.width + "x" + size.height);
+          return size;
+        }
+      }
+    }
+
+    // If no exact match found, find the optimal size based on aspect ratio and max pixels
     double targetRatio = (double) previewSize.width / previewSize.height;
     Camera.Size optimalSize = null;
     double minDiff = Double.MAX_VALUE;
