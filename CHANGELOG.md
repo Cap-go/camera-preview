@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.2.12](https://github.com/Cap-go/camera-preview/compare/6.2.11...6.2.12) (2024-06-03)
+
+
+### Bug Fixes
+
+* add better readme header ([28ec1ca](https://github.com/Cap-go/camera-preview/commit/28ec1ca6ecccd6fe6ba7cc9325284acf33312f3c))
+
 ### [6.2.11](https://github.com/Cap-go/camera-preview/compare/6.2.10...6.2.11) (2024-06-03)
 
 ### [6.2.10](https://github.com/Cap-go/camera-preview/compare/6.2.9...6.2.10) (2024-06-03)
