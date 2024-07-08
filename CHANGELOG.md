@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.2.27](https://github.com/Cap-go/camera-preview/compare/6.2.26...6.2.27) (2024-07-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.appcompat:appcompat to v1.7.0 ([e339f5d](https://github.com/Cap-go/camera-preview/commit/e339f5db2972e66c689926b5978b258f5555903c))
+
 ### [6.2.26](https://github.com/Cap-go/camera-preview/compare/6.2.25...6.2.26) (2024-07-08)
 
 ### [6.2.25](https://github.com/Cap-go/camera-preview/compare/6.2.24...6.2.25) (2024-07-08)
