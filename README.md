@@ -20,6 +20,38 @@ Use v5 for Capacitor 5 and below.
 
 -- [@riderx](https://github.com/riderx), current maintainers
 
+Remember to add the style below on your app's HTML or body element:
+
+```css
+ion-content {
+  --background: transparent;
+}
+```
+
+Take into account that this will make transparent all ion-content on application, if you want to show camera preview only in one page, just add a custom class to your ion-content and make it transparent:
+
+```css
+.my-custom-camera-preview-content {
+  --background: transparent;
+}
+```
+
+If the camera preview is not displaying after applying the above styles, apply transparent background color to the root div element of the parent component
+Ex: VueJS >> App.vue component 
+```html
+<template>
+  <ion-app id="app">
+    <ion-router-outlet />
+  </ion-app>
+</template>
+
+<style>
+#app {
+  background-color: transparent !important;
+}
+<style>
+```
+
 <!-- # Features
 
 <ul>
