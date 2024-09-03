@@ -442,6 +442,23 @@ extension CameraController {
         guard let fileVideoOutput = self.fileVideoOutput else {
             throw CameraControllerError.fileVideoOutputNotFound
         }
+        
+        // cpcp_video_A6C01203 - portrait
+        // 
+        if let connection = fileVideoOutput.connection(with: .video) {
+            switch UIDevice.current.orientation {
+            case .landscapeRight:
+                connection.videoOrientation = .landscapeLeft
+            case .landscapeLeft:
+                connection.videoOrientation = .landscapeRight
+            case .portrait:
+                connection.videoOrientation = .portrait
+            case .portraitUpsideDown:
+                connection.videoOrientation = .portraitUpsideDown
+            default:
+                connection.videoOrientation = .portrait
+            }
+        }
 
         let identifier = UUID()
         let randomIdentifier = identifier.uuidString.replacingOccurrences(of: "-", with: "")

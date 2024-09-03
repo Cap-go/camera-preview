@@ -63,6 +63,21 @@ public class CameraPreview: CAPPlugin {
             }
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
+        
+        if let connection = self.cameraController.fileVideoOutput?.connection(with: .video) {
+            switch UIDevice.current.orientation {
+            case .landscapeRight:
+                connection.videoOrientation = .landscapeLeft
+            case .landscapeLeft:
+                connection.videoOrientation = .landscapeRight
+            case .portrait:
+                connection.videoOrientation = .portrait
+            case .portraitUpsideDown:
+                connection.videoOrientation = .portraitUpsideDown
+            default:
+                connection.videoOrientation = .portrait
+            }
+        }
 
         cameraController.updateVideoOrientation()
     }
