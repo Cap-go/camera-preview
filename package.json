@@ -31,39 +31,42 @@
     "verify:web": "npm run build",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --autocorrect --format",
-    "eslint": "eslint .",
-    "prettier": "prettier --config .prettierrc.js \"**/*.java\"",
+    "eslint": "eslint . --ext .ts",
+    "prettier": "prettier --config .prettierrc.js \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
+    "docgen": "docgen --api CameraPreviewPlugin --output-readme README.md --output-json dist/docs.json",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "docgen": "docgen --api CameraPreviewPlugin --output-readme README.md --output-json dist/docs.json",
-    "prepublishOnly": "npm run build",
-    "prepare": "husky install"
-  },
-  "peerDependencies": {
-    "@capacitor/core": "^6.0.0"
-  },
-  "dependencies": {
-    "@types/node": "^22.5.2"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.16.1",
     "@capacitor/android": "^6.0.0",
     "@capacitor/cli": "^6.0.0",
     "@capacitor/core": "^6.0.0",
     "@capacitor/docgen": "^0.2.2",
     "@capacitor/ios": "^6.0.0",
+    "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^4.0.0",
     "@ionic/swiftlint-config": "^1.1.2",
-    "eslint": "^9.1.1",
-    "husky": "^9.0.11",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "prettier": "^3.2.5",
     "prettier-plugin-java": "^2.6.0",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.17.1",
+    "rimraf": "^5.0.7",
+    "rollup": "^4.18.0",
     "swiftlint": "^1.0.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "@capacitor/core": "^6.0.0"
+  },
+  "prettier": "@ionic/prettier-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
   },
   "capacitor": {
     "ios": {
@@ -73,5 +76,5 @@
       "src": "android"
     }
   },
-  "prettier": "@ionic/prettier-config"
+  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1"
 }

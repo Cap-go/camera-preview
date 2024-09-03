@@ -14,7 +14,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
    *  track which camera is used based on start options
    *  used in capture
    */
-  private isBackCamera: boolean
+  private isBackCamera: boolean = false
 
   constructor() {
     super({
@@ -38,12 +38,12 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
       })
 
     const video = document.getElementById('video')
-    const parent = document.getElementById(options.parent)
+    const parent = document.getElementById(options?.parent || '')
 
     if (!video) {
       const videoElement = document.createElement('video')
       videoElement.id = 'video'
-      videoElement.setAttribute('class', options.className || '')
+      videoElement.setAttribute('class', options?.className || '')
 
       // Don't flip video feed if camera is rear facing
       if (options.position !== 'rear') {
@@ -66,7 +66,7 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
         videoElement.setAttribute('playsinline', 'true')
       }
 
-      parent.appendChild(videoElement)
+      parent?.appendChild(videoElement)
 
       if (navigator?.mediaDevices?.getUserMedia) {
         const constraints: MediaStreamConstraints = {
@@ -150,10 +150,10 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
 
         // flip horizontally back camera isn't used
         if (!this.isBackCamera) {
-          context.translate(video.videoWidth, 0)
-          context.scale(-1, 1)
+          context?.translate(video.videoWidth, 0)
+          context?.scale(-1, 1)
         }
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+        context?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
 
         if ((options.format || 'jpeg') === 'jpeg') {
           base64EncodedImage = canvas
