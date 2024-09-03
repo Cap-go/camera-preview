@@ -22,6 +22,8 @@ class CameraController: NSObject {
 
     var rearCamera: AVCaptureDevice?
     var rearCameraInput: AVCaptureDeviceInput?
+    
+    var fileVideoOutput: AVCaptureMovieFileOutput?
 
     var previewLayer: AVCaptureVideoPreviewLayer?
 
@@ -119,6 +121,12 @@ extension CameraController {
             self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
             self.photoOutput?.isHighResolutionCaptureEnabled = self.highResolutionOutput
             if captureSession.canAddOutput(self.photoOutput!) { captureSession.addOutput(self.photoOutput!) }
+            
+            let fileVideoOutput = AVCaptureMovieFileOutput()
+            if captureSession.canAddOutput(fileVideoOutput) {
+                captureSession.addOutput(fileVideoOutput)
+                self.fileVideoOutput = fileVideoOutput
+            }
             captureSession.startRunning()
         }
 
@@ -427,17 +435,24 @@ extension CameraController {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
             throw CameraControllerError.captureSessionIsMissing
         }
-        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw CameraControllerError.cannotFindDocumentsDirectory;
+        }
+        
+        guard let fileVideoOutput = self.fileVideoOutput else {
+            throw CameraControllerError.fileVideoOutputNotFound
+        }
+
         let identifier = UUID()
         let randomIdentifier = identifier.uuidString.replacingOccurrences(of: "-", with: "")
         let finalIdentifier = String(randomIdentifier.prefix(8))
         let fileName="cpcp_video_"+finalIdentifier+".mp4"
 
-        let fileUrl = path.appendingPathComponent(fileName)
+        let fileUrl = documentsDirectory.appendingPathComponent(fileName)
         try? FileManager.default.removeItem(at: fileUrl)
 
         // Start recording video
-        // ...
+        fileVideoOutput.startRecording(to: fileUrl, recordingDelegate: self)
 
         // Save the file URL for later use
         self.videoFileURL = fileUrl
@@ -448,8 +463,13 @@ extension CameraController {
             completion(nil, CameraControllerError.captureSessionIsMissing)
             return
         }
+        guard let fileVideoOutput = self.fileVideoOutput else {
+            completion(nil, CameraControllerError.fileVideoOutputNotFound)
+            return
+        }
+        
         // Stop recording video
-        // ...
+        fileVideoOutput.stopRecording()
 
         // Return the video file URL in the completion handler
         completion(self.videoFileURL, nil)
@@ -579,6 +599,8 @@ enum CameraControllerError: Swift.Error {
     case inputsAreInvalid
     case invalidOperation
     case noCamerasAvailable
+    case cannotFindDocumentsDirectory
+    case fileVideoOutputNotFound
     case unknown
 }
 
@@ -602,7 +624,10 @@ extension CameraControllerError: LocalizedError {
             return NSLocalizedString("Failed to access device camera(s)", comment: "No Cameras Available")
         case .unknown:
             return NSLocalizedString("Unknown", comment: "Unknown")
-
+        case .cannotFindDocumentsDirectory:
+            return NSLocalizedString("Cannot find documents directory", comment: "This should never happen")
+        case .fileVideoOutputNotFound:
+            return NSLocalizedString("Cannot find fileVideoOutput", comment: "Perhaps you are running IOS < 17 or you are not recording?")
         }
     }
 }
@@ -678,10 +703,11 @@ extension UIImage {
 
 extension CameraController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        /*if error == nil {
-         self.videoRecordCompletionBlock?(outputFileURL, nil)
-         } else {
-         self.videoRecordCompletionBlock?(nil, error)
-         }*/
+        if let error = error {
+            print("Error recording movie: \(error.localizedDescription)")
+        } else {
+            print("Movie recorded successfully: \(outputFileURL)")
+            // You can save the file to the library, upload it, etc.
+        }
     }
 }
