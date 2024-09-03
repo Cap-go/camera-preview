@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.3.3](https://github.com/Cap-go/camera-preview/compare/6.3.2...6.3.3) (2024-09-03)
+
+
+### Bug Fixes
+
+* lint issue ([d0d0db5](https://github.com/Cap-go/camera-preview/commit/d0d0db5bc3e91cc4e2a94315460024a95982df92))
+
 ### [6.3.2](https://github.com/Cap-go/camera-preview/compare/6.3.1...6.3.2) (2024-09-03)
 
 
