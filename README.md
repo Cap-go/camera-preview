@@ -24,7 +24,7 @@ Remember to add the style below on your app's HTML or body element:
 
 ```css
 ion-content {
-  --background: transparent;
+  --background: transparent !important;
 }
 ```
 
