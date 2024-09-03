@@ -66,7 +66,10 @@
   },
   "prettier": "@ionic/prettier-config",
   "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
+    "extends": "@ionic/eslint-config/recommended",
+    "rules": {
+      "@typescript-eslint/prefer-optional-chain": "off"
+    }
   },
   "capacitor": {
     "ios": {

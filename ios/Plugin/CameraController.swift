@@ -22,7 +22,7 @@ class CameraController: NSObject {
 
     var rearCamera: AVCaptureDevice?
     var rearCameraInput: AVCaptureDeviceInput?
-    
+
     var fileVideoOutput: AVCaptureMovieFileOutput?
 
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -121,7 +121,7 @@ extension CameraController {
             self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
             self.photoOutput?.isHighResolutionCaptureEnabled = self.highResolutionOutput
             if captureSession.canAddOutput(self.photoOutput!) { captureSession.addOutput(self.photoOutput!) }
-            
+
             let fileVideoOutput = AVCaptureMovieFileOutput()
             if captureSession.canAddOutput(fileVideoOutput) {
                 captureSession.addOutput(fileVideoOutput)
@@ -436,15 +436,15 @@ extension CameraController {
             throw CameraControllerError.captureSessionIsMissing
         }
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw CameraControllerError.cannotFindDocumentsDirectory;
+            throw CameraControllerError.cannotFindDocumentsDirectory
         }
-        
+
         guard let fileVideoOutput = self.fileVideoOutput else {
             throw CameraControllerError.fileVideoOutputNotFound
         }
-        
+
         // cpcp_video_A6C01203 - portrait
-        // 
+        //
         if let connection = fileVideoOutput.connection(with: .video) {
             switch UIDevice.current.orientation {
             case .landscapeRight:
@@ -484,7 +484,7 @@ extension CameraController {
             completion(nil, CameraControllerError.fileVideoOutputNotFound)
             return
         }
-        
+
         // Stop recording video
         fileVideoOutput.stopRecording()
 
@@ -676,17 +676,14 @@ extension UIImage {
             transform = transform.translatedBy(x: size.width, y: size.height)
             transform = transform.rotated(by: CGFloat.pi)
             print("down")
-            break
-        case .left, .leftMirrored:
+            case .left, .leftMirrored:
             transform = transform.translatedBy(x: size.width, y: 0)
             transform = transform.rotated(by: CGFloat.pi / 2.0)
             print("left")
-            break
-        case .right, .rightMirrored:
+            case .right, .rightMirrored:
             transform = transform.translatedBy(x: 0, y: size.height)
             transform = transform.rotated(by: CGFloat.pi / -2.0)
             print("right")
-            break
         case .up, .upMirrored:
             break
         }
@@ -696,7 +693,6 @@ extension UIImage {
         case .upMirrored, .downMirrored:
             transform.translatedBy(x: size.width, y: 0)
             transform.scaledBy(x: -1, y: 1)
-            break
         case .leftMirrored, .rightMirrored:
             transform.translatedBy(x: size.height, y: 0)
             transform.scaledBy(x: -1, y: 1)
@@ -709,9 +705,8 @@ extension UIImage {
         switch imageOrientation {
         case .left, .leftMirrored, .right, .rightMirrored:
             ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
-        default:
+            default:
             ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-            break
         }
         guard let newCGImage = ctx.makeImage() else { return nil }
         return UIImage.init(cgImage: newCGImage, scale: 1, orientation: .up)

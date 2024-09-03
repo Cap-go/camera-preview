@@ -63,7 +63,7 @@ public class CameraPreview: CAPPlugin {
             }
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
-        
+
         if let connection = self.cameraController.fileVideoOutput?.connection(with: .video) {
             switch UIDevice.current.orientation {
             case .landscapeRight:

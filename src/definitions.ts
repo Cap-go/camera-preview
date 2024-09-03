@@ -152,7 +152,7 @@ export interface CameraPreviewPlugin {
    * @throws An error if the something went wrong
    * @since 0.0.1
    */
-  stopRecordVideo(): Promise<{videoFilePath: string}>;
+  stopRecordVideo(): Promise<{ videoFilePath: string }>;
   /**
    * Start recording video.
    * @param {CameraPreviewOptions} options the options to start recording video with

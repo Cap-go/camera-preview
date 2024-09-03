@@ -1,7 +1,9 @@
 import './style.css'
 import { Directory, Filesystem } from '@capacitor/filesystem'
 import { Toast } from '@capacitor/toast'
-import { CameraPreview, CameraPreviewOptions } from '../../dist/esm/index.js'
+
+import type { CameraPreviewOptions } from '../../dist/esm/index.js';
+import { CameraPreview } from '../../dist/esm/index.js'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
