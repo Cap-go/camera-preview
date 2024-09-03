@@ -44,7 +44,7 @@
   "peerDependencies": {
     "@capacitor/core": "^6.0.0"
   },
-  "dependencies": {},
+  "dependencies": { "@types/node": "^22.5.2" },
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.1",
     "@capacitor/android": "^6.0.0",
@@ -61,7 +61,7 @@
     "rimraf": "^5.0.5",
     "rollup": "^4.17.1",
     "swiftlint": "^1.0.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "capacitor": {
     "ios": {
