@@ -52,6 +52,8 @@ Ex: VueJS >> App.vue component
 <style>
 ```
 
+If it don't work in dark mode here is issue who explain how to fix it: https://github.com/capacitor-community/camera-preview/issues/199
+
 <!-- # Features
 
 <ul>
