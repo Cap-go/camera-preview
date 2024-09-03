@@ -23,8 +23,8 @@ Use v5 for Capacitor 5 and below.
 Remember to add the style below on your app's HTML or body element:
 
 ```css
-ion-content {
-  --background: transparent !important;
+:root {
+  --ion-background-color: transparent !important;
 }
 ```
 
