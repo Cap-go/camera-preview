@@ -63,6 +63,21 @@ public class CameraPreview: CAPPlugin {
             }
             self.cameraController.previewLayer?.frame = self.previewView.frame
         }
+        
+        if let connection = self.cameraController.fileVideoOutput?.connection(with: .video) {
+            switch UIDevice.current.orientation {
+            case .landscapeRight:
+                connection.videoOrientation = .landscapeLeft
+            case .landscapeLeft:
+                connection.videoOrientation = .landscapeRight
+            case .portrait:
+                connection.videoOrientation = .portrait
+            case .portraitUpsideDown:
+                connection.videoOrientation = .portraitUpsideDown
+            default:
+                connection.videoOrientation = .portrait
+            }
+        }
 
         cameraController.updateVideoOrientation()
     }
@@ -294,6 +309,9 @@ public class CameraPreview: CAPPlugin {
     }
 
     @objc func startRecordVideo(_ call: CAPPluginCall) {
+        if #unavailable(iOS 17) {
+            call.reject("You cannot record video on IOS < 17")
+        }
         DispatchQueue.main.async {
             do {
                 try self.cameraController.captureVideo()
@@ -317,7 +335,7 @@ public class CameraPreview: CAPPlugin {
                     return
                 }
 
-                call.resolve(["videoUrl": fileURL.absoluteString])
+                call.resolve(["videoFilePath": fileURL.absoluteString])
             }
         }
     }
