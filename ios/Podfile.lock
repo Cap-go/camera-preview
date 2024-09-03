@@ -1,5 +1,5 @@
 PODS:
-  - Capacitor (6.0.0):
+  - Capacitor (6.1.0):
     - CapacitorCordova
   - CapacitorCordova (2.0.1)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
+  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorCordova: 9fee2eb6780331b6ff09710d6a7d1f2e4707f1b9
 
 PODFILE CHECKSUM: e80ffb7ef3a0ac7d0d6143f3e64f287d4d027c84

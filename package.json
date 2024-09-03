@@ -44,7 +44,9 @@
   "peerDependencies": {
     "@capacitor/core": "^6.0.0"
   },
-  "dependencies": { "@types/node": "^22.5.2" },
+  "dependencies": {
+    "@types/node": "^22.5.2"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.1",
     "@capacitor/android": "^6.0.0",
