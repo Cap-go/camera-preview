@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.3.0](https://github.com/Cap-go/camera-preview/compare/6.2.32...6.3.0) (2024-09-03)
+
+
+### Features
+
+* **IOS:** implement video recording ([519e0b3](https://github.com/Cap-go/camera-preview/commit/519e0b3397eb66bbaf6560d028ad9e01d890254a))
+
+
+### Bug Fixes
+
+* **IOS:** file recording rotation ([1f64c46](https://github.com/Cap-go/camera-preview/commit/1f64c46ce441e5969a71a342b7bca1c96d8b47f6))
+* lockfiles ([9f7ea93](https://github.com/Cap-go/camera-preview/commit/9f7ea93abe20fc42a9a30554c4a1921ed1636504))
+
 ### [6.2.32](https://github.com/Cap-go/camera-preview/compare/6.2.31...6.2.32) (2024-07-17)
 
 
