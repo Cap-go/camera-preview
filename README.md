@@ -108,6 +108,56 @@ You will need to add two permissions to `Info.plist`. Follow the [Capacitor docs
 
 Add `import '@capgo/camera-preview'` to you entry script in ionic on `app.module.ts`, so capacitor can register the web platform from the plugin
 
+### Exemple with Capacitor uploader:
+
+Documentation for the [uploader](https://github.com/Cap-go/capacitor-uploader)
+
+```typescript
+  import { CameraPreview } from '@capgo/camera-preview'
+  import { Uploader } from '@capgo/capacitor-uploader';
+
+
+  async function record() {
+    await CameraPreview.startRecordVideo({ storeToFile: true })
+    await new Promise(resolve => setTimeout(resolve, 5000))
+    const fileUrl = await CameraPreview.stopRecordVideo()
+    console.log(fileUrl.videoFilePath)
+    await uploadVideo(fileUrl.videoFilePath)
+  }
+
+  async function uploadVideo(filePath: string) {
+    Uploader.addListener('events', (event) => {
+      switch (event.name) {
+        case 'uploading':
+          console.log(`Upload progress: ${event.payload.percent}%`);
+          break;
+        case 'completed':
+          console.log('Upload completed successfully');
+          console.log('Server response status code:', event.payload.statusCode);
+          break;
+        case 'failed':
+          console.error('Upload failed:', event.payload.error);
+          break;
+      }
+    });
+    try {
+      const result = await Uploader.startUpload({
+        filePath,
+        serverUrl: 'S#_PRESIGNED_URL',
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'video/mp4',
+        },
+        mimeType: 'video/mp4',
+      });
+      console.log('Video uploaded successfully:', result.id);
+    } catch (error) {
+      console.error('Error uploading video:', error);
+      throw error;
+    }
+  }
+```
+
 ### API
 
 <docgen-index>
