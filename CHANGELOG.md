@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.3.21](https://github.com/Cap-go/camera-preview/compare/6.3.20...6.3.21) (2024-09-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.test.espresso:espresso-core to v3.6.1 ([f6799d1](https://github.com/Cap-go/camera-preview/commit/f6799d132f8929cacbb558d942a83fba60c534c8))
+
 ### [6.3.20](https://github.com/Cap-go/camera-preview/compare/6.3.19...6.3.20) (2024-09-30)
 
 ### [6.3.19](https://github.com/Cap-go/camera-preview/compare/6.3.18...6.3.19) (2024-09-30)
