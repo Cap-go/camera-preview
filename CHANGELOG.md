@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.3.35](https://github.com/Cap-go/camera-preview/compare/6.3.34...6.3.35) (2024-11-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.android.tools.build:gradle to v8.7.2 ([#135](https://github.com/Cap-go/camera-preview/issues/135)) ([f4379f4](https://github.com/Cap-go/camera-preview/commit/f4379f47976f02117671dd90673bd0cd80368ac9))
+
 ### [6.3.34](https://github.com/Cap-go/camera-preview/compare/6.3.33...6.3.34) (2024-11-11)
 
 ### [6.3.33](https://github.com/Cap-go/camera-preview/compare/6.3.32...6.3.33) (2024-11-11)
