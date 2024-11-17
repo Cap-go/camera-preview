@@ -126,8 +126,11 @@ export interface CameraPreviewPlugin {
    * @throws An error if the something goes wrong
    */
   getSupportedPictureSizes(): Promise<{
-    supportedPictureSizes: {facing: string, supportedPictureSizes: {width: number, height: number}[]}[]
-  }>
+    supportedPictureSizes: {
+      facing: string;
+      supportedPictureSizes: { width: number; height: number }[];
+    }[];
+  }>;
   /**
    * Set flash mode.
    * @param options the options to set the flash mode with

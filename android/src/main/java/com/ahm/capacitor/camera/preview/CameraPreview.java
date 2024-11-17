@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
@@ -142,16 +141,20 @@ public class CameraPreview
 
   @PluginMethod
   public void getSupportedPictureSizes(final PluginCall call) {
-    CameraManager cameraManager = (CameraManager) this.getContext().getSystemService(Context.CAMERA_SERVICE);
+    CameraManager cameraManager = (CameraManager) this.getContext()
+      .getSystemService(Context.CAMERA_SERVICE);
 
     JSArray ret = new JSArray();
     try {
       String[] cameraIdList = cameraManager.getCameraIdList();
       for (String cameraId : cameraIdList) {
-        CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
+        CameraCharacteristics characteristics =
+          cameraManager.getCameraCharacteristics(cameraId);
 
         // Determine the facing of the camera
-        Integer lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING);
+        Integer lensFacing = characteristics.get(
+          CameraCharacteristics.LENS_FACING
+        );
         String facing = "Unknown";
         if (lensFacing != null) {
           switch (lensFacing) {
@@ -167,7 +170,9 @@ public class CameraPreview
           }
         }
 
-        StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+        StreamConfigurationMap map = characteristics.get(
+          CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP
+        );
         if (map == null) {
           continue;
         }
@@ -190,14 +195,15 @@ public class CameraPreview
       JSObject finalRet = new JSObject();
       finalRet.put("supportedPictureSizes", ret);
       call.resolve(finalRet);
-      } catch (CameraAccessException ex) {
+    } catch (CameraAccessException ex) {
       Logger.error(getLogTag(), "Cannot call getSupportedPictureSizes", ex);
-      call.reject(String.format("Cannot call getSupportedPictureSizes. Error: %s", ex));
+      call.reject(
+        String.format("Cannot call getSupportedPictureSizes. Error: %s", ex)
+      );
     }
   }
 
-
-    @PluginMethod
+  @PluginMethod
   public void stop(final PluginCall call) {
     bridge
       .getActivity()
