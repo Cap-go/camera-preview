@@ -121,6 +121,14 @@ export interface CameraPreviewPlugin {
     result: any;
   }>;
   /**
+   * Gets the supported picture sizes for a given device.
+   * @returns {Promise<any>} an Promise that resolves with the supported picture sizes for a given device
+   * @throws An error if the something goes wrong
+   */
+  getSupportedPictureSizes(): Promise<{
+    supportedPictureSizes: {facing: string, supportedPictureSizes: {width: number, height: number}[]}[]
+  }>
+  /**
    * Set flash mode.
    * @param options the options to set the flash mode with
    * @returns {Promise<void>} an Promise that resolves when the flash mode is set

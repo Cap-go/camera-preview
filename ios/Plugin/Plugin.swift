@@ -81,6 +81,85 @@ public class CameraPreview: CAPPlugin {
 
         cameraController.updateVideoOrientation()
     }
+    
+    struct CameraInfo {
+        let deviceID: String
+        let position: String
+        let pictureSizes: [CGSize]
+    }
+
+    func getSupportedPictureSizes() -> [CameraInfo] {
+        var cameraInfos = [CameraInfo]()
+
+        // Discover all available cameras
+        let deviceTypes: [AVCaptureDevice.DeviceType] = [
+            .builtInWideAngleCamera,
+            .builtInTelephotoCamera,
+            .builtInUltraWideCamera,
+            .builtInTrueDepthCamera
+        ]
+
+        let session = AVCaptureDevice.DiscoverySession(
+            deviceTypes: deviceTypes,
+            mediaType: .video,
+            position: .unspecified
+        )
+
+        let devices = session.devices
+
+        for device in devices {
+            // Determine the position of the camera
+            var position = "Unknown"
+            switch device.position {
+            case .front:
+                position = "Front"
+            case .back:
+                position = "Back"
+            case .unspecified:
+                position = "Unspecified"
+            @unknown default:
+                position = "Unknown"
+            }
+
+            var pictureSizes = [CGSize]()
+
+            // Get supported formats
+            for format in device.formats {
+                let description = format.formatDescription
+                let dimensions = CMVideoFormatDescriptionGetDimensions(description)
+                let size = CGSize(width: CGFloat(dimensions.width), height: CGFloat(dimensions.height))
+                if !pictureSizes.contains(size) {
+                    pictureSizes.append(size)
+                }
+            }
+
+            // Sort sizes in descending order (largest to smallest)
+            pictureSizes.sort { $0.width * $0.height > $1.width * $1.height }
+
+            let cameraInfo = CameraInfo(deviceID: device.uniqueID, position: position, pictureSizes: pictureSizes)
+            cameraInfos.append(cameraInfo)
+        }
+
+        return cameraInfos
+    }
+
+    
+    @objc func getSupportedPictureSizes(_ call: CAPPluginCall) {
+        let cameraInfos = getSupportedPictureSizes()
+        call.resolve([
+            "supportedPictureSizes": cameraInfos.map {
+                return [
+                    "facing": $0.position,
+                    "supportedPictureSizes": $0.pictureSizes.map { size in
+                        return [
+                            "width": String(describing: size.width),
+                            "height": String(describing: size.height),
+                        ]
+                    }
+                ]
+            }
+        ])
+    }
 
     @objc func start(_ call: CAPPluginCall) {
         self.cameraPosition = call.getString("position") ?? "rear"
