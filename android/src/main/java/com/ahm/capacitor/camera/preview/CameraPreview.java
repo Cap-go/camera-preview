@@ -5,11 +5,18 @@ import static android.Manifest.permission.RECORD_AUDIO;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.util.DisplayMetrics;
+import android.util.Size;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -17,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
 import com.getcapacitor.PermissionState;
@@ -27,6 +35,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.json.JSONArray;
@@ -128,6 +137,70 @@ public class CameraPreview
 
     Integer quality = Objects.requireNonNull(call.getInt("quality", 85));
     fragment.takeSnapshot(quality);
+  }
+
+  @PluginMethod
+  public void getSupportedPictureSizes(final PluginCall call) {
+    CameraManager cameraManager = (CameraManager) this.getContext()
+      .getSystemService(Context.CAMERA_SERVICE);
+
+    JSArray ret = new JSArray();
+    try {
+      String[] cameraIdList = cameraManager.getCameraIdList();
+      for (String cameraId : cameraIdList) {
+        CameraCharacteristics characteristics =
+          cameraManager.getCameraCharacteristics(cameraId);
+
+        // Determine the facing of the camera
+        Integer lensFacing = characteristics.get(
+          CameraCharacteristics.LENS_FACING
+        );
+        String facing = "Unknown";
+        if (lensFacing != null) {
+          switch (lensFacing) {
+            case CameraCharacteristics.LENS_FACING_FRONT:
+              facing = "Front";
+              break;
+            case CameraCharacteristics.LENS_FACING_BACK:
+              facing = "Back";
+              break;
+            case CameraCharacteristics.LENS_FACING_EXTERNAL:
+              facing = "External";
+              break;
+          }
+        }
+
+        StreamConfigurationMap map = characteristics.get(
+          CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP
+        );
+        if (map == null) {
+          continue;
+        }
+
+        Size[] jpegSizes = map.getOutputSizes(ImageFormat.JPEG);
+        JSObject camera = new JSObject();
+        camera.put("facing", facing);
+        JSArray supportedPictureSizes = new JSArray();
+        if (jpegSizes != null) {
+          for (Size size : jpegSizes) {
+            JSObject sizeJson = new JSObject();
+            sizeJson.put("width", size.getWidth());
+            sizeJson.put("height", size.getHeight());
+            supportedPictureSizes.put(sizeJson);
+          }
+          camera.put("supportedPictureSizes", supportedPictureSizes);
+          ret.put(camera);
+        }
+      }
+      JSObject finalRet = new JSObject();
+      finalRet.put("supportedPictureSizes", ret);
+      call.resolve(finalRet);
+    } catch (CameraAccessException ex) {
+      Logger.error(getLogTag(), "Cannot call getSupportedPictureSizes", ex);
+      call.reject(
+        String.format("Cannot call getSupportedPictureSizes. Error: %s", ex)
+      );
+    }
   }
 
   @PluginMethod

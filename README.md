@@ -168,6 +168,7 @@ Documentation for the [uploader](https://github.com/Cap-go/capacitor-uploader)
 * [`captureSample(...)`](#capturesample)
 * [`getSupportedFlashModes()`](#getsupportedflashmodes)
 * [`getHorizontalFov()`](#gethorizontalfov)
+* [`getSupportedPictureSizes()`](#getsupportedpicturesizes)
 * [`setFlashMode(...)`](#setflashmode)
 * [`flip()`](#flip)
 * [`setOpacity(...)`](#setopacity)
@@ -275,6 +276,19 @@ Get horizontal field of view.
 **Returns:** <code>Promise&lt;{ result: any; }&gt;</code>
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### getSupportedPictureSizes()
+
+```typescript
+getSupportedPictureSizes() => Promise<{ supportedPictureSizes: { facing: string; supportedPictureSizes: { width: number; height: number; }[]; }[]; }>
+```
+
+Gets the supported picture sizes for a given device.
+
+**Returns:** <code>Promise&lt;{ supportedPictureSizes: { facing: string; supportedPictureSizes: { width: number; height: number; }[]; }[]; }&gt;</code>
 
 --------------------
 
