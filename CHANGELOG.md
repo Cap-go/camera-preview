@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.4.0](https://github.com/Cap-go/camera-preview/compare/6.3.35...6.4.0) (2024-11-18)
+
+
+### Features
+
+* getSupportedPictureSizes ([4f55cb7](https://github.com/Cap-go/camera-preview/commit/4f55cb7e943848e875de03bb91a22335c7a41319))
+
 ### [6.3.35](https://github.com/Cap-go/camera-preview/compare/6.3.34...6.3.35) (2024-11-11)
 
 
