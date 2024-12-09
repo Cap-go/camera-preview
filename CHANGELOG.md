@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.2](https://github.com/Cap-go/camera-preview/compare/6.5.1...6.5.2) (2024-12-09)
+
 ### [6.5.1](https://github.com/Cap-go/camera-preview/compare/6.5.0...6.5.1) (2024-12-09)
 
 
