@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.1](https://github.com/Cap-go/camera-preview/compare/6.5.0...6.5.1) (2024-12-09)
+
+
+### Bug Fixes
+
+* missing func ([be6f333](https://github.com/Cap-go/camera-preview/commit/be6f3336f49e9b4c4860c1563a65f9ab22fdad89))
+
 ## [6.5.0](https://github.com/Cap-go/camera-preview/compare/6.4.0...6.5.0) (2024-12-09)
 
 
