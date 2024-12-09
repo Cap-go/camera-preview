@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.3](https://github.com/Cap-go/camera-preview/compare/6.5.2...6.5.3) (2024-12-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @capacitor/filesystem to v6.0.2 ([#143](https://github.com/Cap-go/camera-preview/issues/143)) ([d014fee](https://github.com/Cap-go/camera-preview/commit/d014fee6e1f5bca2f25f4161af5393cf75c3bf48))
+
 ### [6.5.2](https://github.com/Cap-go/camera-preview/compare/6.5.1...6.5.2) (2024-12-09)
 
 ### [6.5.1](https://github.com/Cap-go/camera-preview/compare/6.5.0...6.5.1) (2024-12-09)
