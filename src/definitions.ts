@@ -26,7 +26,7 @@ export interface CameraPreviewOptions {
   disableExifHeaderStripping?: boolean;
   /** Defaults to false - iOS only - Activate high resolution image capture so that output images are from the highest resolution possible on the device **/
   enableHighResolution?: boolean;
-  /** Defaults to false - Web only - Disables audio stream to prevent permission requests and output switching */
+  /** Defaults to false - Disables audio stream to prevent permission requests and output switching */
   disableAudio?: boolean;
   /**  Android Only - Locks device orientation when camera is showing. */
   lockAndroidOrientation?: boolean;

@@ -45,7 +45,11 @@ import org.json.JSONArray;
   permissions = {
     @Permission(
       strings = { CAMERA, RECORD_AUDIO },
-      alias = CameraPreview.CAMERA_PERMISSION_ALIAS
+      alias = CameraPreview.CAMERA_WITH_AUDIO_PERMISSION_ALIAS
+    ),
+    @Permission(
+      strings = { CAMERA },
+      alias = CameraPreview.CAMERA_ONLY_PERMISSION_ALIAS
     ),
   }
 )
@@ -53,7 +57,8 @@ public class CameraPreview
   extends Plugin
   implements CameraActivity.CameraPreviewListener {
 
-  static final String CAMERA_PERMISSION_ALIAS = "camera";
+  static final String CAMERA_WITH_AUDIO_PERMISSION_ALIAS = "cameraWithAudio";
+  static final String CAMERA_ONLY_PERMISSION_ALIAS = "cameraOnly";
 
   private static String VIDEO_FILE_PATH = "";
   private static final String VIDEO_FILE_EXTENSION = ".mp4";
@@ -72,15 +77,16 @@ public class CameraPreview
 
   @PluginMethod
   public void start(PluginCall call) {
-    if (
-      PermissionState.GRANTED.equals(
-        getPermissionState(CAMERA_PERMISSION_ALIAS)
-      )
-    ) {
+    boolean disableAudio = call.getBoolean("disableAudio", false);
+    String permissionAlias = disableAudio
+      ? CAMERA_ONLY_PERMISSION_ALIAS
+      : CAMERA_WITH_AUDIO_PERMISSION_ALIAS;
+
+    if (PermissionState.GRANTED.equals(getPermissionState(permissionAlias))) {
       startCamera(call);
     } else {
       requestPermissionForAlias(
-        CAMERA_PERMISSION_ALIAS,
+        permissionAlias,
         call,
         "handleCameraPermissionResult"
       );
@@ -386,19 +392,15 @@ public class CameraPreview
 
   @PermissionCallback
   private void handleCameraPermissionResult(PluginCall call) {
-    if (
-      PermissionState.GRANTED.equals(
-        getPermissionState(CAMERA_PERMISSION_ALIAS)
-      )
-    ) {
+    boolean disableAudio = call.getBoolean("disableAudio", false);
+    String permissionAlias = disableAudio
+      ? CAMERA_ONLY_PERMISSION_ALIAS
+      : CAMERA_WITH_AUDIO_PERMISSION_ALIAS;
+
+    if (PermissionState.GRANTED.equals(getPermissionState(permissionAlias))) {
       startCamera(call);
     } else {
-      Logger.debug(
-        getLogTag(),
-        "User denied camera permission: " +
-        getPermissionState(CAMERA_PERMISSION_ALIAS).toString()
-      );
-      call.reject("Permission failed: user denied access to camera.");
+      call.reject("Permission failed");
     }
   }
 
@@ -456,6 +458,7 @@ public class CameraPreview
     fragment.toBack = toBack;
     fragment.enableOpacity = enableOpacity;
     fragment.enableZoom = enableZoom;
+    fragment.disableAudio = call.getBoolean("disableAudio", false);
 
     bridge
       .getActivity()

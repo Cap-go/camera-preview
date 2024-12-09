@@ -96,6 +96,7 @@ public class CameraActivity extends Fragment {
   public boolean toBack;
   public boolean enableOpacity = false;
   public boolean enableZoom = false;
+  public boolean disableAudio = false;
 
   public int width;
   public int height;
@@ -1117,9 +1118,15 @@ public class CameraActivity extends Fragment {
         }
       }
 
-      mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
       mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
       mRecorder.setProfile(profile);
+      if (disableAudio) {
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+      } else {
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+      }
+
       mRecorder.setOutputFile(filePath);
       mRecorder.setOrientationHint(mOrientationHint);
       mRecorder.setMaxDuration(maxDuration);

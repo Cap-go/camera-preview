@@ -81,7 +81,7 @@ public class CameraPreview: CAPPlugin {
 
         cameraController.updateVideoOrientation()
     }
-    
+
     struct CameraInfo {
         let deviceID: String
         let position: String
@@ -143,7 +143,6 @@ public class CameraPreview: CAPPlugin {
         return cameraInfos
     }
 
-    
     @objc func getSupportedPictureSizes(_ call: CAPPluginCall) {
         let cameraInfos = getSupportedPictureSizes()
         call.resolve([
@@ -153,7 +152,7 @@ public class CameraPreview: CAPPlugin {
                     "supportedPictureSizes": $0.pictureSizes.map { size in
                         return [
                             "width": String(describing: size.width),
-                            "height": String(describing: size.height),
+                            "height": String(describing: size.height)
                         ]
                     }
                 ]
