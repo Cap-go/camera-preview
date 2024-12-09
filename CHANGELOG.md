@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.5.0](https://github.com/Cap-go/camera-preview/compare/6.4.0...6.5.0) (2024-12-09)
+
+
+### Features
+
+* add disableAudio on android ([e06eaf9](https://github.com/Cap-go/camera-preview/commit/e06eaf9a97f463dd1a60b051a66ddb83ec73b62c))
+
 ## [6.4.0](https://github.com/Cap-go/camera-preview/compare/6.3.35...6.4.0) (2024-11-18)
 
 
