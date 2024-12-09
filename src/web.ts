@@ -23,6 +23,12 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
     });
   }
 
+  async getSupportedPictureSizes(): Promise<any> {
+    throw new Error(
+      "getSupportedPictureSizes not supported under the web platform",
+    );
+  }
+
   async start(options: CameraPreviewOptions): Promise<void> {
     await navigator.mediaDevices
       .getUserMedia({
