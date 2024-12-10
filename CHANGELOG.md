@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.4](https://github.com/Cap-go/camera-preview/compare/6.5.3...6.5.4) (2024-12-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @capacitor/toast to v6.0.3 ([#144](https://github.com/Cap-go/camera-preview/issues/144)) ([2e43cfe](https://github.com/Cap-go/camera-preview/commit/2e43cfed9eb5bf23988f58f816988a445c655f86))
+
 ### [6.5.3](https://github.com/Cap-go/camera-preview/compare/6.5.2...6.5.3) (2024-12-09)
 
 
