@@ -274,10 +274,10 @@ public class CameraActivity extends Fragment {
                         switch (event.getAction()) {
                           case MotionEvent.ACTION_DOWN:
                             if (mLastTouchX == 0 || mLastTouchY == 0) {
-                              mLastTouchX = (int) event.getRawX() -
-                              layoutParams.leftMargin;
-                              mLastTouchY = (int) event.getRawY() -
-                              layoutParams.topMargin;
+                              mLastTouchX =
+                                (int) event.getRawX() - layoutParams.leftMargin;
+                              mLastTouchY =
+                                (int) event.getRawY() - layoutParams.topMargin;
                             } else {
                               mLastTouchX = (int) event.getRawX();
                               mLastTouchY = (int) event.getRawY();
@@ -440,8 +440,8 @@ public class CameraActivity extends Fragment {
                   frameContainerLayout.getWidth(),
                   frameContainerLayout.getHeight()
                 );
-              camViewLayout.gravity = Gravity.CENTER_HORIZONTAL |
-              Gravity.CENTER_VERTICAL;
+              camViewLayout.gravity =
+                Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
               frameCamContainerLayout.setLayoutParams(camViewLayout);
             }
           }
@@ -526,8 +526,8 @@ public class CameraActivity extends Fragment {
         "cameraCurrentlyLocked := " + Integer.toString(cameraCurrentlyLocked)
       );
       try {
-        cameraCurrentlyLocked = (cameraCurrentlyLocked + 1) %
-        getNumberOfCameras();
+        cameraCurrentlyLocked =
+          (cameraCurrentlyLocked + 1) % getNumberOfCameras();
         Log.d(TAG, "cameraCurrentlyLocked new: " + cameraCurrentlyLocked);
       } catch (Exception exception) {
         Log.d(TAG, Objects.requireNonNull(exception.getMessage()));
