@@ -387,9 +387,6 @@ public class CameraPreview: CAPPlugin {
     }
 
     @objc func startRecordVideo(_ call: CAPPluginCall) {
-        if #unavailable(iOS 17) {
-            call.reject("You cannot record video on IOS < 17")
-        }
         DispatchQueue.main.async {
             do {
                 try self.cameraController.captureVideo()

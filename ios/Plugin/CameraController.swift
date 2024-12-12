@@ -644,7 +644,7 @@ extension CameraControllerError: LocalizedError {
         case .cannotFindDocumentsDirectory:
             return NSLocalizedString("Cannot find documents directory", comment: "This should never happen")
         case .fileVideoOutputNotFound:
-            return NSLocalizedString("Cannot find fileVideoOutput", comment: "Perhaps you are running IOS < 17 or you are not recording?")
+            return NSLocalizedString("Video recording is not available. Make sure the camera is properly initialized.", comment: "Video recording not available")
         }
     }
 }
