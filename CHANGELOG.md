@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.8](https://github.com/Cap-go/camera-preview/compare/6.5.7...6.5.8) (2024-12-12)
+
+
+### Bug Fixes
+
+* remove  ios limit < 17 ([7b1f1b2](https://github.com/Cap-go/camera-preview/commit/7b1f1b21bb304ffe9f8e9fe01add76c8966ab90a))
+
 ### [6.5.7](https://github.com/Cap-go/camera-preview/compare/6.5.6...6.5.7) (2024-12-10)
 
 ### [6.5.6](https://github.com/Cap-go/camera-preview/compare/6.5.5...6.5.6) (2024-12-10)
