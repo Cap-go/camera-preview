@@ -136,7 +136,7 @@ public class CameraPreview
     final Integer width = Objects.requireNonNull(call.getInt("width", 0));
     final Integer height = Objects.requireNonNull(call.getInt("height", 0));
     final Boolean withFlash = Objects.requireNonNull(
-        call.getBoolean("withFlash", false)
+      call.getBoolean("withFlash", false)
     );
 
     final String filename = "videoTmp";
@@ -145,9 +145,11 @@ public class CameraPreview
     bridge.saveCall(call);
     recordCallbackId = call.getCallbackId();
 
-    bridge.getActivity().runOnUiThread(() -> {
-      fragment.startRecordVideo(getFilePath(), width, height, withFlash);
-    });
+    bridge
+      .getActivity()
+      .runOnUiThread(() -> {
+        fragment.startRecordVideo(getFilePath(), width, height, withFlash);
+      });
 
     call.resolve();
   }
@@ -230,8 +232,8 @@ public class CameraPreview
 
     fragment = new CameraActivityV2();
     fragment.setEventListener(this);
-//    fragment.defaultCamera = position;
-//    fragment.enableOpacity = enableOpacity;
+    //    fragment.defaultCamera = position;
+    //    fragment.enableOpacity = enableOpacity;
     fragment.enableZoom = enableZoom;
     fragment.setDisableAudio(call.getBoolean("disableAudio", false));
 
@@ -291,13 +293,12 @@ public class CameraPreview
         }
 
         if (height != 0) {
-          computedHeight =
-            (int) TypedValue.applyDimension(
-              TypedValue.COMPLEX_UNIT_DIP,
-              height,
-              metrics
-            ) -
-            computedPaddingBottom;
+          computedHeight = (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            height,
+            metrics
+          ) -
+          computedPaddingBottom;
         } else {
           Display defaultDisplay = getBridge()
             .getActivity()
@@ -305,13 +306,12 @@ public class CameraPreview
             .getDefaultDisplay();
           final Point size = new Point();
           defaultDisplay.getSize(size);
-          computedHeight =
-            (int) TypedValue.applyDimension(
-              TypedValue.COMPLEX_UNIT_PX,
-              size.y,
-              metrics
-            ) -
-            computedPaddingBottom;
+          computedHeight = (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_PX,
+            size.y,
+            metrics
+          ) -
+          computedPaddingBottom;
         }
 
         fragment.setRect(computedX, computedY, computedWidth, computedHeight);
