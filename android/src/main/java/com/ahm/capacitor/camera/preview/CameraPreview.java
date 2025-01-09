@@ -293,12 +293,13 @@ public class CameraPreview
         }
 
         if (height != 0) {
-          computedHeight = (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            height,
-            metrics
-          ) -
-          computedPaddingBottom;
+          computedHeight =
+            (int) TypedValue.applyDimension(
+              TypedValue.COMPLEX_UNIT_DIP,
+              height,
+              metrics
+            ) -
+            computedPaddingBottom;
         } else {
           Display defaultDisplay = getBridge()
             .getActivity()
@@ -306,12 +307,13 @@ public class CameraPreview
             .getDefaultDisplay();
           final Point size = new Point();
           defaultDisplay.getSize(size);
-          computedHeight = (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_PX,
-            size.y,
-            metrics
-          ) -
-          computedPaddingBottom;
+          computedHeight =
+            (int) TypedValue.applyDimension(
+              TypedValue.COMPLEX_UNIT_PX,
+              size.y,
+              metrics
+            ) -
+            computedPaddingBottom;
         }
 
         fragment.setRect(computedX, computedY, computedWidth, computedHeight);
