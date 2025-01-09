@@ -16,6 +16,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.Display;
@@ -129,6 +130,12 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
       return;
     }
 
+    final Integer width = Objects.requireNonNull(call.getInt("width", 0));
+    final Integer height = Objects.requireNonNull(call.getInt("height", 0));
+    final Boolean withFlash = Objects.requireNonNull(
+        call.getBoolean("withFlash", false)
+    );
+
     final String filename = "videoTmp";
     VIDEO_FILE_PATH = getActivity().getCacheDir().toString() + "/";
 
@@ -136,7 +143,7 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
     recordCallbackId = call.getCallbackId();
 
     bridge.getActivity().runOnUiThread(() -> {
-      fragment.startRecordVideo(getFilePath());
+      fragment.startRecordVideo(getFilePath(), width, height, withFlash);
     });
 
     call.resolve();
@@ -197,7 +204,7 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
     fragment.setEventListener(this);
 //    fragment.defaultCamera = position;
 //    fragment.enableOpacity = enableOpacity;
-//    fragment.enableZoom = enableZoom;
+    fragment.enableZoom = enableZoom;
     fragment.setDisableAudio(call.getBoolean("disableAudio", false));
 
     bridge.getActivity().runOnUiThread(() -> {
@@ -282,11 +289,19 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
   public void onPictureTaken(String originalPicture) {
     JSObject jsObject = new JSObject();
     jsObject.put("value", originalPicture);
-    bridge.getSavedCall(captureCallbackId).resolve(jsObject);
+    PluginCall call = bridge.getSavedCall(captureCallbackId);
+    if (call != null) {
+      call.resolve(jsObject);
+    }
   }
 
   @Override
   public void onPictureTakenError(String message) {
+    Log.e("CameraPreview", String.format("onPictureTakenError: %s", message));
+    PluginCall pluginCall = bridge.getSavedCall(captureCallbackId);
+    if (pluginCall == null) {
+      return;
+    }
     bridge.getSavedCall(captureCallbackId).reject(message);
   }
 
@@ -305,6 +320,9 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
   @Override
   public void onCameraStarted() {
     PluginCall pluginCall = bridge.getSavedCall(cameraStartCallbackId);
+    if (pluginCall == null) {
+      return;
+    }
     pluginCall.resolve();
     bridge.releaseCall(pluginCall);
   }

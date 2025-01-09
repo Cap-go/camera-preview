@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Surface;
+import android.view.WindowManager;
+import android.app.Activity;
+import android.view.ScaleGestureDetector;
+import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,25 +26,31 @@ import com.otaliastudios.cameraview.VideoResult;
 import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Flash;
 import com.otaliastudios.cameraview.controls.Mode;
+import com.otaliastudios.cameraview.gesture.Gesture;
+import com.otaliastudios.cameraview.gesture.GestureAction;
 import com.otaliastudios.cameraview.size.Size;
 import com.otaliastudios.cameraview.size.SizeSelectors;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.UUID;
 
 public class CameraActivityV2 extends Fragment {
 
     private CameraView camera;
     private CameraPreviewListener eventListener;
     private boolean enableOpacity = false;
-    private boolean enableZoom = false;
+    public boolean enableZoom = false;
     private boolean disableAudio = false;
     private String defaultCamera = "back";
     private int width;
     private int height;
     private int x;
     private int y;
+    private ScaleGestureDetector scaleGestureDetector;
+    private float maxZoom = 2.0f;
+    private float currentZoom = 0f;
 
     public interface CameraPreviewListener {
         void onPictureTaken(String originalPicture);
@@ -72,8 +83,18 @@ public class CameraActivityV2 extends Fragment {
         camera.setAudio(disableAudio ? com.otaliastudios.cameraview.controls.Audio.OFF 
                                    : com.otaliastudios.cameraview.controls.Audio.ON);
         
+        // Configure zoom settings
         if (enableZoom) {
-            // camera.setPinchToZoom(true);
+            // Initialize ScaleGestureDetector
+            scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+                @Override
+                public boolean onScale(ScaleGestureDetector detector) {
+                    float scaleFactor = detector.getScaleFactor();
+                    currentZoom = Math.max(0, Math.min(currentZoom * scaleFactor, maxZoom));
+                    camera.setZoom(currentZoom);
+                    return true;
+                }
+            });
         }
         
         camera.setPreviewStreamSize(SizeSelectors.and(
@@ -83,6 +104,14 @@ public class CameraActivityV2 extends Fragment {
         ));
 
         FrameLayout frameLayout = new FrameLayout(getContext());
+        frameLayout.setOnTouchListener((v, event) -> {
+            if (enableZoom && scaleGestureDetector != null) {
+                scaleGestureDetector.onTouchEvent(event);
+                return true;
+            }
+            return false;
+        });
+
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
             width > 0 ? width : FrameLayout.LayoutParams.MATCH_PARENT,
             height > 0 ? height : FrameLayout.LayoutParams.MATCH_PARENT
@@ -128,40 +157,76 @@ public class CameraActivityV2 extends Fragment {
 
     public void takePicture() {
         if (camera != null) {
-            camera.takePicture();
-            camera.addCameraListener(new com.otaliastudios.cameraview.CameraListener() {
-                @Override
-                public void onPictureTaken(@NonNull PictureResult result) {
-                    result.toFile(new File(getContext().getCacheDir(), "picture.jpg"), file -> {
-                        try {
-                            byte[] bytes = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                bytes = Files.readAllBytes(file.toPath());
-                            }
-                            String base64 = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                            if (eventListener != null) {
-                                eventListener.onPictureTaken(base64);
-                            }
-                        } catch (IOException e) {
-                            if (eventListener != null) {
-                                eventListener.onPictureTakenError(e.getMessage());
-                            }
-                        }
-                    });
-                }
-            });
+            if (camera.getMode() == Mode.VIDEO) {
+                // In video mode, take a snapshot instead
+                camera.addCameraListener(new com.otaliastudios.cameraview.CameraListener() {
+                    @Override
+                    public void onPictureTaken(@NonNull PictureResult result) {
+                        processImageResult(result);
+                        camera.removeCameraListener(this);
+                    }
+                });
+                camera.takePictureSnapshot();
+            } else {
+                // In picture mode, take normal picture
+                camera.addCameraListener(new com.otaliastudios.cameraview.CameraListener() {
+                    @Override
+                    public void onPictureTaken(@NonNull PictureResult result) {
+                        processImageResult(result);
+                        camera.removeCameraListener(this);
+                    }
+                });
+                camera.takePicture();
+            }
         }
     }
 
-    public void startRecordVideo(String filePath) {
+    private void processImageResult(@NonNull PictureResult result) {
+        result.toFile(new File(getContext().getCacheDir(), String.format("picture-%s.jpg", UUID.randomUUID().toString())), file -> {
+            try (java.io.FileInputStream fis = new java.io.FileInputStream(file)) {
+                if (file == null) {
+                    Log.e("CameraActivityV2", "processImageResult file is null");
+                    eventListener.onPictureTakenError("processImageResult file is null");
+                    return;
+                }
+                byte[] bytes = new byte[(int) file.length()];
+                fis.read(bytes);
+                String base64 = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                if (eventListener != null) {
+                    eventListener.onPictureTaken(base64);
+                }
+                // Clean up the temp file
+                file.delete();
+            } catch (IOException e) {
+                if (eventListener != null) {
+                    eventListener.onPictureTakenError(e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void startRecordVideo(String filePath, int width, int height, boolean withFlash) {
         if (camera != null) {
             try {
                 camera.setMode(Mode.VIDEO);
+                configureVideoRecording();
                 File file = new File(filePath);
                 
+                // Set flash mode based on withFlash parameter
+                camera.setFlash(withFlash ? Flash.TORCH : Flash.OFF);
+
                 // Ensure parent directory exists
                 file.getParentFile().mkdirs();
-                
+
+                // Configure video size based on width and height
+                if (width != 0 || height != 0) {
+                    camera.setVideoSize(SizeSelectors.and(
+                        SizeSelectors.minWidth(width > 0 ? width : 1280), // default 1280 if width not specified
+                        SizeSelectors.minHeight(height > 0 ? height : 720), // default 720 if height not specified
+                        SizeSelectors.smallest()
+                    ));
+                }
+
                 // Add the listener before starting recording
                 camera.addCameraListener(new com.otaliastudios.cameraview.CameraListener() {
                     @Override
@@ -181,7 +246,6 @@ public class CameraActivityV2 extends Fragment {
 
                     @Override
                     public void onVideoRecordingEnd() {
-                        // Video recording has ended naturally
                         Log.d("CameraActivityV2", "Video recording ended naturally");
                     }
 
@@ -203,6 +267,8 @@ public class CameraActivityV2 extends Fragment {
                 // Start recording with a small delay to ensure camera is ready
                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     try {
+                        // Set video quality
+                        // camera.setVideoQuality(com.otaliastudios.cameraview.controls.VideoQuality.HIGHEST);
                         camera.takeVideo(file);
                     } catch (Exception e) {
                         Log.e("CameraActivityV2", "Failed to start recording", e);
@@ -224,6 +290,7 @@ public class CameraActivityV2 extends Fragment {
     public void stopRecordVideo() {
         if (camera != null) {
             try {
+                camera.setFlash(Flash.OFF);
                 if (camera.isTakingVideo()) {
                     camera.stopVideo();
                 } else {
@@ -301,5 +368,37 @@ public class CameraActivityV2 extends Fragment {
 
     public CameraView getCamera() {
         return camera;
+    }
+
+    private void configureVideoRecording() {
+        if (camera != null) {
+            Activity activity = getActivity();
+            if (activity != null) {
+                WindowManager windowManager = activity.getWindowManager();
+                int rotation = windowManager.getDefaultDisplay().getRotation();
+                int orientation;
+
+                // Handle orientation based on device rotation and camera facing
+                Facing facing = camera.getFacing();
+                switch (rotation) {
+                    case Surface.ROTATION_90:
+                        orientation = facing == Facing.FRONT ? 270 : 90;
+                        break;
+                    case Surface.ROTATION_180:
+                        orientation = 180;
+                        break;
+                    case Surface.ROTATION_270:
+                        orientation = facing == Facing.FRONT ? 90 : 270;
+                        break;
+                    case Surface.ROTATION_0:
+                    default:
+                        orientation = 0;
+                        break;
+                }
+
+                // Set video orientation
+                camera.setRotation(orientation);
+            }
+        }
     }
 }
