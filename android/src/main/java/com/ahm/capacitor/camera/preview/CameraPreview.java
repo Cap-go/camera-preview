@@ -54,7 +54,9 @@ import org.json.JSONArray;
     ),
   }
 )
-public class CameraPreview extends Plugin implements CameraActivityV2.CameraPreviewListener {
+public class CameraPreview
+  extends Plugin
+  implements CameraActivityV2.CameraPreviewListener {
 
   static final String CAMERA_WITH_AUDIO_PERMISSION_ALIAS = "cameraWithAudio";
   static final String CAMERA_ONLY_PERMISSION_ALIAS = "cameraOnly";
@@ -67,7 +69,8 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
   private String recordCallbackId = "";
   private String cameraStartCallbackId = "";
 
-  private int previousOrientationRequest = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+  private int previousOrientationRequest =
+    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
   private CameraActivityV2 fragment;
   private final int containerViewId = 20;
 
@@ -163,42 +166,67 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
 
   @PluginMethod
   public void stop(final PluginCall call) {
-    bridge.getActivity().runOnUiThread(() -> {
-      FrameLayout containerView = getBridge().getActivity().findViewById(containerViewId);
+    bridge
+      .getActivity()
+      .runOnUiThread(() -> {
+        FrameLayout containerView = getBridge()
+          .getActivity()
+          .findViewById(containerViewId);
 
-      getBridge().getActivity().setRequestedOrientation(previousOrientationRequest);
+        getBridge()
+          .getActivity()
+          .setRequestedOrientation(previousOrientationRequest);
 
-      if (containerView != null) {
-        ((ViewGroup) getBridge().getWebView().getParent()).removeView(containerView);
-        getBridge().getWebView().setBackgroundColor(Color.WHITE);
-        FragmentManager fragmentManager = getActivity().getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(fragment);
-        fragmentTransaction.commit();
-        fragment = null;
+        if (containerView != null) {
+          ((ViewGroup) getBridge().getWebView().getParent()).removeView(
+              containerView
+            );
+          getBridge().getWebView().setBackgroundColor(Color.WHITE);
+          FragmentManager fragmentManager = getActivity().getFragmentManager();
+          FragmentTransaction fragmentTransaction =
+            fragmentManager.beginTransaction();
+          fragmentTransaction.remove(fragment);
+          fragmentTransaction.commit();
+          fragment = null;
 
-        call.resolve();
-      } else {
-        call.reject("camera already stopped");
-      }
-    });
+          call.resolve();
+        } else {
+          call.reject("camera already stopped");
+        }
+      });
   }
 
   private void startCamera(final PluginCall call) {
     String position = call.getString("position");
-    position = (position == null || position.isEmpty() || "rear".equals(position)) ? "back" : "front";
+    position = (position == null ||
+        position.isEmpty() ||
+        "rear".equals(position))
+      ? "back"
+      : "front";
 
     final Integer x = Objects.requireNonNull(call.getInt("x", 0));
     final Integer y = Objects.requireNonNull(call.getInt("y", 0));
     final Integer width = Objects.requireNonNull(call.getInt("width", 0));
     final Integer height = Objects.requireNonNull(call.getInt("height", 0));
-    final Integer paddingBottom = Objects.requireNonNull(call.getInt("paddingBottom", 0));
-    final Boolean toBack = Objects.requireNonNull(call.getBoolean("toBack", false));
-    final Boolean enableOpacity = Objects.requireNonNull(call.getBoolean("enableOpacity", false));
-    final Boolean enableZoom = Objects.requireNonNull(call.getBoolean("enableZoom", false));
-    final Boolean lockOrientation = Objects.requireNonNull(call.getBoolean("lockAndroidOrientation", false));
-    
-    previousOrientationRequest = getBridge().getActivity().getRequestedOrientation();
+    final Integer paddingBottom = Objects.requireNonNull(
+      call.getInt("paddingBottom", 0)
+    );
+    final Boolean toBack = Objects.requireNonNull(
+      call.getBoolean("toBack", false)
+    );
+    final Boolean enableOpacity = Objects.requireNonNull(
+      call.getBoolean("enableOpacity", false)
+    );
+    final Boolean enableZoom = Objects.requireNonNull(
+      call.getBoolean("enableZoom", false)
+    );
+    final Boolean lockOrientation = Objects.requireNonNull(
+      call.getBoolean("lockAndroidOrientation", false)
+    );
+
+    previousOrientationRequest = getBridge()
+      .getActivity()
+      .getRequestedOrientation();
 
     fragment = new CameraActivityV2();
     fragment.setEventListener(this);
@@ -207,67 +235,122 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
     fragment.enableZoom = enableZoom;
     fragment.setDisableAudio(call.getBoolean("disableAudio", false));
 
-    bridge.getActivity().runOnUiThread(() -> {
-      DisplayMetrics metrics = getBridge().getActivity().getResources().getDisplayMetrics();
-      
-      if (lockOrientation) {
-        getBridge().getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-      }
+    bridge
+      .getActivity()
+      .runOnUiThread(() -> {
+        DisplayMetrics metrics = getBridge()
+          .getActivity()
+          .getResources()
+          .getDisplayMetrics();
 
-      int computedX = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, x, metrics);
-      int computedY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, y, metrics);
-      int computedPaddingBottom = paddingBottom != 0 
-        ? (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingBottom, metrics)
-        : 0;
-
-      int computedWidth;
-      int computedHeight;
-
-      if (width != 0) {
-        computedWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, metrics);
-      } else {
-        Display defaultDisplay = getBridge().getActivity().getWindowManager().getDefaultDisplay();
-        final Point size = new Point();
-        defaultDisplay.getSize(size);
-        computedWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, size.x, metrics);
-      }
-
-      if (height != 0) {
-        computedHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, metrics) 
-          - computedPaddingBottom;
-      } else {
-        Display defaultDisplay = getBridge().getActivity().getWindowManager().getDefaultDisplay();
-        final Point size = new Point();
-        defaultDisplay.getSize(size);
-        computedHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, size.y, metrics) 
-          - computedPaddingBottom;
-      }
-
-      fragment.setRect(computedX, computedY, computedWidth, computedHeight);
-
-      FrameLayout containerView = getBridge().getActivity().findViewById(containerViewId);
-      if (containerView == null) {
-        containerView = new FrameLayout(getActivity().getApplicationContext());
-        containerView.setId(containerViewId);
-
-        getBridge().getWebView().setBackgroundColor(Color.TRANSPARENT);
-        ((ViewGroup) getBridge().getWebView().getParent()).addView(containerView);
-        
-        if (toBack) {
-          getBridge().getWebView().getParent().bringChildToFront(getBridge().getWebView());
+        if (lockOrientation) {
+          getBridge()
+            .getActivity()
+            .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         }
 
-        FragmentManager fragmentManager = getBridge().getActivity().getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(containerView.getId(), fragment);
-        fragmentTransaction.commit();
+        int computedX = (int) TypedValue.applyDimension(
+          TypedValue.COMPLEX_UNIT_DIP,
+          x,
+          metrics
+        );
+        int computedY = (int) TypedValue.applyDimension(
+          TypedValue.COMPLEX_UNIT_DIP,
+          y,
+          metrics
+        );
+        int computedPaddingBottom = paddingBottom != 0
+          ? (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            paddingBottom,
+            metrics
+          )
+          : 0;
 
-        bridge.saveCall(call);
-        cameraStartCallbackId = call.getCallbackId();
-      } else {
-        call.reject("camera already started");
-      }
-    });
+        int computedWidth;
+        int computedHeight;
+
+        if (width != 0) {
+          computedWidth = (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            width,
+            metrics
+          );
+        } else {
+          Display defaultDisplay = getBridge()
+            .getActivity()
+            .getWindowManager()
+            .getDefaultDisplay();
+          final Point size = new Point();
+          defaultDisplay.getSize(size);
+          computedWidth = (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_PX,
+            size.x,
+            metrics
+          );
+        }
+
+        if (height != 0) {
+          computedHeight =
+            (int) TypedValue.applyDimension(
+              TypedValue.COMPLEX_UNIT_DIP,
+              height,
+              metrics
+            ) -
+            computedPaddingBottom;
+        } else {
+          Display defaultDisplay = getBridge()
+            .getActivity()
+            .getWindowManager()
+            .getDefaultDisplay();
+          final Point size = new Point();
+          defaultDisplay.getSize(size);
+          computedHeight =
+            (int) TypedValue.applyDimension(
+              TypedValue.COMPLEX_UNIT_PX,
+              size.y,
+              metrics
+            ) -
+            computedPaddingBottom;
+        }
+
+        fragment.setRect(computedX, computedY, computedWidth, computedHeight);
+
+        FrameLayout containerView = getBridge()
+          .getActivity()
+          .findViewById(containerViewId);
+        if (containerView == null) {
+          containerView = new FrameLayout(
+            getActivity().getApplicationContext()
+          );
+          containerView.setId(containerViewId);
+
+          getBridge().getWebView().setBackgroundColor(Color.TRANSPARENT);
+          ((ViewGroup) getBridge().getWebView().getParent()).addView(
+              containerView
+            );
+
+          if (toBack) {
+            getBridge()
+              .getWebView()
+              .getParent()
+              .bringChildToFront(getBridge().getWebView());
+          }
+
+          FragmentManager fragmentManager = getBridge()
+            .getActivity()
+            .getFragmentManager();
+          FragmentTransaction fragmentTransaction =
+            fragmentManager.beginTransaction();
+          fragmentTransaction.add(containerView.getId(), fragment);
+          fragmentTransaction.commit();
+
+          bridge.saveCall(call);
+          cameraStartCallbackId = call.getCallbackId();
+        } else {
+          call.reject("camera already started");
+        }
+      });
   }
 
   private boolean hasCamera(PluginCall call) {
@@ -277,7 +360,9 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
   private String getFilePath() {
     String fileName = "videoTmp";
     int i = 1;
-    while (new File(VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION).exists()) {
+    while (
+      new File(VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION).exists()
+    ) {
       fileName = "videoTmp" + '_' + i;
       i++;
     }
@@ -353,13 +438,13 @@ public class CameraPreview extends Plugin implements CameraActivityV2.CameraPrev
   private void handleCameraPermissionResult(PluginCall call) {
     boolean disableAudio = call.getBoolean("disableAudio", false);
     String permissionAlias = disableAudio
-        ? CAMERA_ONLY_PERMISSION_ALIAS
-        : CAMERA_WITH_AUDIO_PERMISSION_ALIAS;
+      ? CAMERA_ONLY_PERMISSION_ALIAS
+      : CAMERA_WITH_AUDIO_PERMISSION_ALIAS;
 
     if (getPermissionState(permissionAlias) == PermissionState.GRANTED) {
-        startCamera(call);
+      startCamera(call);
     } else {
-        call.reject("User denied camera permission");
+      call.reject("User denied camera permission");
     }
   }
 }
