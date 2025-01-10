@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
@@ -77,6 +76,7 @@ public class CameraPreview
   private final int containerViewId = 20;
 
   public class TouchInterceptWrapper extends CoordinatorLayout {
+
     private ViewGroup originalViewGroup;
 
     public TouchInterceptWrapper(ViewGroup original) {
@@ -370,8 +370,8 @@ public class CameraPreview
           int index = parent.indexOfChild(originalContainer);
 
           TouchInterceptWrapper wrapper = new TouchInterceptWrapper(parent);
-          ((ViewGroup)parent.getParent()).removeView(originalContainer);
-          ((ViewGroup)parent.getParent()).addView(wrapper, 0);
+          ((ViewGroup) parent.getParent()).removeView(originalContainer);
+          ((ViewGroup) parent.getParent()).addView(wrapper, 0);
 
           if (toBack) {
             getBridge()
