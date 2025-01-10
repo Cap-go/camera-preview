@@ -25,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
@@ -73,6 +75,37 @@ public class CameraPreview
     ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
   private CameraActivityV2 fragment;
   private final int containerViewId = 20;
+
+  public class TouchInterceptWrapper extends CoordinatorLayout {
+    private ViewGroup originalViewGroup;
+
+    public TouchInterceptWrapper(ViewGroup original) {
+      super(original.getContext());
+      this.originalViewGroup = original;
+
+      // Copy layout parameters and children
+      setLayoutParams(original.getLayoutParams());
+      while (original.getChildCount() > 0) {
+        View child = original.getChildAt(0);
+        original.removeViewAt(0);
+        addView(child);
+      }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+      // Clone and dispatch the event to all children
+      for (int i = 0; i < getChildCount(); i++) {
+        View child = getChildAt(i);
+        if (child.getVisibility() == View.VISIBLE) {
+          MotionEvent eventCopy = MotionEvent.obtain(ev);
+          child.dispatchTouchEvent(eventCopy);
+          eventCopy.recycle();
+        }
+      }
+      return false;
+    }
+  }
 
   @PluginMethod
   public void start(PluginCall call) {
@@ -329,6 +362,14 @@ public class CameraPreview
           ((ViewGroup) getBridge().getWebView().getParent()).addView(
               containerView
             );
+
+          ViewGroup originalContainer = getBridge().getWebView();
+          ViewGroup parent = (ViewGroup) originalContainer.getParent();
+          int index = parent.indexOfChild(originalContainer);
+
+          TouchInterceptWrapper wrapper = new TouchInterceptWrapper(parent);
+          ((ViewGroup)parent.getParent()).removeView(originalContainer);
+          ((ViewGroup)parent.getParent()).addView(wrapper, 0);
 
           if (toBack) {
             getBridge()

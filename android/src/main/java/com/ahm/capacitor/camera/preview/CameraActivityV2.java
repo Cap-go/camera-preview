@@ -89,21 +89,7 @@ public class CameraActivityV2 extends Fragment {
     // Configure zoom settings
     if (enableZoom) {
       // Initialize ScaleGestureDetector
-      scaleGestureDetector = new ScaleGestureDetector(
-        getContext(),
-        new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-          @Override
-          public boolean onScale(ScaleGestureDetector detector) {
-            float scaleFactor = detector.getScaleFactor();
-            currentZoom = Math.max(
-              0,
-              Math.min(currentZoom * scaleFactor, maxZoom)
-            );
-            camera.setZoom(currentZoom);
-            return true;
-          }
-        }
-      );
+      camera.mapGesture(Gesture.PINCH, GestureAction.ZOOM); // Pinch to zoom!
     }
 
     camera.setPreviewStreamSize(
@@ -115,13 +101,6 @@ public class CameraActivityV2 extends Fragment {
     );
 
     FrameLayout frameLayout = new FrameLayout(getContext());
-    frameLayout.setOnTouchListener((v, event) -> {
-      if (enableZoom && scaleGestureDetector != null) {
-        scaleGestureDetector.onTouchEvent(event);
-        return true;
-      }
-      return false;
-    });
 
     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
       width > 0 ? width : FrameLayout.LayoutParams.MATCH_PARENT,
