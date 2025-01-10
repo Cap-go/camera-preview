@@ -85,6 +85,7 @@ public class CameraActivityV2 extends Fragment {
         ? com.otaliastudios.cameraview.controls.Audio.OFF
         : com.otaliastudios.cameraview.controls.Audio.ON
     );
+    camera.setPlaySounds(false);
 
     // Configure zoom settings
     if (enableZoom) {
