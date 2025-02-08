@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.27](https://github.com/Cap-go/camera-preview/compare/6.5.26...6.5.27) (2025-02-08)
+
+
+### Bug Fixes
+
+* android startRecord ([6600d99](https://github.com/Cap-go/camera-preview/commit/6600d993f7cb55165b921cd51d0dd537b8942b8b))
+
 ### [6.5.26](https://github.com/Cap-go/camera-preview/compare/6.5.25...6.5.26) (2025-02-03)
 
 
