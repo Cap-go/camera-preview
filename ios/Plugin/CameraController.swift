@@ -60,8 +60,8 @@ class CameraController: NSObject {
     var videoFileURL: URL?
     
     // Lens tracking
-    private var availableLenses: [LensInfo] = []
-    private var currentLens: LensInfo?
+    var availableLenses: [LensInfo] = []
+    var currentLens: LensInfo?
 }
 
 extension CameraController {
