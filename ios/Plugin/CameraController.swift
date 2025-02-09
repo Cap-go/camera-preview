@@ -27,8 +27,8 @@ public struct LensInfo: Codable {
     }
 }
 
-class CameraController: NSObject {
-    var captureSession: AVCaptureSession?
+public class CameraController: NSObject {
+    public var captureSession: AVCaptureSession?
 
     var currentCameraPosition: CameraPosition?
 
@@ -60,8 +60,8 @@ class CameraController: NSObject {
     var videoFileURL: URL?
     
     // Lens tracking
-    var availableLenses: [LensInfo] = []
-    var currentLens: LensInfo?
+    public var availableLenses: [LensInfo] = []
+    public var currentLens: LensInfo?
 }
 
 extension CameraController {
@@ -543,7 +543,7 @@ extension CameraController {
         completion(self.videoFileURL, nil)
     }
     
-    func switchToLens(uniqueId: String) throws {
+    public func switchToLens(uniqueId: String) throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
             throw CameraControllerError.captureSessionIsMissing
         }
