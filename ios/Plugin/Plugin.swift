@@ -440,5 +440,32 @@ public class CameraPreview: CAPPlugin {
             }
         }
     }
+    
+    @objc func listLense(_ call: CAPPluginCall) {
+        let lenses = self.cameraController.availableLenses.map { $0.toDictionary }
+        call.resolve(["lenses": lenses])
+    }
+
+    @objc func changeLense(_ call: CAPPluginCall) {
+        guard let uniqueId = call.getString("uniqueId") else {
+            call.reject("uniqueId parameter is required")
+            return
+        }
+        
+        do {
+            try self.cameraController.switchToLens(uniqueId: uniqueId)
+            call.resolve()
+        } catch {
+            call.reject("Failed to switch lens: \(error.localizedDescription)")
+        }
+    }
+
+    @objc func getCurrentLense(_ call: CAPPluginCall) {
+        if let currentLens = self.cameraController.currentLens {
+            call.resolve(["lens": currentLens.toDictionary])
+        } else {
+            call.reject("No active lens")
+        }
+    }
 
 }

@@ -9,6 +9,18 @@
 import AVFoundation
 import UIKit
 
+struct LensInfo: Codable {
+    let uniqueId: String
+    let position: String // "front" or "back"
+    let type: String    // "wide", "telephoto", "ultraWide"
+    let maxZoom: Float
+    let horizontalFov: Float
+    
+    var toDictionary: [String: Any] {
+        return ["uniqueId": uniqueId, "position": position, "type": type, "maxZoom": maxZoom, "horizontalFov": horizontalFov]
+    }
+}
+
 class CameraController: NSObject {
     var captureSession: AVCaptureSession?
 
@@ -40,6 +52,10 @@ class CameraController: NSObject {
     var zoomFactor: CGFloat = 1.0
 
     var videoFileURL: URL?
+    
+    // Lens tracking
+    private var availableLenses: [LensInfo] = []
+    private var currentLens: LensInfo?
 }
 
 extension CameraController {
@@ -49,25 +65,54 @@ extension CameraController {
         }
 
         func configureCaptureDevices() throws {
-
-            let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .unspecified)
-
-            let cameras = session.devices.compactMap { $0 }
-            guard !cameras.isEmpty else { throw CameraControllerError.noCamerasAvailable }
-
-            for camera in cameras {
-                if camera.position == .front {
-                    self.frontCamera = camera
+            let deviceTypes: [AVCaptureDevice.DeviceType] = [
+                .builtInWideAngleCamera,
+                .builtInTelephotoCamera,
+                .builtInUltraWideCamera,
+                .builtInTrueDepthCamera
+            ]
+            
+            let session = AVCaptureDevice.DiscoverySession(
+                deviceTypes: deviceTypes,
+                mediaType: .video,
+                position: .unspecified
+            )
+            
+            let cameras = session.devices.compactMap { device in
+                let position = device.position == .front ? "front" : "back"
+                var type = "wide"
+                if device.deviceType == .builtInTelephotoCamera {
+                    type = "telephoto"
+                } else if device.deviceType == .builtInUltraWideCamera {
+                    type = "ultraWide"
                 }
-
-                if camera.position == .back {
-                    self.rearCamera = camera
-
-                    try camera.lockForConfiguration()
-                    camera.focusMode = .continuousAutoFocus
-                    camera.unlockForConfiguration()
+                
+                return LensInfo(
+                    uniqueId: device.uniqueID,
+                    position: position,
+                    type: type,
+                    maxZoom: Float(device.activeFormat.videoMaxZoomFactor),
+                    horizontalFov: device.activeFormat.videoFieldOfView
+                )
+            }
+            
+            guard !cameras.isEmpty else { throw CameraControllerError.noCamerasAvailable }
+            self.availableLenses = cameras
+            
+            // Set up default cameras for backward compatibility
+            for device in session.devices {
+                if device.position == .front {
+                    self.frontCamera = device
+                }
+                
+                if device.position == .back {
+                    self.rearCamera = device
+                    try device.lockForConfiguration()
+                    device.focusMode = .continuousAutoFocus
+                    device.unlockForConfiguration()
                 }
             }
+            
             if disableAudio == false {
                 self.audioDevice = AVCaptureDevice.default(for: AVMediaType.audio)
             }
@@ -490,6 +535,39 @@ extension CameraController {
 
         // Return the video file URL in the completion handler
         completion(self.videoFileURL, nil)
+    }
+    
+    func switchToLens(uniqueId: String) throws {
+        guard let captureSession = self.captureSession, captureSession.isRunning else {
+            throw CameraControllerError.captureSessionIsMissing
+        }
+        
+        guard let targetLens = availableLenses.first(where: { $0.uniqueId == uniqueId }),
+              let device = AVCaptureDevice(uniqueID: uniqueId) else {
+            throw CameraControllerError.invalidOperation
+        }
+        
+        captureSession.beginConfiguration()
+        
+        // Remove existing input
+        if let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput {
+            captureSession.removeInput(currentInput)
+        }
+        
+        // Add new input
+        do {
+            let newInput = try AVCaptureDeviceInput(device: device)
+            if captureSession.canAddInput(newInput) {
+                captureSession.addInput(newInput)
+                self.currentLens = targetLens
+            } else {
+                throw CameraControllerError.inputsAreInvalid
+            }
+        } catch {
+            throw CameraControllerError.invalidOperation
+        }
+        
+        captureSession.commitConfiguration()
     }
 }
 
