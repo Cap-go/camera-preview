@@ -9,14 +9,14 @@
 import AVFoundation
 import UIKit
 
-struct LensInfo: Codable {
-    let uniqueId: String
-    let position: String // "front" or "back"
-    let type: String    // "wide", "telephoto", "ultraWide"
-    let maxZoom: Float
-    let horizontalFov: Float
+public struct LensInfo: Codable {
+    public let uniqueId: String
+    public let position: String // "front" or "back"
+    public let type: String    // "wide", "telephoto", "ultraWide"
+    public let maxZoom: Float
+    public let horizontalFov: Float
     
-    var toDictionary: [String: String] {
+    public var toDictionary: [String: String] {
         return [
             "uniqueId": uniqueId,
             "position": position,
