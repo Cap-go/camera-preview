@@ -16,8 +16,14 @@ struct LensInfo: Codable {
     let maxZoom: Float
     let horizontalFov: Float
     
-    var toDictionary: [String: Any] {
-        return ["uniqueId": uniqueId, "position": position, "type": type, "maxZoom": maxZoom, "horizontalFov": horizontalFov]
+    var toDictionary: [String: String] {
+        return [
+            "uniqueId": uniqueId,
+            "position": position,
+            "type": type,
+            "maxZoom": String(format: "%.2f", maxZoom),
+            "horizontalFov": String(format: "%.2f", horizontalFov)
+        ]
     }
 }
 
