@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.28](https://github.com/Cap-go/camera-preview/compare/6.5.27...6.5.28) (2025-02-09)
+
+
+### Bug Fixes
+
+* prevent iOS crash when stopping camera before initialization ([b6c4870](https://github.com/Cap-go/camera-preview/commit/b6c4870d8d8e4da5a0e9e843e5265873567dac3a)), closes [#172](https://github.com/Cap-go/camera-preview/issues/172)
+
 ### [6.5.27](https://github.com/Cap-go/camera-preview/compare/6.5.26...6.5.27) (2025-02-08)
 
 
