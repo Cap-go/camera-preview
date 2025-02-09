@@ -1118,8 +1118,6 @@ public class CameraActivity extends Fragment {
         }
       }
 
-      mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-      mRecorder.setProfile(profile);
       if (disableAudio) {
         mRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
@@ -1127,6 +1125,8 @@ public class CameraActivity extends Fragment {
         mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
       }
 
+      mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+      mRecorder.setProfile(profile);
       mRecorder.setOutputFile(filePath);
       mRecorder.setOrientationHint(mOrientationHint);
       mRecorder.setMaxDuration(maxDuration);

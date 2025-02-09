@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.5.28](https://github.com/Cap-go/camera-preview/compare/6.5.27...6.5.28) (2025-02-09)
+
+
+### Bug Fixes
+
+* prevent iOS crash when stopping camera before initialization ([b6c4870](https://github.com/Cap-go/camera-preview/commit/b6c4870d8d8e4da5a0e9e843e5265873567dac3a)), closes [#172](https://github.com/Cap-go/camera-preview/issues/172)
+
+### [6.5.27](https://github.com/Cap-go/camera-preview/compare/6.5.26...6.5.27) (2025-02-08)
+
+
+### Bug Fixes
+
+* android startRecord ([6600d99](https://github.com/Cap-go/camera-preview/commit/6600d993f7cb55165b921cd51d0dd537b8942b8b))
+
+### [6.5.26](https://github.com/Cap-go/camera-preview/compare/6.5.25...6.5.26) (2025-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @capacitor/filesystem to v6.0.3 ([#171](https://github.com/Cap-go/camera-preview/issues/171)) ([47fd830](https://github.com/Cap-go/camera-preview/commit/47fd8309696d0ecfcfb37ee0853c796312fe1a28))
+
+### [6.5.25](https://github.com/Cap-go/camera-preview/compare/6.5.24...6.5.25) (2025-02-03)
+
+### [6.5.24](https://github.com/Cap-go/camera-preview/compare/6.5.23...6.5.24) (2025-01-27)
+
+### [6.5.23](https://github.com/Cap-go/camera-preview/compare/6.5.22...6.5.23) (2025-01-27)
+
 ### [6.5.22](https://github.com/Cap-go/camera-preview/compare/6.5.21...6.5.22) (2025-01-23)
 
 ### [6.5.21](https://github.com/Cap-go/camera-preview/compare/6.5.20...6.5.21) (2025-01-20)
