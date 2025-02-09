@@ -33,7 +33,10 @@ extension UIWindow {
  */
 @objc(CameraPreview)
 public class CameraPreview: CAPPlugin {
-
+    // Camera state tracking
+    private var isInitializing: Bool = false
+    private var isInitialized: Bool = false
+    
     var previewView: UIView!
     var cameraPosition = String()
     let cameraController = CameraController()
@@ -161,6 +164,16 @@ public class CameraPreview: CAPPlugin {
     }
 
     @objc func start(_ call: CAPPluginCall) {
+        if self.isInitializing {
+            call.reject("camera initialization in progress")
+            return
+        }
+        if self.isInitialized {
+            call.reject("camera already started")
+            return
+        }
+        self.isInitializing = true
+        
         self.cameraPosition = call.getString("position") ?? "rear"
         let cameraMode = call.getBool("cameraMode") ?? false
         self.highResolutionOutput = call.getBool("enableHighResolution") ?? false
@@ -222,6 +235,8 @@ public class CameraPreview: CAPPlugin {
                             NotificationCenter.default.addObserver(self, selector: #selector(CameraPreview.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
                         }
 
+                        self.isInitializing = false
+                        self.isInitialized = true
                         call.resolve()
 
                     }
@@ -242,10 +257,21 @@ public class CameraPreview: CAPPlugin {
 
     @objc func stop(_ call: CAPPluginCall) {
         DispatchQueue.main.async {
+            if self.isInitializing {
+                call.reject("cannot stop camera while initialization is in progress")
+                return
+            }
+            if !self.isInitialized {
+                call.reject("camera not initialized")
+                return
+            }
             if self.cameraController.captureSession?.isRunning ?? false {
                 self.cameraController.captureSession?.stopRunning()
-                self.previewView.removeFromSuperview()
+                if let previewView = self.previewView {
+                    previewView.removeFromSuperview()
+                }
                 self.webView?.isOpaque = true
+                self.isInitialized = false
                 call.resolve()
             } else {
                 call.reject("camera already stopped")
