@@ -107,7 +107,7 @@ public class CameraPreview
   @PluginMethod
   public void setOpacity(PluginCall call) {
     if (!this.hasCamera(call)) {
-      call.error("Camera is not running");
+      call.reject("Camera is not running");
       return;
     }
 

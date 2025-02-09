@@ -14,13 +14,10 @@ export class CameraPreviewWeb extends WebPlugin implements CameraPreviewPlugin {
    *  track which camera is used based on start options
    *  used in capture
    */
-  private isBackCamera: boolean = false;
+  private isBackCamera = false;
 
   constructor() {
-    super({
-      name: "CameraPreview",
-      platforms: ["web"],
-    });
+    super();
   }
 
   async getSupportedPictureSizes(): Promise<any> {
